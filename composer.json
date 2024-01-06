@@ -1,0 +1,45 @@
+{
+  "name": "strides/laravel-api-module",
+  "description": "Laravel api Module management",
+  "minimum-stability": "stable",
+  "keywords": [
+    "modules",
+    "laravel",
+    "strides",
+    "module"
+  ],
+  "license": "MIT",
+    "authors": [
+        {
+            "name": "Strides-hovo",
+            "email": "strides@internet.ru",
+            "role": "Developer"
+        }
+    ],
+  "autoload": {
+    "psr-4": {
+      "Strides\\Module\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Strides\\Module\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=8.1"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^v8.17.0",
+    "phpunit/phpunit": "^9.0"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Strides\\Module\\Providers\\ModuleServiceProvider"
+      ]
+    }
+  },
+  "aliases": {
+  }
+}
