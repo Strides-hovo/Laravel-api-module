@@ -6,6 +6,9 @@ namespace {{ $namespace }};
 @if(isset($model_namespace))use {{ $model_namespace }}; @endif
 @if(isset($resource_namespace))use {{ $resource_namespace }}; @endif
 @if(isset($collection_namespace))use {{ $collection_namespace }}; @endif
+@php $request =  $request ?? 'Request'; @endphp
+@php $model = isset($model) ? '$' . $model : ''; @endphp
+@php $model_name =  $model_name ?? ''; @endphp
 
 class {{ $class }}
 {
@@ -16,28 +19,28 @@ class {{ $class }}
     }
 
 
-    public function store({{ $request }} $request)@isset($resource):{{ $resource }}@endisset
+    public function store({{ $request }} $request)@isset($resource) :{{ $resource }} @endisset
     {
-        ${{ $model }} = {{$model_name}}::create($request->validated());
-        return new {{ $resource }}(${{ $model }});
+@if($model){{ $model }} = {{$model_name}}::create($request->validated());@endif
+@isset($resource) return new {{ $resource }}({{ $model }});@endisset
     }
 
 
-    public function show({{$model_name}} ${{ $model }}): {{ $resource }}
+    public function show({{$model_name}} {{ $model ? : '$id'}})@isset($resource) :{{ $resource }} @endisset
     {
-        return new {{ $resource }}(${{ $model }});
+@isset($resource) return new {{ $resource }}({{ $model }});@endisset
     }
 
 
-    public function update({{ $request }} $request, {{$model_name}} ${{ $model }}): {{ $resource }}
+    public function update({{ $request }} $request, {{$model_name}} {{ $model ? : '$id' }})@isset($resource) :{{ $resource }} @endisset
     {
-        ${{ $model }}->update($request->validated());
-        return new {{ $resource }}(${{ $model }});
+@if($model){{ $model }}->update($request->validated()); @endif
+@isset($resource) return new {{ $resource }}({{ $model }});@endisset
     }
 
 
-    public function destroy({{$model_name}} ${{ $model }}): bool
+    public function destroy({{$model_name}} {{ $model ? : '$id'}}): bool
     {
-        return ${{ $model }}->delete();
+        return {{ $model ? : '$id' }}->delete();
     }
 }

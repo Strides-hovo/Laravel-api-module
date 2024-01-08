@@ -88,7 +88,8 @@ class ModuleHelper
         $modules_names_config = Config::get('module.modules_name');
         if (File::exists($modules_names_config)) {
             $file = File::get($modules_names_config);
-            return json_decode($file, true) ?: [];
+            $modules = json_decode($file, true) ?: [];
+            return array_filter($modules, fn($v) => $v);
         }
         return [];
     }
