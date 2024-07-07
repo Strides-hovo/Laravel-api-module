@@ -5,8 +5,8 @@
 ### installation
     composer require laravel/api-module
 
-### setting
-    add in the composer.json file to the autoload field 
+### setting add in the composer.json file to the autoload field
+     
     "Modules\\": "Modules/",
 
 ### config published

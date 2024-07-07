@@ -1,13 +1,8 @@
 <?php
 
-namespace tests\Unit;
 
-
-use Strides\Module\Enums\BuilderClassNameEnum;
-use Strides\Module\Exceptions\BuilderException;
-use Strides\Module\Exceptions\FileGeneratorException;
-use Strides\Module\ModuleDirector;
-use Strides\Module\Tests\TestCase;
+namespace Strides\Module\Tests\Unit;
+use Strides\Module\Enums\BuilderClassNameEnum;use Strides\Module\Exceptions\BuilderException;use Strides\Module\Exceptions\FileGeneratorException;use Strides\Module\ModuleDirector;use Strides\Module\Tests\TestCase;
 
 class FileGeneratorTest extends TestCase
 {

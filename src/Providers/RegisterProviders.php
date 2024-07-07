@@ -12,7 +12,7 @@ use Strides\Module\Migrator;
 class RegisterProviders extends ServiceProvider
 {
 
-    public function register()
+    public function register(): void
     {
         $this->app->bind(MigrationFacadeInterface::class, function ($app, $parameters) {
             $command = $parameters['command'];

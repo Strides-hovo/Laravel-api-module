@@ -1,9 +1,11 @@
 <?php
 
-namespace tests\Unit;
+
+namespace Strides\Module\Tests\Unit;
 
 use Exception;
 use Strides\Module\Builders\ControllerBuilder;
+use Strides\Module\Exceptions\BuilderException;
 use Strides\Module\Tests\TestCase;
 
 class BuilderTest extends TestCase
@@ -28,6 +30,7 @@ class BuilderTest extends TestCase
 
     /**
      * @throws Exception
+     * @throws BuilderException
      */
     public function test_controller_builder_by_name()
     {

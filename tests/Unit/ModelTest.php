@@ -1,6 +1,7 @@
 <?php
 
-namespace tests\Unit;
+
+namespace Strides\Module\Tests\Unit;
 
 use Strides\Module\Enums\BuilderClassNameEnum;
 use Strides\Module\Exceptions\BuilderException;

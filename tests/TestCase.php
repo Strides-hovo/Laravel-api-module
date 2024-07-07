@@ -2,12 +2,17 @@
 
 namespace Strides\Module\Tests;
 
+use Illuminate\Support\Facades\File;
 use Orchestra\Testbench\TestCase as Test;
 use Strides\Module\Providers\ModuleServiceProvider;
 
 
 class TestCase extends Test
 {
+    protected const MODULE_NAME = 'V1/Sister';
+    protected const MODULE_DIR = 'Modules/' . self::MODULE_NAME;
+    protected const FILENAME = 'Sister';
+
 
 
     public function setup(): void
@@ -47,5 +52,16 @@ class TestCase extends Test
             'database' => ':memory',
             'prefix' => '',
         ]);
+    }
+
+
+    protected function clearModule(): void
+    {
+        $jsonFile = base_path('modules_name.json');
+        File::put($jsonFile, json_encode([]));
+
+        if (File::exists(base_path(self::MODULE_DIR))) {
+            File::deleteDirectory(base_path(self::MODULE_DIR));
+        }
     }
 }

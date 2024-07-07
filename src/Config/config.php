@@ -19,6 +19,7 @@ return [
             'resource' => ['path' => 'Http/Resources', 'generate' => true],
             'collection' => ['path' => 'Http/Resources', 'generate' => true],
             'repository' => ['path' => 'Repositories', 'generate' => true],
+            'service' => ['path' => 'Services', 'generate' => true],
 
             'route' => ['path' => 'Routes', 'generate' => true],
             'middleware' => ['path' => 'Http/Middleware', 'generate' => true],
