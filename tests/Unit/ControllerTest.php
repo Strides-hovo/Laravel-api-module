@@ -1,6 +1,7 @@
 <?php
 
-namespace tests\Unit;
+
+namespace Strides\Module\Tests\Unit;
 
 use Strides\Module\Enums\BuilderClassNameEnum;
 use Strides\Module\Exceptions\BuilderException;
@@ -27,10 +28,10 @@ class ControllerTest extends TestCase
         $this->assertIsArray($contents);
         $this->assertArrayHasKey('controller', $contents);
         $this->keysExists([
-            'directory','fileName','template','replacements'
-        ],$contents['controller']);
-        $this->assertStringContainsString('Category',$contents['controller']['fileName']);
-        $this->assertStringContainsString('PostController',$contents['controller']['fileName']);
+            'directory', 'fileName', 'template', 'replacements'
+        ], $contents['controller']);
+        $this->assertStringContainsString('Category', $contents['controller']['fileName']);
+        $this->assertStringContainsString('PostController', $contents['controller']['fileName']);
 
     }
 
@@ -54,11 +55,11 @@ class ControllerTest extends TestCase
         $this->assertIsArray($contents);
         $this->assertArrayHasKey('controller', $contents);
         $this->keysExists([
-            'directory','fileName','template','replacements'
-        ],$contents['controller']);
+            'directory', 'fileName', 'template', 'replacements'
+        ], $contents['controller']);
         $this->keysExists([
-            'request','resource','repository','model','collection'
-        ],$contents['controller']['replacements']);
+            'request', 'resource', 'repository', 'model', 'collection'
+        ], $contents['controller']['replacements']);
     }
 
 
@@ -78,11 +79,11 @@ class ControllerTest extends TestCase
         $this->assertIsArray($contents);
         $this->assertArrayHasKey('controller', $contents);
         $this->keysExists([
-            'directory','fileName','template','replacements'
-        ],$contents['controller']);
+            'directory', 'fileName', 'template', 'replacements'
+        ], $contents['controller']);
         $this->keysExists([
-            'request','resource','repository','model','collection'
-        ],$contents['controller']['replacements']);
+            'request', 'resource', 'repository', 'model', 'collection'
+        ], $contents['controller']['replacements']);
     }
 
 
@@ -112,8 +113,8 @@ class ControllerTest extends TestCase
         ];
         $contents = ModuleFactory::build(BuilderClassNameEnum::CONTROLLER, $args);
         $this->assertIsArray($contents);
-        $this->assertArrayHasKey('controller',$contents);
-        $this->assertArrayHasKey('resource',$contents);
-        $this->assertArrayHasKey('collection',$contents);
+        $this->assertArrayHasKey('controller', $contents);
+        $this->assertArrayHasKey('resource', $contents);
+        $this->assertArrayHasKey('collection', $contents);
     }
 }

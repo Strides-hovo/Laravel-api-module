@@ -1,7 +1,7 @@
 <?php
 
 
-namespace tests\Unit;
+namespace Strides\Module\Tests\Unit;
 
 use Illuminate\Support\Facades\Config;
 use Strides\Module\Exceptions\BuilderException;
@@ -22,7 +22,7 @@ class ModuleTest extends TestCase
      */
     public function test_create_module()
     {
-        dd(2);
+        //dd(2);
         $args = [
             'moduleName' => 'Category',
         ];

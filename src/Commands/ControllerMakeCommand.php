@@ -3,6 +3,7 @@
 namespace Strides\Module\Commands;
 
 use Strides\Module\Enums\BuilderClassNameEnum;
+use Strides\Module\Enums\BuilderKeysEnum;
 use Strides\Module\Exceptions\BuilderException;
 use Strides\Module\Exceptions\FileGeneratorException;
 use Strides\Module\ModuleDirector;
@@ -14,7 +15,7 @@ class ControllerMakeCommand extends BaseMakeCommand
 
     protected $name = 'module:make-controller';
     protected $description = 'Created Controller';
-
+    protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::controller;
 
     protected function getArguments(): array
     {
@@ -45,6 +46,9 @@ class ControllerMakeCommand extends BaseMakeCommand
     public function handle(): void
     {
         parent::handle();
+        if (!$this->showConfirm('Контроллер')) {
+            return;
+        }
         $statuses = ModuleDirector::create(BuilderClassNameEnum::CONTROLLER, $this->data);
         foreach ($statuses as $status) {
             $this->line('Created: <info>' . $status . '</info>');

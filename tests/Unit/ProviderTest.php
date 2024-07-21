@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Unit;
+namespace Strides\Module\Tests\Unit;
 
 use Illuminate\Support\ServiceProvider;
 use Strides\Module\Facades\ModuleFacade;

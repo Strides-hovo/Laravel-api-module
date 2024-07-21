@@ -3,12 +3,13 @@
 namespace Strides\Module\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Strides\Module\Exceptions\BuilderException;
 use Strides\Module\ModuleHelper;
 
 class LoaderServiceProvider extends ServiceProvider
 {
 
-    public function register()
+    public function register(): void
     {
         $this->setMigrations()->setConfig();
     }
@@ -22,7 +23,7 @@ class LoaderServiceProvider extends ServiceProvider
     }
 
 
-    private function setMigrations()
+    private function setMigrations(): static
     {
         $migrationsDir = $this->getMigrationsDir();
 
@@ -33,7 +34,7 @@ class LoaderServiceProvider extends ServiceProvider
     }
 
 
-    private function setConfig()
+    private function setConfig(): static
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../Config/config.php',
@@ -42,12 +43,14 @@ class LoaderServiceProvider extends ServiceProvider
         return $this;
     }
 
-    private function getMigrationsDir()
+    private function getMigrationsDir(): array
     {
         $moduleNames = ModuleHelper::getModulesNames();
         if (empty($moduleNames)) return [];
 
-        return array_map(function ($moduleName) {
+        return array_map(/**
+         * @throws BuilderException
+         */ function ($moduleName) {
             $directory = ModuleHelper::module($moduleName, ModuleHelper::generator('migration'));
             return ($directory);
         }, array_keys($moduleNames));
