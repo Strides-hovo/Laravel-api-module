@@ -1,4 +1,4 @@
-{!! '<?php' !!}
+<?php echo '<?php'; ?>
 
 use Illuminate\Support\Facades\Route;
 use {{ $controller_namespace }};
