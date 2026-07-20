@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace Strides\Module\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
