@@ -1,0 +1,4 @@
+    public function destroy(int|string $id): bool
+    {
+        return $this->repository->delete($id);
+    }

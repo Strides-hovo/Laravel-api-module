@@ -1,0 +1,20 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Console\Command;
+
+class {{ class }} extends Command
+{
+
+    protected $signature = 'app:{{ name }}';
+
+
+    protected $description = 'Command description';
+
+
+    public function handle()
+    {
+        $this->info('Command executed successfully!');
+    }
+}

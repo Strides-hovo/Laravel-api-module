@@ -1,0 +1,5 @@
+
+public function store({{ parameters }}): {{ return_type }}
+{
+{{ body }}
+}

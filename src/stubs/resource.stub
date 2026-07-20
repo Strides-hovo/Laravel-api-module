@@ -1,0 +1,17 @@
+<?php
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class {{ class }} extends {{ extend }}
+{
+
+    public function toArray($request): array
+    {
+        return [
+            // @Todo
+        ];
+    }
+}

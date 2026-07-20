@@ -1,0 +1,23 @@
+<?php
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Strides\Module\Transformers\ModuleTransformer;
+use Illuminate\Database\Eloquent\Model;
+
+class {{ class }} extends ModuleTransformer
+{
+
+    protected array $availableIncludes = [];
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model|mixed $model
+     */
+    public function transformModel($model): array
+    {
+        return [
+
+        ];
+    }
+}

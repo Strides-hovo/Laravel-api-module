@@ -1,0 +1,5 @@
+
+public function create(array $data): {{ model }}
+{
+    return $this->repository->create($data);
+}

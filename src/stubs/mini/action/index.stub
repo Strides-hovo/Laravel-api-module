@@ -1,0 +1,19 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+{{ repository_use }}
+
+class {{ class }}
+{
+    public function __construct({{ repository_param }})
+    {}
+
+
+    public function handle(array $data): \Illuminate\Support\Collection
+    {
+        return $this->repository->filter($data);
+    }
+}

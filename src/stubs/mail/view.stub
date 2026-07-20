@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шаблон письма</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f6f9fc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f6f9fc; padding: 40px 10px;">
+    <tr>
+        <td align="center">
+
+            <!-- Главный контейнер письма -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); overflow: hidden;">
+
+                <!-- Шапка (Header) -->
+                <tr>
+                    <td align="center" style="background-color: #4f46e5; padding: 30px 20px;">
+                        <!-- Здесь может быть ваш логотип. Пока просто красивый текст -->
+                        <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 0.5px;">
+                            Название Компании
+                        </h1>
+                    </td>
+                </tr>
+
+                <!-- Тело письма (Body) -->
+                <tr>
+                    <td style="padding: 40px 30px; color: #334155; font-size: 16px; line-height: 1.6;">
+
+                        <!-- Приветствие -->
+                        <h2 style="margin-top: 0; margin-bottom: 20px; color: #1e293b; font-size: 20px; font-weight: 600;">
+                            Здравствуйте, [Имя пользователя]!
+                        </h2>
+
+                        <!-- Основной текст -->
+                        <p style="margin-bottom: 24px;">
+                            Мы рады приветствовать вас! Это дефолтный, но стильный шаблон письма, который вы можете использовать для любых уведомлений, рассылок или подтверждений. Он выглядит легко, аккуратно и отлично читается как на компьютерах, так и на смартфонах.
+                        </p>
+
+                        <p style="margin-bottom: 30px;">
+                            Чтобы сделать шаблон еще лучше, вы можете добавить сюда важную информацию, выделить ключевые моменты или предложить пользователю совершить какое-то действие.
+                        </p>
+
+                        <!-- Кнопка (Call to Action) -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 30px;">
+                            <tr>
+                                <td align="center">
+                                    <a href="https://example.com" target="_blank" style="display: inline-block; background-color: #4f46e5; color: #ffffff; padding: 14px 28px; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: 6px; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);">
+                                        Основное действие
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Текст после кнопки -->
+                        <p style="margin-bottom: 0; font-size: 15px; color: #64748b;">
+                            Если у вас возникнут вопросы, просто ответьте на это письмо — наша команда поддержки всегда на связи.
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Подвал (Footer) -->
+                <tr>
+                    <td style="background-color: #f8fafc; padding: 30px 30px; border-top: 1px solid #e2e8f0; text-align: center; color: #94a3b8; font-size: 13px; line-height: 1.5;">
+                        <p style="margin: 0 0 8px 0;">
+                            © 2026 Название Компании. Все права защищены.
+                        </p>
+                        <p style="margin: 0;">
+                            Вы получили это письмо, так как зарегистрированы на нашем сайте. <br>
+                            <a href="https://example.com/unsubscribe" style="color: #4f46e5; text-decoration: underline;">Отписаться от рассылки</a>
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+            <!-- /Главный контейнер -->
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

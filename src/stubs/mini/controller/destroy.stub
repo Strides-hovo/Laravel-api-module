@@ -1,0 +1,4 @@
+public function destroy({{ parameters }}): {{ return_type }}
+{
+{{ body }}
+}

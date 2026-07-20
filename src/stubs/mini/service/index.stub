@@ -1,0 +1,6 @@
+
+
+public function filter(array $data): \Illuminate\Support\Collection
+{
+    return $this->repository->filter($data);
+}

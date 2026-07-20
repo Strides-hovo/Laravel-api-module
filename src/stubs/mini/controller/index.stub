@@ -1,0 +1,6 @@
+
+
+public function index({{ parameters }}): {{ return_type }}
+{
+    {{ body }}
+}

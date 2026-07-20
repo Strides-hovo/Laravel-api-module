@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+
+class {{ class }} extends InteractsWithQueue implements ShouldQueue
+{
+
+    public function __construct()
+    {
+    }
+
+
+    public function handle({{ event }} $event): void
+    {
+    }
+}

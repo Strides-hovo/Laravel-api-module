@@ -1,0 +1,45 @@
+<?php
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+class {{ class }}
+{
+
+    public function filter(array $data = []): \Illuminate\Database\Eloquent\Collection
+    {
+        return {{ model }}::where($data)->get();
+    }
+
+    public function all(): \Illuminate\Database\Eloquent\Collection
+    {
+        return {{ model }}::all();
+    }
+
+
+    public function find(int|string $id): {{ model }}
+    {
+        return {{ model }}::find($id);
+    }
+
+
+    public function create(array $data): {{ model }}
+    {
+        return {{ model }}::create($data);
+    }
+
+
+    public function update(int|string $id, array $data): {{ model }}
+    {
+        $model = {{ model }}::find($id);
+        $model->update($data);
+        return $model;
+    }
+
+
+    public function delete(int|string $id): bool
+    {
+        $model = {{ model }}::find($id);
+        return $model->delete();
+    }
+}
