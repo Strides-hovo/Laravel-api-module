@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace Strides\Module\Builders;
 
 use Illuminate\Support\Str;
 use Strides\Module\Contracts\HasRelationsInterface;
