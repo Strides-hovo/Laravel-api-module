@@ -18,10 +18,4 @@ class CastBuilder extends BaseBuilder
         return Config::get('module-stub.cast.main');
     }
 
-    protected function getReplacements(): array
-    {
-        return array_merge(parent::getReplacements(), [
-            '{{ model }}' => ModuleHelper::modelFqcn($this->moduleName),
-        ]);
-    }
 }

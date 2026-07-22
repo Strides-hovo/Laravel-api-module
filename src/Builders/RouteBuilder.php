@@ -27,8 +27,8 @@ class RouteBuilder extends BaseBuilder
         $controller = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::controller, $controllerName);
 
         return [
-            '{{ model }}' =>   Str::lower($this->moduleName) ,
-            '{{ controller }}' => '\\' . $controller,
+            '{{ model }}' => Str::plural(Str::camel(ModuleHelper::singular($this->moduleName))),
+            '{{ controller }}' => '\\'.$controller,
         ];
     }
 }

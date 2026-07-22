@@ -22,7 +22,7 @@ class MigrationBuilder extends BaseBuilder
         $dropping = 'dropIfExists';
         $body = "\$table->id(); \n \$table->timestamps();";
 
-        if (!Str::contains($this->fileName, 'create')) {
+        if (! Str::contains($this->fileName, 'create')) {
             $action = $dropping = 'table';
             $body = '// @Todo';
         }

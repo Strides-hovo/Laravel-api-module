@@ -33,14 +33,14 @@ class ActionBuilder extends BaseBuilder
     {
         $method = ActionMethodEnum::fromClassName($this->fileName);
 
-        $stub = (string)file_get_contents($this->getStubPath($method));
+        $stub = (string) file_get_contents($this->getStubPath($method));
         $finalContent = $this->resolveContent($stub, $method);
 
         $modDir = ModuleHelper::module($this->moduleName);
         $buildDir = ModuleHelper::generator(BuilderKeysEnum::action);
 
-        $dir = ModuleHelper::normalizePath($modDir . DIRECTORY_SEPARATOR . $buildDir);
-        $fileName = $dir . DIRECTORY_SEPARATOR . $this->fileName . '.php';
+        $dir = ModuleHelper::normalizePath($modDir.DIRECTORY_SEPARATOR.$buildDir);
+        $fileName = $dir.DIRECTORY_SEPARATOR.$this->fileName.'.php';
 
         return new BuilderResultDto(
             dirName: $dir,
@@ -54,7 +54,7 @@ class ActionBuilder extends BaseBuilder
         $resolverClass = $method ? self::RESOLVERS[$method->name] : null;
 
         if ($resolverClass) {
-            $resolver = new $resolverClass();
+            $resolver = new $resolverClass;
 
             return $resolver->resolve($stub, $this->moduleName, $this->fileName);
         }
@@ -74,11 +74,11 @@ class ActionBuilder extends BaseBuilder
         if ($method) {
             return Config::get(
                 "module-stub.action.{$method->name}",
-                dirname(__DIR__) . '/stubs/mini/action/' . $method->name . '.stub'
+                dirname(__DIR__).'/stubs/mini/action/'.$method->name.'.stub'
             );
         }
 
-        return Config::get('module-stub.action.main', dirname(__DIR__) . '/stubs/action.stub');
+        return Config::get('module-stub.action.main', dirname(__DIR__).'/stubs/action.stub');
     }
 
     /**

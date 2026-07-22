@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class ModuleEnableCommand extends Command
 {
     protected $name = 'module:enable';
+
     protected $description = 'Enable a module';
 
     public function handle(): int
@@ -19,7 +20,7 @@ class ModuleEnableCommand extends Command
         $argument = $this->argument('moduleName');
         $moduleName = is_string($argument) ? Str::ucfirst($argument) : '';
 
-        if (!Module::exists($moduleName)) {
+        if (! Module::exists($moduleName)) {
             $this->error("Module [{$moduleName}] not found in modules_name.json.");
 
             return self::FAILURE;

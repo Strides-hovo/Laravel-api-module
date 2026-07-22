@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Strides\Module\Providers;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
@@ -23,8 +24,7 @@ class LoaderServiceProvider extends ServiceProvider
             ->setMigrations()
             ->setProviders()
             ->setFactories()
-            ->setModuleConfigs()
-        ;
+            ->setModuleConfigs();
     }
 
     public function boot(): void
@@ -36,8 +36,8 @@ class LoaderServiceProvider extends ServiceProvider
     private function setConfig(): self
     {
         // Merged base vs public config
-        $baseConfig = require __DIR__ . '/../Config/base.php';
-        $publicConfig = require __DIR__ . '/../Config/config.php';
+        $baseConfig = require __DIR__.'/../Config/base.php';
+        $publicConfig = require __DIR__.'/../Config/config.php';
         $mergedGenerators = collect((array) $baseConfig['paths']['generator'])
             ->merge((array) $publicConfig['paths']['generator'])
             ->all();
@@ -47,7 +47,7 @@ class LoaderServiceProvider extends ServiceProvider
 
         $this->app->make('config')->set('module', $finalConfig);
 
-        $this->mergeConfigFrom(__DIR__ . '/../Config/stub.php', 'module-stub');
+        $this->mergeConfigFrom(__DIR__.'/../Config/stub.php', 'module-stub');
 
         return $this;
     }
@@ -57,10 +57,10 @@ class LoaderServiceProvider extends ServiceProvider
         $modules = Module::allEnabled();
 
         foreach ($modules as $module) {
-            $path = Config::get('module.namespace') . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR .'resource/views';
+            $path = Config::get('module.namespace').DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.'resources/views';
             $this->loadViewsFrom(
                 base_path($path),
-                $module
+                Str::lower($module)
             );
         }
     }
@@ -81,11 +81,13 @@ class LoaderServiceProvider extends ServiceProvider
         $modules = Module::allEnabled();
         foreach ($modules as $module) {
             $dir = ModuleHelper::namespace($module, BuilderKeysEnum::service_provider);
-            $provider = $dir . DIRECTORY_SEPARATOR . ModuleHelper::singular($module) . 'ServiceProvider';
+            $provider = $dir.DIRECTORY_SEPARATOR.ModuleHelper::singular($module).'ServiceProvider';
             $file = ModuleHelper::path(ModuleHelper::singular($module), BuilderKeysEnum::service_provider);
 
             if (File::exists("{$file}.php")) {
-                $this->app->register($provider);
+                if (class_exists($provider)) {
+                    $this->app->register($provider);
+                }
             }
         }
 
@@ -94,17 +96,20 @@ class LoaderServiceProvider extends ServiceProvider
 
     private function setFactories(): self
     {
-        /** @var callable(class-string<\Illuminate\Database\Eloquent\Model>): class-string<\Illuminate\Database\Eloquent\Factories\Factory> $factoryCallback */
+        /**
+         * @param  string  $modelClass
+         * @return string|null
+         */
         $factoryCallback = function (string $modelClass) {
             $moduleNamespace = Config::get('module.namespace');
 
-            if (!str_starts_with($modelClass, $moduleNamespace)) {
+            if (! str_starts_with($modelClass, $moduleNamespace)) {
                 return null;
             }
 
             $module = explode('\\', $modelClass)[1];
 
-            /** @var class-string<\Illuminate\Database\Eloquent\Factories\Factory> $factoryClass */
+            /** @var class-string<Factory> $factoryClass */
             $factoryClass = ModuleHelper::namespace($module, BuilderKeysEnum::factory, FileNameFactory::make($module, BuilderKeysEnum::factory));
 
             return $factoryClass;
@@ -112,20 +117,23 @@ class LoaderServiceProvider extends ServiceProvider
 
         Factory::guessFactoryNamesUsing($factoryCallback);
 
-        /** @var callable(\Illuminate\Database\Eloquent\Factories\Factory): class-string<\Illuminate\Database\Eloquent\Model> $modelCallback */
+        /**
+         * @param  Factory  $factory
+         * @return string|null
+         */
         $modelCallback = function (Factory $factory) {
             $factoryClass = get_class($factory);
             $moduleNamespace = Config::get('module.namespace');
 
-            if (!str_starts_with($factoryClass, $moduleNamespace)) {
+            if (! str_starts_with($factoryClass, $moduleNamespace)) {
                 return null; // Same question regarding the non-module case
             }
 
             $module = explode('\\', $factoryClass)[1];
             $basename = Str::replaceLast('Factory', '', class_basename($factoryClass));
 
-            /** @var class-string<\Illuminate\Database\Eloquent\Model> $modelClass */
-            $modelClass = ModuleHelper::namespace($module, BuilderKeysEnum::model) . '\\' . $basename;
+            /** @var class-string<Model> $modelClass */
+            $modelClass = ModuleHelper::namespace($module, BuilderKeysEnum::model).'\\'.$basename;
 
             return $modelClass;
         };
@@ -152,7 +160,7 @@ class LoaderServiceProvider extends ServiceProvider
 
             $configFile = "{$configPath}.php";
 
-            if (!File::exists($configFile)) {
+            if (! File::exists($configFile)) {
                 continue;
             }
 
@@ -176,7 +184,7 @@ class LoaderServiceProvider extends ServiceProvider
 
             $configFile = "{$configPath}.php";
 
-            if (!File::exists($configFile)) {
+            if (! File::exists($configFile)) {
                 continue;
             }
 

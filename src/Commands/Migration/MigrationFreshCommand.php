@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 class MigrationFreshCommand extends MigrationActionCommand
 {
     protected $name = 'module:migrate-fresh';
+
     protected $description = 'Fresh Migration from module';
 
     public function handleCommand(): int
@@ -45,7 +46,7 @@ class MigrationFreshCommand extends MigrationActionCommand
             '--database' => $database,
             '--step' => $this->option('step'),
             '--force' => $this->option('force'),
-            '--seed' => $this->option('seed') || !empty($this->option('seeder')),
+            '--seed' => $this->option('seed') || ! empty($this->option('seeder')),
             '--seeder' => $this->option('seeder'),
         ]);
     }

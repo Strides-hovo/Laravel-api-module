@@ -20,7 +20,9 @@ class MakeWithRequestWithActionWithTransformControllerTest extends TestCase
 
     /**
      * @throws ReflectionException
+     *
      * @runInSeparateProcess
+     *
      * @preserveGlobalState disabled
      */
     public function test_create_by_module_name()
@@ -49,7 +51,9 @@ class MakeWithRequestWithActionWithTransformControllerTest extends TestCase
 
     /**
      * @throws ReflectionException
+     *
      * @runInSeparateProcess
+     *
      * @preserveGlobalState disabled
      */
     public function test_create_by_file_name_in_blog_module()
@@ -104,7 +108,7 @@ class MakeWithRequestWithActionWithTransformControllerTest extends TestCase
         ]);
 
         $this->assertClassExists(BuilderKeysEnum::action, $moduleName, $actionUpdateName, [
-            'handle' => ['string|int','array'],
+            'handle' => ['string|int', 'array'],
         ]);
 
         $this->assertClassExists(BuilderKeysEnum::action, $moduleName, $actionDestroyName, [

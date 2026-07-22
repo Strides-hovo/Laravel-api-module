@@ -58,7 +58,7 @@ class ServiceBuilder extends BaseBuilder
 
         foreach (self::METHOD_RESOLVERS as $method => $resolverClass) {
             $stub = (string) file_get_contents($this->getMethodStubPath($method));
-            $resolver = new $resolverClass();
+            $resolver = new $resolverClass;
             $fragments[] = $resolver->resolve($stub, $this->moduleName);
         }
 
@@ -69,7 +69,7 @@ class ServiceBuilder extends BaseBuilder
     {
         return Config::get(
             "module-stub.service.{$method}",
-            dirname(__DIR__) . "/stubs/mini/service/{$method}.stub"
+            dirname(__DIR__)."/stubs/mini/service/{$method}.stub"
         );
     }
 }

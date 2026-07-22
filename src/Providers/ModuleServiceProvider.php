@@ -52,7 +52,7 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton('strides-module-manager', fn () =>  new ModuleManager()); // Facade
+        $this->app->singleton('strides-module-manager', fn () => new ModuleManager); // Facade
         $this->app->register(LoaderServiceProvider::class);
     }
 
@@ -66,7 +66,7 @@ class ModuleServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__ . '/../Config/config.php' => config_path('module.php'),
+            __DIR__.'/../Config/config.php' => config_path('module.php'),
         ]);
 
     }

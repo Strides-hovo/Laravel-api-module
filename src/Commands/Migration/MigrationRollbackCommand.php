@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 class MigrationRollbackCommand extends MigrationActionCommand
 {
     protected $name = 'module:migrate-rollback';
+
     protected $description = 'Rollback Migration from Module';
 
     public function handleCommand(): int

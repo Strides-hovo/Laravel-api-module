@@ -13,6 +13,7 @@ use Strides\Module\ModuleHelper;
 class ModuleOptimizeCommand extends Command
 {
     protected $name = 'module:optimize';
+
     protected $description = 'Remove modules from modules_name.json whose directories no longer exist';
 
     /**
@@ -36,7 +37,7 @@ class ModuleOptimizeCommand extends Command
         $staleInJson = array_diff_key($registeredModules, $diskModulesIndex);
         $missingInJson = array_diff_key($diskModulesIndex, $registeredModules);
 
-        if (empty($staleInJson) && empty($missingInJson) && !$this->hasInvalidModules()) {
+        if (empty($staleInJson) && empty($missingInJson) && ! $this->hasInvalidModules()) {
             $this->info('Everything is synchronized and valid. Nothing to optimize.');
 
             return self::SUCCESS;
@@ -55,7 +56,7 @@ class ModuleOptimizeCommand extends Command
     private function hasInvalidModules(): bool
     {
         foreach ($this->modulesOnDisk as $name) {
-            if (!File::exists($this->serviceProviderPath($name))) {
+            if (! File::exists($this->serviceProviderPath($name))) {
                 return true;
             }
         }
@@ -66,7 +67,7 @@ class ModuleOptimizeCommand extends Command
     /**
      * Удаляет из JSON записи, для которых нет физической директории на диске.
      *
-     * @param array<string, mixed> $staleInJson
+     * @param  array<string, mixed>  $staleInJson
      */
     private function removeStaleEntries(array $staleInJson): void
     {
@@ -86,13 +87,14 @@ class ModuleOptimizeCommand extends Command
      *  - если он невалиден (нет Service Provider) — предлагает удалить его;
      *  - если он валиден, но не зарегистрирован в JSON — предлагает активировать.
      *
-     * @param array<string, mixed> $missingInJson
+     * @param  array<string, mixed>  $missingInJson
      */
     private function reconcileDiskModules(array $missingInJson): void
     {
         foreach ($this->modulesOnDisk as $name) {
-            if (!File::exists($this->serviceProviderPath($name))) {
+            if (! File::exists($this->serviceProviderPath($name))) {
                 $this->handleInvalidModule($name);
+
                 continue;
             }
 
@@ -108,7 +110,7 @@ class ModuleOptimizeCommand extends Command
             "Модуль '{$name}' невалиден (отсутствует Service Provider). Хотите удалить его запись и папку?"
         );
 
-        if (!$confirmed) {
+        if (! $confirmed) {
             return;
         }
 

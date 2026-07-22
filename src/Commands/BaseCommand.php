@@ -20,7 +20,9 @@ use Strides\Module\ModuleHelper;
 abstract class BaseCommand extends Command
 {
     protected BuilderKeysEnum $generatorKey;
+
     protected CommandDto $data;
+
     protected ModuleDirector $director;
 
     /**
@@ -55,22 +57,22 @@ abstract class BaseCommand extends Command
      */
     protected function showConfirm(string $type): bool
     {
-        if (!$this->checkExistence($this->data, $this->generatorKey)) {
+        if (! $this->checkExistence($this->data, $this->generatorKey)) {
             return true;
         }
 
         // In non-interactive mode (testing), skip confirmation
-        if (!$this->input->isInteractive()) {
+        if (! $this->input->isInteractive()) {
             return false;
         }
 
-        if (!$this->confirm("This $type already exists. Do you want to overwrite $type in " . ($this->data->moduleName ?? '') . '?')) {
-            $this->line("<info>Creation of $type in " . ($this->data->moduleName ?? '') . ' canceled.</info>');
+        if (! $this->confirm("This $type already exists. Do you want to overwrite $type in ".($this->data->moduleName ?? '').'?')) {
+            $this->line("<info>Creation of $type in ".($this->data->moduleName ?? '').' canceled.</info>');
 
             return false;
         }
 
-        $this->comment("Creating $type " . ($this->data->moduleName ?? ''));
+        $this->comment("Creating $type ".($this->data->moduleName ?? ''));
 
         return true;
     }
@@ -85,7 +87,7 @@ abstract class BaseCommand extends Command
         if (empty($this->data->fileName)) {
             $this->data->fileName = FileNameFactory::make($moduleName, $this->generatorKey);
         } elseif ($this->generatorKey === BuilderKeysEnum::migration) {
-            $this->data->fileName = date('Y_m_d_His') . '_' . $this->data->fileName;
+            $this->data->fileName = date('Y_m_d_His').'_'.$this->data->fileName;
         }
     }
 
@@ -103,9 +105,9 @@ abstract class BaseCommand extends Command
         $this->data = new CommandDto(
             moduleName: $moduleName,
             fileName: $fileName,
-            options: array_filter($this->options(), fn ($option) => (bool)$option)
+            options: array_filter($this->options(), fn ($option) => (bool) $option)
         );
-        $this->director = new ModuleDirector(new FileGenerator());
+        $this->director = new ModuleDirector(new FileGenerator);
     }
 
     /**
@@ -114,14 +116,14 @@ abstract class BaseCommand extends Command
     private function checkExistence(CommandDto $data, BuilderKeysEnum $generatorKey): bool
     {
         $modulePath = ModuleHelper::module($data->moduleName ?? '');
-        if (!is_dir($modulePath)) {
+        if (! is_dir($modulePath)) {
             return false;
         }
 
         $filePath = ModuleHelper::normalizePath(
-            $modulePath . DIRECTORY_SEPARATOR .
-            ModuleHelper::generator($generatorKey) . DIRECTORY_SEPARATOR .
-            $data->fileName . '.php'
+            $modulePath.DIRECTORY_SEPARATOR.
+            ModuleHelper::generator($generatorKey).DIRECTORY_SEPARATOR.
+            $data->fileName.'.php'
         );
 
         return File::exists($filePath);

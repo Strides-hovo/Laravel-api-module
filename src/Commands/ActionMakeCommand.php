@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class ActionMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-action';
+
     protected $description = 'Created Action';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::action;
 
     /**
@@ -20,7 +22,7 @@ class ActionMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Action')) {
+        if (! $this->showConfirm('Action')) {
             $this->warn('Action creation cancelled');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class ActionMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::ACTION, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

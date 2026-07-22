@@ -15,7 +15,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class ModuleMakeCommand extends Command
 {
     protected $name = 'module:make-module';
+
     protected $description = 'Create Module';
+
     private string $moduleName;
 
     /**
@@ -26,21 +28,21 @@ class ModuleMakeCommand extends Command
         $argument = $this->argument('moduleName');
         $moduleNameParam = is_string($argument) || is_null($argument) ? $argument : null;
 
-        if (!$this->setModuleName($moduleNameParam)) {
+        if (! $this->setModuleName($moduleNameParam)) {
             $this->error('The module name is required!');
 
             return self::FAILURE;
         }
 
         if (Module::exists($this->moduleName)) {
-            if (!$this->confirm('This module already exists, do you want to overwrite the entire folder ' . ($this->moduleName) . '?')) {
-                $this->line('<info>Creation of module ' . ($this->moduleName ?? '') . ' canceled.</info>');
+            if (! $this->confirm('This module already exists, do you want to overwrite the entire folder '.($this->moduleName).'?')) {
+                $this->line('<info>Creation of module '.($this->moduleName ?? '').' canceled.</info>');
 
                 return self::FAILURE;
             }
         }
 
-        $this->comment('Creating module ' . ($this->moduleName));
+        $this->comment('Creating module '.($this->moduleName));
         $statuses = ModuleGenerator::create($this->moduleName);
 
         foreach ($statuses as $relation => $file) {

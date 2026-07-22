@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class ModuleDisableCommand extends Command
 {
     protected $name = 'module:disable';
+
     protected $description = 'Disable a module without deleting its files';
 
     public function handle(): int
@@ -21,7 +22,7 @@ class ModuleDisableCommand extends Command
 
         Module::disable($moduleName);
         $this->info("Module [{$moduleName}] disabled successfully.");
-        $this->line('<comment>Note:</comment> Module files are kept. Use <info>module:enable ' . $moduleName . '</info> to re-enable.');
+        $this->line('<comment>Note:</comment> Module files are kept. Use <info>module:enable '.$moduleName.'</info> to re-enable.');
 
         return self::SUCCESS;
     }

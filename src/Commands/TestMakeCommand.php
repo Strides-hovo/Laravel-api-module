@@ -13,11 +13,14 @@ use Symfony\Component\Console\Input\InputOption;
 class TestMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-test';
-    protected $description = 'Create Test';
-    protected BuilderKeysEnum $generatorKey;
-    protected BuilderClassNameEnum $buildEnum;
-    protected string $type;
 
+    protected $description = 'Create Test';
+
+    protected BuilderKeysEnum $generatorKey;
+
+    protected BuilderClassNameEnum $buildEnum;
+
+    protected string $type;
 
     /**
      * @throws BindingResolutionException
@@ -27,26 +30,26 @@ class TestMakeCommand extends BaseCommand
         $this->setEnums();
         parent::handle();
 
-        if (!$this->showConfirm('Test')) {
+        if (! $this->showConfirm('Test')) {
             $this->warn('Created Test canceled.');
+
             return self::FAILURE;
         }
 
-
-        if (!in_array($this->type, ['unit', 'feature'])) {
+        if (! in_array($this->type, ['unit', 'feature'])) {
             $this->error("Invalid test type! Use 'unit' or 'feature'.");
+
             return self::FAILURE;
         }
 
         $statuses = $this->director->generateComponent($this->buildEnum, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;
     }
-
 
     protected function getArguments(): array
     {
@@ -62,7 +65,6 @@ class TestMakeCommand extends BaseCommand
             ['type', 't', InputOption::VALUE_OPTIONAL, 'The test type (unit or feature)', 'unit'],
         ];
     }
-
 
     private function setEnums()
     {

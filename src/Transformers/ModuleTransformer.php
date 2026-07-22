@@ -31,7 +31,6 @@ abstract class ModuleTransformer extends JsonResource
      * Абстрактный метод, который должен реализовать каждый конкретный трансформер.
      * Переименован во избежание конфликта имен с методами JsonResource.
      *
-     * @param mixed $model
      * @return array<string, mixed>
      */
     abstract public function transformModel(mixed $model): array;
@@ -50,7 +49,7 @@ abstract class ModuleTransformer extends JsonResource
      * Метод для обработки одиночной модели.
      * Полностью совместим с сигнатурой родительского JsonResource::make(...$parameters)
      *
-     * @param mixed ...$parameters
+     * @param  mixed  ...$parameters
      * @return static
      */
     public static function make(...$parameters)
@@ -76,7 +75,7 @@ abstract class ModuleTransformer extends JsonResource
     /**
      * Переопределение базового метода Laravel для трансформации данных.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  Request  $request
      * @return array<string, mixed>
      */
     public function toArray($request): array
@@ -94,7 +93,7 @@ abstract class ModuleTransformer extends JsonResource
             if (in_array($include, $this->availableIncludes) && $this->isRelationLoaded($include)) {
 
                 $relatedData = $this->resource->{$include};
-                $methodName = 'include' . Str::studly($include);
+                $methodName = 'include'.Str::studly($include);
 
                 if (method_exists($this, $methodName)) {
                     $data[$include] = $this->{$methodName}($relatedData);
@@ -125,14 +124,13 @@ abstract class ModuleTransformer extends JsonResource
     /**
      * Парсинг связей из GET-запроса (?include=comments,author).
      *
-     * @param Request $request
      * @return array<int, string>
      */
     private function parseIncludes(Request $request): array
     {
         $includeParam = $request->query('include', '');
 
-        if (empty($includeParam) || !is_string($includeParam)) {
+        if (empty($includeParam) || ! is_string($includeParam)) {
             return [];
         }
 
@@ -144,7 +142,7 @@ abstract class ModuleTransformer extends JsonResource
      */
     private function isRelationLoaded(string $relation): bool
     {
-        if (!is_object($this->resource)) {
+        if (! is_object($this->resource)) {
             return false;
         }
 

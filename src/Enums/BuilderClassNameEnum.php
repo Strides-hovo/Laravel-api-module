@@ -13,6 +13,7 @@ use Strides\Module\Builders\DtoBuilder;
 use Strides\Module\Builders\EventBuilder;
 use Strides\Module\Builders\FactoryBuilder;
 use Strides\Module\Builders\FeatureTestBuilder;
+use Strides\Module\Builders\HttpBuilder;
 use Strides\Module\Builders\JobBuilder;
 use Strides\Module\Builders\ListenerBuilder;
 use Strides\Module\Builders\MailBuilder;
@@ -70,4 +71,5 @@ enum BuilderClassNameEnum: string
     case CAST = CastBuilder::class;
     case ROUTE = RouteBuilder::class;
     case CONFIG = ConfigBuilder::class;
+    case HTTP = HttpBuilder::class;
 }

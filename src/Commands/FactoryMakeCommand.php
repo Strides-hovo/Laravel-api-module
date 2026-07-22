@@ -13,7 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 class FactoryMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-factory';
+
     protected $description = 'Create Factory';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::factory;
 
     /**
@@ -21,7 +23,7 @@ class FactoryMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Factory')) {
+        if (! $this->showConfirm('Factory')) {
             $this->warn('Factory');
 
             return self::FAILURE;
@@ -30,7 +32,7 @@ class FactoryMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::FACTORY, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

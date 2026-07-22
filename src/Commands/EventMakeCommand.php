@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class EventMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-event';
+
     protected $description = 'Create Event';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::event;
 
     /**
@@ -20,7 +22,7 @@ class EventMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Event')) {
+        if (! $this->showConfirm('Event')) {
             $this->warn('Event creation cancelled');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class EventMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::EVENT, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

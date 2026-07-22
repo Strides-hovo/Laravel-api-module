@@ -13,7 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 class ControllerMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-controller';
+
     protected $description = 'Created Controller';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::controller;
 
     /**
@@ -21,7 +23,7 @@ class ControllerMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Controller')) {
+        if (! $this->showConfirm('Controller')) {
             $this->warn('Controller creation cancelled.');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class ControllerMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::CONTROLLER, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

@@ -10,6 +10,5 @@ class BuilderResultDto
         public string $dirName,
         public string $fileName,
         public string $content,
-    ) {
-    }
+    ) {}
 }

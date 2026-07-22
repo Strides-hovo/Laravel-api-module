@@ -17,9 +17,7 @@ class ModuleException extends Exception
     /**
      * Initialize the module exception.
      *
-     * @param string $message
-     * @param int $code
-     * @param array<string|int, mixed> $errors
+     * @param  array<string|int, mixed>  $errors
      */
     public function __construct(string $message = '', int $code = 400, array $errors = [])
     {

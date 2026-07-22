@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class SeederMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-seeder';
+
     protected $description = 'Create Seeder';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::seeder;
 
     /**
@@ -20,7 +22,7 @@ class SeederMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Seeder')) {
+        if (! $this->showConfirm('Seeder')) {
             $this->warn('Seeder creation cancelled.');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class SeederMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::SEEDER, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

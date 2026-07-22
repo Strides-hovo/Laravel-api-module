@@ -18,8 +18,8 @@ class ListenerBuilder extends BaseBuilder
     protected function getReplacements(): array
     {
         $event = 'object';
-        if (!empty($this->options) && isset($this->options['event'])) {
-            $event = '\\' . ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::event, $this->options['event']);
+        if (! empty($this->options) && isset($this->options['event'])) {
+            $event = '\\'.ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::event, $this->options['event']);
         }
 
         return array_merge(parent::getReplacements(), [

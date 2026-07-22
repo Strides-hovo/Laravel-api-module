@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 class MigrationRunCommand extends MigrationActionCommand
 {
     protected $name = 'module:migrate';
+
     protected $description = 'Run Migration';
 
     public function handleCommand(): int

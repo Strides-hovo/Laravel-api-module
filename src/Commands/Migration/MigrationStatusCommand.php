@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class MigrationStatusCommand extends MigrationActionCommand
 {
     protected $name = 'module:migrate-status';
+
     protected $description = 'Show Migration status';
 
     public function handleCommand(): int

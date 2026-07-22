@@ -12,13 +12,13 @@ class ResourceBuilder extends BaseBuilder
 {
     protected function getStubPath(): string
     {
-        return Config::get('module-stub.resource.main', dirname(__DIR__) . '/stubs/resource.stub');
+        return Config::get('module-stub.resource.main', dirname(__DIR__).'/stubs/resource.stub');
     }
 
     protected function getReplacements(): array
     {
 
-        $extend = !empty($this->options) && key_exists('collection', $this->options)
+        $extend = ! empty($this->options) && array_key_exists('collection', $this->options)
                 ? '\Illuminate\Http\Resources\Json\ResourceCollection'
                 : '\Illuminate\Http\Resources\Json\JsonResource';
 

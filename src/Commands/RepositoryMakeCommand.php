@@ -13,7 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 class RepositoryMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-repository';
+
     protected $description = 'Created Repository';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::repository;
 
     /**
@@ -21,7 +23,7 @@ class RepositoryMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Repository')) {
+        if (! $this->showConfirm('Repository')) {
             $this->warn('repository creation cancelled.');
 
             return self::FAILURE;
@@ -30,7 +32,7 @@ class RepositoryMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::REPOSITORY, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

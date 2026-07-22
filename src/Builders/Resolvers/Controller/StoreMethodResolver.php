@@ -9,15 +9,16 @@ use Illuminate\Support\Str;
 class StoreMethodResolver extends ControllerMethodsResolver
 {
     protected string $method = 'store';
+
     protected string $body = '// @Todo';
 
     protected function setResource(array $relations): self
     {
-        $hasResource = !empty($relations['resource']);
-        $hasAction = !empty($relations['actions']['store'] ?? null);
-        $hasService = !empty($relations['service']);
+        $hasResource = ! empty($relations['resource']);
+        $hasAction = ! empty($relations['actions']['store'] ?? null);
+        $hasService = ! empty($relations['service']);
 
-        if (!$hasAction && !$hasService) {
+        if (! $hasAction && ! $hasService) {
             return $this;
         }
 
@@ -32,9 +33,9 @@ class StoreMethodResolver extends ControllerMethodsResolver
 
     protected function setTransform(array $relations, string $moduleName): self
     {
-        $hasTransformer = !empty($relations['transformer']);
-        $hasAction = !empty($relations['actions']['store'] ?? null);
-        $hasService = !empty($relations['service']);
+        $hasTransformer = ! empty($relations['transformer']);
+        $hasAction = ! empty($relations['actions']['store'] ?? null);
+        $hasService = ! empty($relations['service']);
 
         if ($hasTransformer && ($hasAction || $hasService)) {
             $transformer = $relations['transformer'];
@@ -49,8 +50,8 @@ class StoreMethodResolver extends ControllerMethodsResolver
 
     protected function setReturnType(array $relations): void
     {
-        $hasResource = !empty($relations['resource']);
-        $hasTransformer = !empty($relations['transformer']);
+        $hasResource = ! empty($relations['resource']);
+        $hasTransformer = ! empty($relations['transformer']);
 
         if ($hasResource) {
             $this->returnType = $relations['resource'];

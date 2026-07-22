@@ -22,14 +22,13 @@ class ModuleDirector
     /**
      * Set up the director with the underlying file writer service.
      */
-    public function __construct(private readonly FileGenerator $fileGenerator)
-    {
-    }
+    public function __construct(private readonly FileGenerator $fileGenerator) {}
 
     /**
      * Generate a primary module component and dynamically build any nested sub-relations.
      *
      * @return array<string>
+     *
      * @throws BindingResolutionException
      */
     public function generateComponent(BuilderClassNameEnum $builderClass, CommandDto $dto): array
@@ -66,6 +65,7 @@ class ModuleDirector
      * down to each generated relation instead of overwriting them.
      *
      * @return array<string>
+     *
      * @throws BindingResolutionException
      */
     private function processRelations(BaseBuilder $builder, CommandDto $dto): array
@@ -83,6 +83,7 @@ class ModuleDirector
                             $statuses = array_merge($statuses, $this->generateRelated('action', $actionClassName, $dto));
                         }
                     }
+
                     continue;
                 }
 
@@ -103,6 +104,7 @@ class ModuleDirector
      * (e.g. a generated Controller's Request/Service/Resource actually gets written to disk).
      *
      * @return array<string>
+     *
      * @throws BindingResolutionException|BuilderException
      */
     private function generateRelated(string $relation, string $className, CommandDto $parentDto): array

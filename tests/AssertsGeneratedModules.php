@@ -13,6 +13,7 @@ trait AssertsGeneratedModules
     /**
      * Этот метод просто инкапсулирует сложную проверку,
      * но никак не связывает тесты между собой.
+     *
      * @throws ReflectionException|ReflectionException
      */
     private function assertClassExists(BuilderKeysEnum $key, string $moduleName, string $fileName, array $methods = [])
@@ -26,7 +27,7 @@ trait AssertsGeneratedModules
         $namespace = ModuleHelper::namespace($moduleName, $key, $fileName);
         $this->assertTrue(class_exists($namespace), "Класс {$namespace} не был найден или невалиден.");
 
-        if (!empty($methods)) {
+        if (! empty($methods)) {
             $reflection = new \ReflectionClass($namespace);
             $this->assertMethodsSignature($reflection, $methods);
         }
@@ -40,6 +41,7 @@ trait AssertsGeneratedModules
      *     'update' => [UpdateCategoryRequest::class, CategoryService::class],
      *     'index' => [] // если аргументы не требуются
      * ]
+     *
      * @throws ReflectionException|ReflectionException
      */
     private function assertMethodsSignature(\ReflectionClass $reflection, array $methods): void
@@ -74,6 +76,7 @@ trait AssertsGeneratedModules
                         $paramType,
                         "Аргумент [\${$param->getName()}] в методе [{$methodName}] не должен иметь жесткого типа (ожидался mixed)."
                     );
+
                     continue;
                 }
 
@@ -84,7 +87,7 @@ trait AssertsGeneratedModules
 
                 $actualType = $paramType instanceof \ReflectionNamedType
                     ? $paramType->getName()
-                    : (string)$paramType;
+                    : (string) $paramType;
 
                 $this->assertEquals(
                     ltrim($expectedType, '\\'),

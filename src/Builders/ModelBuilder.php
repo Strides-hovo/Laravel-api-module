@@ -33,7 +33,7 @@ class ModelBuilder extends BaseBuilder implements HasRelationsInterface
     public function setRelations(array $options): void
     {
         foreach ($options as $key => $value) {
-            if (!$value) {
+            if (! $value) {
                 continue;
             }
 
@@ -50,9 +50,9 @@ class ModelBuilder extends BaseBuilder implements HasRelationsInterface
                 'test' => $this->relations['unit_test'] = $this->getModelRelation(BuilderKeysEnum::unit_test, 'Test'),
                 'a', 'action' => $this->relations['actions'] = [
                     'index' => $this->getControllerRelation(BuilderKeysEnum::action, 'IndexAction', $this->fileName),
-                    'store' => $this->getControllerRelation(BuilderKeysEnum::action, 'StoreAction', $this->fileName ),
-                    'update' => $this->getControllerRelation(BuilderKeysEnum::action, 'UpdateAction',$this->fileName),
-                    'destroy' => $this->getControllerRelation(BuilderKeysEnum::action, 'DestroyAction',$this->fileName),
+                    'store' => $this->getControllerRelation(BuilderKeysEnum::action, 'StoreAction', $this->fileName),
+                    'update' => $this->getControllerRelation(BuilderKeysEnum::action, 'UpdateAction', $this->fileName),
+                    'destroy' => $this->getControllerRelation(BuilderKeysEnum::action, 'DestroyAction', $this->fileName),
                 ],
 
                 'morph-pivot' => $this->morphPivot(),
@@ -62,7 +62,7 @@ class ModelBuilder extends BaseBuilder implements HasRelationsInterface
                 default => null
             };
         }
-        if (isset($options['controller'])){
+        if (isset($options['controller'])) {
             unset($this->relations['actions']);
         }
     }
@@ -79,7 +79,7 @@ class ModelBuilder extends BaseBuilder implements HasRelationsInterface
 
     private function getModelRelation(BuilderKeysEnum $key, string $replacer): string
     {
-        $relationClass = $this->fileName . $replacer;
+        $relationClass = $this->fileName.$replacer;
 
         return FileNameFactory::make($this->moduleName, $key, $relationClass);
     }

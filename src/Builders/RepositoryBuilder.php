@@ -22,7 +22,7 @@ class RepositoryBuilder extends BaseBuilder
     protected function getReplacements(): array
     {
 
-        $model = !empty($this->options) && key_exists('model', $this->options)
+        $model = ! empty($this->options) && array_key_exists('model', $this->options)
                  ? $this->options['model']
                  : $this->moduleName;
 

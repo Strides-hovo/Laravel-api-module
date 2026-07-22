@@ -30,10 +30,10 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
      * Initialize the controller builder and inject the method-specific template resolvers.
      */
     public function __construct(
-        CommandDto                      $dto,
-        protected IndexMethodResolver   $indexMethod,
-        protected StoreMethodResolver   $storeMethod,
-        protected UpdateMethodResolver  $updateMethod,
+        CommandDto $dto,
+        protected IndexMethodResolver $indexMethod,
+        protected StoreMethodResolver $storeMethod,
+        protected UpdateMethodResolver $updateMethod,
         protected DestroyMethodResolver $destroyMethod,
     ) {
         parent::__construct($dto);
@@ -60,12 +60,12 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
     /**
      * Parse array configurations to determine dynamic relation classes to load.
      *
-     * @param array<string, mixed> $options
+     * @param  array<string, mixed>  $options
      */
     public function setRelations(array $options): void
     {
         foreach ($options as $key => $value) {
-            if (!$value) {
+            if (! $value) {
                 continue;
             }
 
@@ -85,11 +85,11 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
                 default => null,
             };
 
-            if (!empty($this->relations['actions'])) {
+            if (! empty($this->relations['actions'])) {
                 unset($this->relations['service']);
             }
 
-            if (!empty($this->relations['transformer'])) {
+            if (! empty($this->relations['transformer'])) {
                 unset($this->relations['resource']);
             }
         }
@@ -101,7 +101,7 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
      */
     protected function getStubPath(): string
     {
-        return (string)Config::get('module-stub.controller.main');
+        return (string) Config::get('module-stub.controller.main');
     }
 
     /**
@@ -143,8 +143,8 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
         $result = [];
 
         foreach ($methods as $name => $resolver) {
-            $stubPath = (string)Config::get("module-stub.controller.{$name}");
-            $stub = is_file($stubPath) ? (string)file_get_contents($stubPath) : '';
+            $stubPath = (string) Config::get("module-stub.controller.{$name}");
+            $stub = is_file($stubPath) ? (string) file_get_contents($stubPath) : '';
             $result[] = $resolver->resolve($stub, $this->moduleName, $this->relations);
         }
 
@@ -170,7 +170,7 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
         foreach ($this->relations as $relation => $className) {
             if ($relation === 'actions' && is_iterable($className)) {
                 foreach ($className as $actionClass) {
-                    $fqcn = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::action, (string)$actionClass);
+                    $fqcn = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::action, (string) $actionClass);
                     $imports[] = "use {$fqcn};";
                 }
             } elseif (isset($keyToEnum[$relation]) && is_string($className)) {

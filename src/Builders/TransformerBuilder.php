@@ -11,7 +11,7 @@ class TransformerBuilder extends BaseBuilder
 {
     protected function getStubPath(): string
     {
-        return Config::get('module-stub.transformer.main', dirname(__DIR__) . '/stubs/transformer.stub');
+        return Config::get('module-stub.transformer.main', dirname(__DIR__).'/stubs/transformer.stub');
     }
 
     protected function getGeneratorKey(): BuilderKeysEnum

@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class TransformerMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-transformer';
+
     protected $description = 'Created Transformer';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::transformer;
 
     /**
@@ -20,7 +22,7 @@ class TransformerMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Transformer')) {
+        if (! $this->showConfirm('Transformer')) {
             $this->warn('Transformer creation cancelled.');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class TransformerMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::TRANSFORMER, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;
@@ -42,5 +44,4 @@ class TransformerMakeCommand extends BaseCommand
             ['fileName', InputArgument::OPTIONAL, 'Create a transformer with this name.'],
         ];
     }
-
 }

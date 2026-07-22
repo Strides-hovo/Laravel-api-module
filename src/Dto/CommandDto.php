@@ -12,22 +12,18 @@ class CommandDto
     /**
      * Initialize the Command DTO.
      *
-     * @param string|null $moduleName
-     * @param string|null $fileName
-     * @param array<string, mixed> $options
+     * @param  array<string, mixed>  $options
      */
     public function __construct(
         public ?string $moduleName,
         public ?string $fileName,
         public array $options = []
-    ) {
-    }
+    ) {}
 
     /**
      * Create a new DTO instance from a raw state array.
      *
-     * @param array<string, mixed> $data
-     * @return self
+     * @param  array<string, mixed>  $data
      */
     public static function fromArray(array $data): self
     {

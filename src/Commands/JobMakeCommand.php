@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class JobMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-job';
+
     protected $description = 'Create Job';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::job;
 
     /**
@@ -20,7 +22,7 @@ class JobMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Job')) {
+        if (! $this->showConfirm('Job')) {
             $this->warn('Job creation cancelled');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class JobMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::JOB, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

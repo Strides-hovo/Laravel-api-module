@@ -11,6 +11,5 @@ final class ModuleDto
         public readonly string $path,
         public readonly string $namespace,
         public readonly bool $enabled,
-    ) {
-    }
+    ) {}
 }

@@ -41,7 +41,7 @@ class PolicyBuilder extends BaseBuilder
         $guard = '';
 
         // @Todo Need to return the default user module
-        if (!isset($this->options['model']) && !isset($this->options['guard'])) {
+        if (! isset($this->options['model']) && ! isset($this->options['guard'])) {
             return '';
         }
 
@@ -62,7 +62,7 @@ class PolicyBuilder extends BaseBuilder
     private function getRelation(string $entity): string
     {
         $model = Str::lower($entity);
-        $namespace = '\\' . ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::model, $entity);
+        $namespace = '\\'.ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::model, $entity);
 
         return "$namespace \$$model";
     }

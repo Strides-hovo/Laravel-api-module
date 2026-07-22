@@ -11,13 +11,11 @@ use Strides\Module\Tests\TestCase;
 
 class MakeEmptyTest extends TestCase
 {
-
-    //use AssertsGeneratedModules;
-
-
+    // use AssertsGeneratedModules;
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState disabled
      * */
     public function test_create_by_module_name()
@@ -35,7 +33,6 @@ class MakeEmptyTest extends TestCase
         $this->assertModelCreated($moduleName, $fileName);
     }
 
-
     public function test_create_by_file_name()
     {
         $moduleName = 'Category';
@@ -45,7 +42,7 @@ class MakeEmptyTest extends TestCase
 
         $this->artisan('module:make-model', [
             'moduleName' => $moduleName,
-            'fileName' => $fileName
+            'fileName' => $fileName,
         ]);
 
         $this->assertModelCreated($moduleName, $fileName);

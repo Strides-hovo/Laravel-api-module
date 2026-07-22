@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class ConfigPublishCommand extends Command
 {
     protected $name = 'module:config-publish';
+
     protected $description = 'Publish config file';
 
     public function handle(): int
@@ -22,7 +23,7 @@ class ConfigPublishCommand extends Command
         $configName = Str::lower($inputString);
         $moduleName = Str::title($inputString);
 
-        if (!Module::exists($moduleName)) {
+        if (! Module::exists($moduleName)) {
             $this->error('This module does not exist in the project.');
 
             return self::FAILURE;

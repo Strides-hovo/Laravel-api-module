@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Strides\Module;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Support\Facades\Log;
 use Strides\Module\Builders\BaseBuilder;
+use Strides\Module\Builders\MailBuilder;
 use Strides\Module\Dto\CommandDto;
 use Strides\Module\Enums\BuilderClassNameEnum;
 use Strides\Module\Enums\BuilderKeysEnum;
@@ -23,7 +25,7 @@ class ModuleGenerator
     public static function create(string $moduleName): array
     {
         $generators = array_map(fn ($setting) => true, ModuleHelper::generators());
-        $fileGenerator = new FileGenerator();
+        $fileGenerator = new FileGenerator;
         $statuses = [];
 
         foreach ($generators as $key => $value) {
@@ -34,10 +36,20 @@ class ModuleGenerator
             $builder = self::resolveBuilder($key, $moduleName, $generators);
 
             if ($builder === null) {
-                \Illuminate\Support\Facades\Log::warning('No builder registered for generator key.', ['key' => $key]);
+                Log::warning('No builder registered for generator key.', ['key' => $key]);
+
                 continue;
             }
+            if ($builder instanceof MailBuilder){
+                $builder->setOptions(['view' => true]);
+                $view = $builder->getRequestView();
 
+                $statuses["mail view"] = $fileGenerator->generate(
+                    dirName: $view->dirName,
+                    fileName: $view->fileName,
+                    content: $view->content
+                );
+            }
             $content = $builder->getContent();
 
             $statuses[$key] = $fileGenerator->generate(
@@ -45,6 +57,8 @@ class ModuleGenerator
                 fileName: $content->fileName,
                 content: $content->content
             );
+
+
 
             if ($key === 'controller' && array_key_exists('action', $generators)) {
                 $statuses['action'] = self::generateActionsFromController($builder, $moduleName, $fileGenerator);
@@ -80,6 +94,7 @@ class ModuleGenerator
 
     /**
      * @return array<string, string>
+     *
      * @throws BindingResolutionException|BuilderException
      */
     private static function generateActionsFromController(BaseBuilder $controllerBuilder, string $moduleName, FileGenerator $fileGenerator): array

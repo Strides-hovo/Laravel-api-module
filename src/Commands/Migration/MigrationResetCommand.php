@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 class MigrationResetCommand extends MigrationActionCommand
 {
     protected $name = 'module:migrate-reset';
+
     protected $description = 'Reset Module Migrations';
 
     public function handleCommand(): int

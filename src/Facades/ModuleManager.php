@@ -36,7 +36,7 @@ class ModuleManager
      */
     public static function allDisabled(): array
     {
-        return array_keys(array_filter(self::readRegistry(), fn (bool $enabled) => !$enabled));
+        return array_keys(array_filter(self::readRegistry(), fn (bool $enabled) => ! $enabled));
     }
 
     /**
@@ -58,7 +58,7 @@ class ModuleManager
 
     public static function isDisabled(string $moduleName): bool
     {
-        return !self::isEnabled($moduleName);
+        return ! self::isEnabled($moduleName);
     }
 
     public static function enable(string $moduleName): bool
@@ -112,7 +112,7 @@ class ModuleManager
      */
     public static function path(string $moduleName): string
     {
-        return rtrim(config('module.paths.modules'), '/') . '/' . $moduleName;
+        return rtrim(config('module.paths.modules'), '/').'/'.$moduleName;
     }
 
     /**
@@ -120,7 +120,7 @@ class ModuleManager
      */
     public static function namespace(string $moduleName): string
     {
-        return config('module.namespace') . '\\' . $moduleName;
+        return config('module.namespace').'\\'.$moduleName;
     }
 
     /**
@@ -137,7 +137,7 @@ class ModuleManager
      */
     public static function get(string $moduleName): ?ModuleDto
     {
-        if (!self::exists($moduleName)) {
+        if (! self::exists($moduleName)) {
             return null;
         }
 
@@ -178,7 +178,7 @@ class ModuleManager
     {
         $path = self::registryPath();
 
-        if (!File::exists($path)) {
+        if (! File::exists($path)) {
             return [];
         }
 
@@ -188,13 +188,13 @@ class ModuleManager
     /**
      * Overwrites the registry file completely.
      *
-     * @param array<string, bool> $data
+     * @param  array<string, bool>  $data
      */
     private static function writeRegistry(array $data): bool
     {
-        return (bool)File::put(
+        return (bool) File::put(
             self::registryPath(),
-            (string)json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+            (string) json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
         );
     }
 }

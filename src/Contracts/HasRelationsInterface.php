@@ -12,7 +12,7 @@ interface HasRelationsInterface
     /**
      * Parse and assign nested components or structures using parsed command options.
      *
-     * @param array<string, mixed> $options
+     * @param  array<string, mixed>  $options
      */
     public function setRelations(array $options): void;
 

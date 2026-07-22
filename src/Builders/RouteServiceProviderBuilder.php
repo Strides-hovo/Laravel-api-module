@@ -21,7 +21,7 @@ class RouteServiceProviderBuilder extends BaseBuilder
     protected function getReplacements(): array
     {
         return array_merge(parent::getReplacements(), [
-            '{{ route_file }}' => ModuleHelper::normalizePath(Config::get('module.namespace') . DIRECTORY_SEPARATOR . "{$this->moduleName}/Routes/api.php"),
+            '{{ route_file }}' => ModuleHelper::normalizePath(Config::get('module.namespace').DIRECTORY_SEPARATOR."{$this->moduleName}/Routes/api.php"),
         ]);
     }
 }

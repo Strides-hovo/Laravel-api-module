@@ -19,8 +19,7 @@ class DestroyMethodResolver extends ControllerMethodsResolver
     /**
      * Skip request parameters configuration since 'destroy' only expects the model identifier.
      *
-     * @param array<string, mixed> $relations
-     * @return static
+     * @param  array<string, mixed>  $relations
      */
     protected function setRequest(array $relations): static
     {
@@ -30,15 +29,14 @@ class DestroyMethodResolver extends ControllerMethodsResolver
     /**
      * Compile destruction execution body routing logic and responses.
      *
-     * @param array<string, mixed> $relations
-     * @return self
+     * @param  array<string, mixed>  $relations
      */
     protected function setResource(array $relations): self
     {
-        $hasAction = !empty($relations['actions']['destroy'] ?? null);
-        $hasService = !empty($relations['service']);
+        $hasAction = ! empty($relations['actions']['destroy'] ?? null);
+        $hasService = ! empty($relations['service']);
 
-        if (!$hasAction && !$hasService) {
+        if (! $hasAction && ! $hasService) {
             $this->body = '// @Todo';
 
             return $this;
@@ -56,9 +54,7 @@ class DestroyMethodResolver extends ControllerMethodsResolver
     /**
      * Skip custom transformer registration as destruction yields a structured empty JSON response.
      *
-     * @param array<string, mixed> $relations
-     * @param string $moduleName
-     * @return self
+     * @param  array<string, mixed>  $relations
      */
     protected function setTransform(array $relations, string $moduleName): self
     {
@@ -68,8 +64,7 @@ class DestroyMethodResolver extends ControllerMethodsResolver
     /**
      * Define the target return type signature.
      *
-     * @param array<string, mixed> $relations
-     * @return void
+     * @param  array<string, mixed>  $relations
      */
     protected function setReturnType(array $relations): void
     {

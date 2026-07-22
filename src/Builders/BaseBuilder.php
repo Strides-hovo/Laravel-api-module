@@ -15,6 +15,7 @@ use Strides\Module\ModuleHelper;
 abstract class BaseBuilder
 {
     protected string $moduleName;
+
     public string $fileName;
 
     /** @var array<string, mixed> */
@@ -38,6 +39,12 @@ abstract class BaseBuilder
 
     abstract protected function getStubPath(): string;
 
+    public function setOptions(array $options): BaseBuilder
+    {
+        $this->options = $options;
+        return $this;
+    }
+
     protected function getControllerRelation(BuilderKeysEnum $key, string $replacer, string $entity = 'Controller'): string
     {
         $relationClass = Str::replaceLast($entity, $replacer, $this->fileName);
@@ -47,14 +54,15 @@ abstract class BaseBuilder
 
     public function getContent(): BuilderResultDto
     {
-        $stub = (string)file_get_contents($this->getStubPath());
+        $stub = (string) file_get_contents($this->getStubPath());
         $content = strtr($stub, $this->getReplacements());
 
         $dir = ModuleHelper::normalizePath(
-            ModuleHelper::module($this->moduleName) . DIRECTORY_SEPARATOR . ModuleHelper::generator($this->getGeneratorKey())
+            ModuleHelper::module($this->moduleName).DIRECTORY_SEPARATOR.ModuleHelper::generator($this->getGeneratorKey())
         );
+        $fileName = $this->fileName . ($this->getGeneratorKey() === BuilderKeysEnum::http ? ".http" : ".php");
 
-        return new BuilderResultDto($dir, $dir . DIRECTORY_SEPARATOR . $this->fileName . '.php', $content);
+        return new BuilderResultDto($dir, $dir.DIRECTORY_SEPARATOR.$fileName, $content);
     }
 
     /**

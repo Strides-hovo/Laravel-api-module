@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'paths' =>  [
+    'paths' => [
         'generator' => [
             'route' => ['path' => 'Routes', 'generate' => true],
             'config' => ['path' => 'Config', 'generate' => true],

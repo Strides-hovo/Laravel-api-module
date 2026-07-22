@@ -11,7 +11,7 @@ class RequestBuilder extends BaseBuilder
 {
     protected function getStubPath(): string
     {
-        return Config::get('module-stub.request.main', dirname(__DIR__) . '/stubs/request.stub');
+        return Config::get('module-stub.request.main', dirname(__DIR__).'/stubs/request.stub');
     }
 
     protected function getGeneratorKey(): BuilderKeysEnum

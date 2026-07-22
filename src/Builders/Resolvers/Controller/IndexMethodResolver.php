@@ -16,16 +16,15 @@ class IndexMethodResolver extends ControllerMethodsResolver
     /**
      * Map database records collections using default API resources.
      *
-     * @param array<string, mixed> $relations
-     * @return self
+     * @param  array<string, mixed>  $relations
      */
     protected function setResource(array $relations): self
     {
-        $hasResource = !empty($relations['resource']);
-        $hasAction = !empty($relations['actions']['index'] ?? null);
-        $hasService = !empty($relations['service']);
+        $hasResource = ! empty($relations['resource']);
+        $hasAction = ! empty($relations['actions']['index'] ?? null);
+        $hasService = ! empty($relations['service']);
 
-        if (!$hasAction && !$hasService) {
+        if (! $hasAction && ! $hasService) {
             return $this;
         }
 
@@ -41,15 +40,13 @@ class IndexMethodResolver extends ControllerMethodsResolver
     /**
      * Compile response formatting using customized collection transformers.
      *
-     * @param array<string, mixed> $relations
-     * @param string $moduleName
-     * @return self
+     * @param  array<string, mixed>  $relations
      */
     protected function setTransform(array $relations, string $moduleName): self
     {
-        $hasTransformer = !empty($relations['transformer']);
-        $hasAction = !empty($relations['actions']['index'] ?? null);
-        $hasService = !empty($relations['service']);
+        $hasTransformer = ! empty($relations['transformer']);
+        $hasAction = ! empty($relations['actions']['index'] ?? null);
+        $hasService = ! empty($relations['service']);
 
         if ($hasTransformer && ($hasAction || $hasService)) {
             $transformer = $relations['transformer'];
@@ -66,13 +63,12 @@ class IndexMethodResolver extends ControllerMethodsResolver
     /**
      * Define target collection return types (Resources vs Transformers).
      *
-     * @param array<string, mixed> $relations
-     * @return void
+     * @param  array<string, mixed>  $relations
      */
     protected function setReturnType(array $relations): void
     {
-        $hasResource = !empty($relations['resource']);
-        $hasTransformer = !empty($relations['transformer']);
+        $hasResource = ! empty($relations['resource']);
+        $hasTransformer = ! empty($relations['transformer']);
 
         if ($hasResource) {
             $this->returnType = '\Illuminate\Http\Resources\Json\AnonymousResourceCollection';

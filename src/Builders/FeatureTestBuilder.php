@@ -16,5 +16,4 @@ class FeatureTestBuilder extends BaseBuilder
     {
         return Config::get('module-stub.test.feature');
     }
-
 }

@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 class MigrationRefreshCommand extends MigrationActionCommand
 {
     protected $name = 'module:migrate-refresh';
+
     protected $description = 'Refresh Migration from  module';
 
     public function handleCommand(): int

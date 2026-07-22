@@ -13,7 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 class ListenerMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-listener';
+
     protected $description = 'Create Listener';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::listener;
 
     /**
@@ -21,7 +23,7 @@ class ListenerMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Listener')) {
+        if (! $this->showConfirm('Listener')) {
             $this->warn('Listener creation cancelled');
 
             return self::FAILURE;
@@ -30,7 +32,7 @@ class ListenerMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::LISTENER, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

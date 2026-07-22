@@ -13,7 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 class ResourceMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-resource';
+
     protected $description = 'Created Resource';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::resource;
 
     /**
@@ -21,7 +23,7 @@ class ResourceMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Resource')) {
+        if (! $this->showConfirm('Resource')) {
             $this->warn('resource creation cancelled.');
 
             return self::FAILURE;
@@ -30,7 +32,7 @@ class ResourceMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::RESOURCE, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;
@@ -47,7 +49,7 @@ class ResourceMakeCommand extends BaseCommand
     protected function getOptions(): array
     {
         return [
-            ['collection', 'c', InputOption::VALUE_NONE, 'Create collection' ],
+            ['collection', 'c', InputOption::VALUE_NONE, 'Create collection'],
         ];
     }
 }

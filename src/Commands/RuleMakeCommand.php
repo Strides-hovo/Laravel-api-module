@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class RuleMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-rule';
+
     protected $description = 'Create Rule';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::rule;
 
     /**
@@ -20,7 +22,7 @@ class RuleMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Rule')) {
+        if (! $this->showConfirm('Rule')) {
             $this->warn('rule creation cancelled.');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class RuleMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::RULE, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

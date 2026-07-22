@@ -20,7 +20,9 @@ class MakeWithRequestWithServiceControllerTest extends TestCase
 
     /**
      * @throws ReflectionException
+     *
      * @runInSeparateProcess
+     *
      * @preserveGlobalState disabled
      */
     public function test_create_by_module_name()
@@ -46,7 +48,9 @@ class MakeWithRequestWithServiceControllerTest extends TestCase
 
     /**
      * @throws ReflectionException
+     *
      * @runInSeparateProcess
+     *
      * @preserveGlobalState disabled
      */
     public function test_create_by_file_name_in_blog_module()
@@ -87,5 +91,4 @@ class MakeWithRequestWithServiceControllerTest extends TestCase
             'destroy' => ['string|int'],
         ]);
     }
-
 }

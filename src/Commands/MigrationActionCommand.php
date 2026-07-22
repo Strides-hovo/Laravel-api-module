@@ -14,7 +14,9 @@ use Strides\Module\ModuleHelper;
 abstract class MigrationActionCommand extends Command
 {
     protected string $moduleName;
+
     protected string $relativePath;
+
     protected string $seedClass;
 
     abstract public function handleCommand(): int;
@@ -24,13 +26,13 @@ abstract class MigrationActionCommand extends Command
         $argument = $this->argument('moduleName');
         $moduleNameParam = is_string($argument) || is_null($argument) ? $argument : null;
 
-        if (!$this->setModuleName($moduleNameParam)) {
+        if (! $this->setModuleName($moduleNameParam)) {
             $this->error('The module name is required!');
 
             return self::FAILURE;
         }
 
-        if (!Module::exists($this->moduleName)) {
+        if (! Module::exists($this->moduleName)) {
             $this->error('This module does not exist in the project.');
 
             return self::FAILURE;
@@ -49,10 +51,10 @@ abstract class MigrationActionCommand extends Command
         if ($this->hasArgument('fileName')) {
             $fileName = $this->argument('fileName');
             if (is_string($fileName) && $fileName !== '') {
-                if (!str_ends_with($fileName, '.php')) {
+                if (! str_ends_with($fileName, '.php')) {
                     $fileName .= '.php';
                 }
-                $relativePath = $relativePath . DIRECTORY_SEPARATOR . $fileName;
+                $relativePath = $relativePath.DIRECTORY_SEPARATOR.$fileName;
             }
         }
         $this->relativePath = $relativePath;

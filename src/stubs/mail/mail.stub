@@ -20,5 +20,5 @@ class {{ class }} extends Mailable
     public function __construct()
     {}
 
-    {{ view }}
+    {{ content }}
 }

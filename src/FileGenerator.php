@@ -16,12 +16,12 @@ class FileGenerator
         self::mkFile($fileName, $content);
         PintFormatter::format([$fileName]);
 
-        return  $dirName . DIRECTORY_SEPARATOR . basename($fileName);
+        return $dirName.DIRECTORY_SEPARATOR.basename($fileName);
     }
 
     private static function mkDir(string $directory): void
     {
-        if (!File::isDirectory($directory)) {
+        if (! File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
     }

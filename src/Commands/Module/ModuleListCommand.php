@@ -11,6 +11,7 @@ use Strides\Module\ModuleHelper;
 class ModuleListCommand extends Command
 {
     protected $name = 'module:list';
+
     protected $description = 'List Modules';
 
     public function handle(): int
@@ -47,7 +48,7 @@ class ModuleListCommand extends Command
         $missing = count(array_filter($rows, fn ($r) => str_contains($r[2], 'Missing')));
 
         $this->newLine();
-        $this->line("Total: <info>{$total}</info>  Enabled: <info>{$enabled}</info>  Disabled: <comment>" . ($total - $enabled) . '</comment>' . ($missing ? "  <error>Missing: {$missing}</error>" : ''));
+        $this->line("Total: <info>{$total}</info>  Enabled: <info>{$enabled}</info>  Disabled: <comment>".($total - $enabled).'</comment>'.($missing ? "  <error>Missing: {$missing}</error>" : ''));
 
         if ($missing > 0) {
             $this->newLine();

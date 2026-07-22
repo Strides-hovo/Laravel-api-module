@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class ModuleDeleteCommand extends Command
 {
     protected $name = 'module:delete';
+
     protected $description = 'Delete a module without deleting its files';
 
     public function handle(): int
@@ -21,7 +22,7 @@ class ModuleDeleteCommand extends Command
         $argument = $this->argument('moduleName');
         $moduleName = is_string($argument) ? Str::ucfirst($argument) : '';
 
-        if (!Module::exists($moduleName)) {
+        if (! Module::exists($moduleName)) {
             $this->error('This module does not exist in the project.');
 
             return self::FAILURE;
@@ -37,7 +38,7 @@ class ModuleDeleteCommand extends Command
 
             Module::delete($moduleName);
             $this->info("Module [{$moduleName}] deleted successfully.");
-            $this->line('<comment>Note:</comment> Module files are kept. Use <info>module:make ' . $moduleName . '</info> to re-created.');
+            $this->line('<comment>Note:</comment> Module files are kept. Use <info>module:make '.$moduleName.'</info> to re-created.');
         } else {
             $this->info("Module [{$moduleName}] deletion canceled.");
         }

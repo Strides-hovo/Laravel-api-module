@@ -19,7 +19,7 @@ class FactoryBuilder extends BaseBuilder
     {
         $model = '';
         if (isset($this->options['model'])) {
-            $model = '\\' . ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::model, $this->options['model']);
+            $model = '\\'.ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::model, $this->options['model']);
         }
 
         return array_merge(parent::getReplacements(), [

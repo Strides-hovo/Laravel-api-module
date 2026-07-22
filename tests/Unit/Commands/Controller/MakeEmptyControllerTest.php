@@ -18,6 +18,7 @@ class MakeEmptyControllerTest extends TestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState disabled
      * */
     public function test_create_by_module_name()
@@ -53,7 +54,9 @@ class MakeEmptyControllerTest extends TestCase
     /**
      * Этот метод просто инкапсулирует сложную проверку,
      * но никак не связывает тесты между собой.
+     *
      * @runInSeparateProcess
+     *
      * @preserveGlobalState disabled
      */
     private function assertControllerGenerated(string $moduleName, string $fileName): void

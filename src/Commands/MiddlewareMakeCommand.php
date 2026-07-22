@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class MiddlewareMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-middleware';
+
     protected $description = 'Create Middleware';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::middleware;
 
     /**
@@ -21,7 +23,7 @@ class MiddlewareMakeCommand extends BaseCommand
     public function handleCommand(): int
     {
 
-        if (!$this->showConfirm('Middleware')) {
+        if (! $this->showConfirm('Middleware')) {
             $this->warn('middleware creation cancelled.');
 
             return self::FAILURE;
@@ -30,7 +32,7 @@ class MiddlewareMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::MIDDLEWARE, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

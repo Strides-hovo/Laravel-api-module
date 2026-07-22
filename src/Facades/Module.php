@@ -23,9 +23,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static array scan() Получить реальные папки в папку Modules.
  * @method static ModuleDto|null get(string $moduleName) Получить полное описание модуля в виде объекта DTO.
  *
- * @see \Strides\Module\Facades\ModuleManager
+ * @see ModuleManager
  */
-
 class Module extends Facade
 {
     protected static function getFacadeAccessor(): string

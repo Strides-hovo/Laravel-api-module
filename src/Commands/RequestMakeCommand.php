@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class RequestMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-request';
+
     protected $description = 'Created Request';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::request;
 
     /**
@@ -20,7 +22,7 @@ class RequestMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Request')) {
+        if (! $this->showConfirm('Request')) {
             $this->warn('request creation cancelled.');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class RequestMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::REQUEST, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;
@@ -42,5 +44,4 @@ class RequestMakeCommand extends BaseCommand
             ['fileName', InputArgument::OPTIONAL, 'Create a request with this name.'],
         ];
     }
-
 }

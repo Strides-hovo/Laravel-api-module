@@ -28,11 +28,11 @@ class PintFormatter
     /**
      * Run the Pint formatter command on the given list of file paths.
      *
-     * @param array<int, string> $filePaths
+     * @param  array<int, string>  $filePaths
      */
     public static function format(array $filePaths): bool
     {
-        if (!self::isEnabled() || empty($filePaths)) {
+        if (! self::isEnabled() || empty($filePaths)) {
             return false;
         }
 
@@ -86,7 +86,7 @@ class PintFormatter
             // Хост-приложение, использующее этот пакет как зависимость.
             base_path('vendor/bin/pint'),
             // Разработка самого пакета (composer install внутри пакета).
-            dirname(__DIR__) . '/vendor/bin/pint',
+            dirname(__DIR__).'/vendor/bin/pint',
         ];
     }
 }

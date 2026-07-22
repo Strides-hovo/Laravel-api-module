@@ -13,7 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 class PolicyMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-policy';
+
     protected $description = 'Create Policy';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::policy;
 
     /**
@@ -21,7 +23,7 @@ class PolicyMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Policy')) {
+        if (! $this->showConfirm('Policy')) {
             $this->warn('Policy creation cancelled');
 
             return self::FAILURE;
@@ -30,7 +32,7 @@ class PolicyMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::POLICY, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class ServiceMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-service';
+
     protected $description = 'Created Service';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::service;
 
     /**
@@ -20,7 +22,7 @@ class ServiceMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Service')) {
+        if (! $this->showConfirm('Service')) {
             $this->warn('Service creation cancelled.');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class ServiceMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::SERVICE, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

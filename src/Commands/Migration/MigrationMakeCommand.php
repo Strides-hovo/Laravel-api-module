@@ -14,7 +14,9 @@ use Symfony\Component\Console\Input\InputOption;
 class MigrationMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-migration';
+
     protected $description = 'Create Migration';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::migration;
 
     /**
@@ -22,7 +24,7 @@ class MigrationMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Migration')) {
+        if (! $this->showConfirm('Migration')) {
             $this->warn('Создание migration отменено.');
 
             return self::FAILURE;
@@ -31,7 +33,7 @@ class MigrationMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::MIGRATION, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

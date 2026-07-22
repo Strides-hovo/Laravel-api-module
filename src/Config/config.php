@@ -25,7 +25,6 @@ return [
             'service' => ['path' => 'Services', 'generate' => true],
             'action' => ['path' => 'Actions', 'generate' => true],
 
-
             'mail' => ['path' => 'Mail', 'generate' => true],
             'notification' => ['path' => 'Notification', 'generate' => true],
             'dto' => ['path' => 'Dto', 'generate' => true],
@@ -33,10 +32,11 @@ return [
             'policy' => ['path' => 'Policies', 'generate' => true],
             'command' => ['path' => 'Console/Commands', 'generate' => true],
 
-            'event' => ['path' => 'Events', 'generate' => false],
+            'event' => ['path' => 'Events', 'generate' => true],
             'listener' => ['path' => 'Listeners', 'generate' => true],
             'job' => ['path' => 'Jobs', 'generate' => true],
             'cast' => ['path' => 'Casts', 'generate' => true],
+            'http' => ['path' => '/', 'generate' => true],
 
             'unit_test' => ['path' => 'Tests/Unit', 'generate' => true],
             'feature_test' => ['path' => 'Tests/Feature', 'generate' => true],

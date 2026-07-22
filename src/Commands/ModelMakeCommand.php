@@ -13,7 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 class ModelMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-model';
+
     protected $description = 'Create Model';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::model;
 
     /**
@@ -21,7 +23,7 @@ class ModelMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Model')) {
+        if (! $this->showConfirm('Model')) {
             $this->warn('Model creation cancelled');
 
             return self::FAILURE;

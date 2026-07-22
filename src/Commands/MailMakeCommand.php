@@ -13,7 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 class MailMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-mail';
+
     protected $description = 'Create Mail';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::mail;
 
     /**
@@ -21,7 +23,7 @@ class MailMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Mail')) {
+        if (! $this->showConfirm('Mail')) {
             $this->warn('Mail creation cancelled');
 
             return self::FAILURE;
@@ -30,7 +32,7 @@ class MailMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::MAIL, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;

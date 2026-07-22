@@ -18,7 +18,7 @@ enum ActionMethodEnum: string
     public static function fromClassName(string $className): ?self
     {
         foreach (self::cases() as $case) {
-            if (str_ends_with($className, $case->value . 'Action')) {
+            if (str_ends_with($className, $case->value.'Action')) {
                 return $case;
             }
         }

@@ -22,7 +22,7 @@ abstract class TestCase extends BaseTest
     }
 
     /**
-     * @param Application $app
+     * @param  Application  $app
      * @return array<int, class-string>
      */
     protected function getPackageProviders($app): array
@@ -33,8 +33,7 @@ abstract class TestCase extends BaseTest
     }
 
     /**
-     * @param Application $app
-     * @return void
+     * @param  Application  $app
      */
     protected function getEnvironmentSetUp($app): void
     {
@@ -46,7 +45,7 @@ abstract class TestCase extends BaseTest
         ]);
     }
 
-    protected function clearModule(string $moduleName)
+    protected function clearModule(string $moduleName): void
     {
         $jsonFile = base_path('modules_name.json');
         File::put($jsonFile, json_encode([]));
@@ -64,8 +63,7 @@ abstract class TestCase extends BaseTest
         $generatorPath = ModuleHelper::generator($key);
 
         return ModuleHelper::normalizePath(
-            $modulePath . DIRECTORY_SEPARATOR . $generatorPath . DIRECTORY_SEPARATOR . $fileName . '.php'
+            $modulePath.DIRECTORY_SEPARATOR.$generatorPath.DIRECTORY_SEPARATOR.$fileName.'.php'
         );
     }
-
 }

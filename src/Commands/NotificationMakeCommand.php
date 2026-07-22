@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 class NotificationMakeCommand extends BaseCommand
 {
     protected $name = 'module:make-notification';
+
     protected $description = 'Create Notification';
+
     protected BuilderKeysEnum $generatorKey = BuilderKeysEnum::notification;
 
     /**
@@ -20,7 +22,7 @@ class NotificationMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (!$this->showConfirm('Notification')) {
+        if (! $this->showConfirm('Notification')) {
             $this->warn('notification creation cancelled');
 
             return self::FAILURE;
@@ -29,7 +31,7 @@ class NotificationMakeCommand extends BaseCommand
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::NOTIFICATION, $this->data);
 
         foreach ($statuses as $status) {
-            $this->line('Created: <info>' . $status . '</info>');
+            $this->line('Created: <info>'.$status.'</info>');
         }
 
         return self::SUCCESS;
