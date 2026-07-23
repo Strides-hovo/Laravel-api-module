@@ -53,6 +53,9 @@ One command. Model, migration, factory, seeder, controller, repository, transfor
 
 ---
 
+
+![Demo](module.gif)
+
 ## Installation
 
 **1. Install via Composer**
