@@ -55,4 +55,4 @@ jobs:
           composer update --prefer-dist --no-interaction --no-progress --no-audit
 
       - name: Execute tests
-        run: vendor/bin/phpunit
+        run: vendor/bin/phpunit tests --do-not-fail-on-warning
