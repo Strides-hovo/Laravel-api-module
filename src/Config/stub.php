@@ -7,6 +7,7 @@ return [
         'store' => dirname(__DIR__).'/stubs/mini/controller/store.stub',
         'destroy' => dirname(__DIR__).'/stubs/mini/controller/destroy.stub',
         'update' => dirname(__DIR__).'/stubs/mini/controller/update.stub',
+        'show' => dirname(__DIR__).'/stubs/mini/controller/show.stub',
     ],
     'action' => [
         'main' => dirname(__DIR__).'/stubs/action.stub',
@@ -14,6 +15,16 @@ return [
         'store' => dirname(__DIR__).'/stubs/mini/action/store.stub',
         'update' => dirname(__DIR__).'/stubs/mini/action/update.stub',
         'destroy' => dirname(__DIR__).'/stubs/mini/action/destroy.stub',
+        'show' => dirname(__DIR__).'/stubs/mini/action/show.stub',
+    ],
+    'service' => [
+        'main' => dirname(__DIR__).'/stubs/service.stub',
+        'solo' => dirname(__DIR__).'/stubs/service.solo.stub',
+        'index' => dirname(__DIR__).'/stubs/mini/service/index.stub',
+        'store' => dirname(__DIR__).'/stubs/mini/service/store.stub',
+        'update' => dirname(__DIR__).'/stubs/mini/service/update.stub',
+        'destroy' => dirname(__DIR__).'/stubs/mini/service/destroy.stub',
+        'show' => dirname(__DIR__).'/stubs/mini/service/show.stub',
     ],
     'request' => [
         'main' => dirname(__DIR__).'/stubs/request.stub',
@@ -24,14 +35,7 @@ return [
     'transformer' => [
         'main' => dirname(__DIR__).'/stubs/transformer.stub',
     ],
-    'service' => [
-        'main' => dirname(__DIR__).'/stubs/service.stub',
-        'solo' => dirname(__DIR__).'/stubs/service.solo.stub',
-        'index' => dirname(__DIR__).'/stubs/mini/service/index.stub',
-        'store' => dirname(__DIR__).'/stubs/mini/service/store.stub',
-        'update' => dirname(__DIR__).'/stubs/mini/service/update.stub',
-        'destroy' => dirname(__DIR__).'/stubs/mini/service/destroy.stub',
-    ],
+
     'repository' => [
         'main' => dirname(__DIR__).'/stubs/repository.stub',
         'solo' => dirname(__DIR__).'/stubs/repository.solo.stub',

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Strides\Module\Builders\Resolvers\Controller\ControllerMethodsResolver;
 use Strides\Module\Builders\Resolvers\Controller\DestroyMethodResolver;
 use Strides\Module\Builders\Resolvers\Controller\IndexMethodResolver;
+use Strides\Module\Builders\Resolvers\Controller\ShowMethodResolver;
 use Strides\Module\Builders\Resolvers\Controller\StoreMethodResolver;
 use Strides\Module\Builders\Resolvers\Controller\UpdateMethodResolver;
 use Strides\Module\Contracts\HasRelationsInterface;
@@ -35,6 +36,7 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
         protected StoreMethodResolver $storeMethod,
         protected UpdateMethodResolver $updateMethod,
         protected DestroyMethodResolver $destroyMethod,
+        protected ShowMethodResolver $showMethod
     ) {
         parent::__construct($dto);
     }
@@ -76,6 +78,7 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
                     'store' => $this->getControllerRelation(BuilderKeysEnum::action, 'StoreAction'),
                     'update' => $this->getControllerRelation(BuilderKeysEnum::action, 'UpdateAction'),
                     'destroy' => $this->getControllerRelation(BuilderKeysEnum::action, 'DestroyAction'),
+                    'show' => $this->getControllerRelation(BuilderKeysEnum::action, 'ShowAction'),
                 ],
                 's', 'service' => $this->relations['service'] = $this->getControllerRelation(BuilderKeysEnum::service, 'Service'),
                 'e', 'resource' => $this->relations['resource'] = $this->getControllerRelation(BuilderKeysEnum::resource, 'Resource'),
@@ -136,6 +139,7 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
         $methods = [
             'index' => $this->indexMethod,
             'store' => $this->storeMethod,
+            'show'  => $this->showMethod,
             'update' => $this->updateMethod,
             'destroy' => $this->destroyMethod,
         ];
@@ -195,6 +199,7 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
                 'store' => $this->getControllerRelation(BuilderKeysEnum::action, 'StoreAction'),
                 'update' => $this->getControllerRelation(BuilderKeysEnum::action, 'UpdateAction'),
                 'destroy' => $this->getControllerRelation(BuilderKeysEnum::action, 'DestroyAction'),
+                'show' => $this->getControllerRelation(BuilderKeysEnum::action, 'ShowAction'),
             ],
             'repository' => ModuleHelper::repositoryClassName($this->moduleName),
         ];

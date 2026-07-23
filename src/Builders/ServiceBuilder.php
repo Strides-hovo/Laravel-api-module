@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Strides\Module\Builders\Resolvers\Service\DestroyMethodResolver;
 use Strides\Module\Builders\Resolvers\Service\IndexMethodResolver;
 use Strides\Module\Builders\Resolvers\Service\ServiceMethodResolver;
+use Strides\Module\Builders\Resolvers\Service\ShowMethodResolver;
 use Strides\Module\Builders\Resolvers\Service\StoreMethodResolver;
 use Strides\Module\Builders\Resolvers\Service\UpdateMethodResolver;
 use Strides\Module\Enums\BuilderKeysEnum;
@@ -25,6 +26,7 @@ class ServiceBuilder extends BaseBuilder
     private const METHOD_RESOLVERS = [
         'index' => IndexMethodResolver::class,
         'store' => StoreMethodResolver::class,
+        'show' => ShowMethodResolver::class,
         'update' => UpdateMethodResolver::class,
         'destroy' => DestroyMethodResolver::class,
     ];

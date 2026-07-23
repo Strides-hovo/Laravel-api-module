@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Strides\Module\Builders\Resolvers\Action\ActionsClassesResolver;
 use Strides\Module\Builders\Resolvers\Action\DestroyClassResolver;
 use Strides\Module\Builders\Resolvers\Action\IndexClassResolver;
+use Strides\Module\Builders\Resolvers\Action\ShowClassResolver;
 use Strides\Module\Builders\Resolvers\Action\StoreClassResolver;
 use Strides\Module\Builders\Resolvers\Action\UpdateClassResolver;
 use Strides\Module\Dto\BuilderResultDto;
@@ -27,6 +28,7 @@ class ActionBuilder extends BaseBuilder
         'store' => StoreClassResolver::class,
         'update' => UpdateClassResolver::class,
         'destroy' => DestroyClassResolver::class,
+        'show'   => ShowClassResolver::class
     ];
 
     public function getContent(): BuilderResultDto

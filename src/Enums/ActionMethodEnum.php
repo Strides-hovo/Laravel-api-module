@@ -10,6 +10,7 @@ enum ActionMethodEnum: string
     case store = 'Store';
     case update = 'Update';
     case destroy = 'Destroy';
+    case show = 'Show';
 
     /**
      * Определяет метод экшена по имени класса (IndexAction, StoreAction, UpdateAction, DestroyAction).
