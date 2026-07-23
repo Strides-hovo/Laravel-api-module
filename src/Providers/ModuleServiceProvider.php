@@ -15,6 +15,7 @@ use Strides\Module\Commands\JobMakeCommand;
 use Strides\Module\Commands\ListenerMakeCommand;
 use Strides\Module\Commands\MailMakeCommand;
 use Strides\Module\Commands\MiddlewareMakeCommand;
+use Strides\Module\Commands\Migration\DbSeedCommand;
 use Strides\Module\Commands\Migration\MigrationFreshCommand;
 use Strides\Module\Commands\Migration\MigrationMakeCommand;
 use Strides\Module\Commands\Migration\MigrationRefreshCommand;
@@ -114,5 +115,6 @@ class ModuleServiceProvider extends ServiceProvider
         ModuleOptimizeCommand::class,
         ConfigPublishCommand::class,
         TestMakeCommand::class,
+        DbSeedCommand::class,
     ];
 }
