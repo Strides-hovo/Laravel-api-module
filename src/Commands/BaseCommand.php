@@ -13,6 +13,7 @@ use Strides\Module\Factories\FileNameFactory;
 use Strides\Module\FileGenerator;
 use Strides\Module\ModuleDirector;
 use Strides\Module\ModuleHelper;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Abstract base command providing unified execution blocks, user inputs, and template variables.
@@ -52,6 +53,14 @@ abstract class BaseCommand extends Command
         return $this->handleCommand();
     }
 
+    protected function getOptions():array
+    {
+        return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
+        ];
+    }
+
+
     /**
      * Confirm overwriting an already existing target module component file.
      */
@@ -66,7 +75,7 @@ abstract class BaseCommand extends Command
             return false;
         }
 
-        if (! $this->confirm("This $type already exists. Do you want to overwrite $type in ".($this->data->moduleName ?? '').'?')) {
+        if (!$this->option('force') && !$this->confirm("This $type already exists. Do you want to overwrite $type in ".($this->data->moduleName ?? '').'?')) {
             $this->line("<info>Creation of $type in ".($this->data->moduleName ?? '').' canceled.</info>');
 
             return false;

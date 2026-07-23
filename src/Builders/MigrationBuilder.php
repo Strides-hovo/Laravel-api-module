@@ -15,9 +15,14 @@ class MigrationBuilder extends BaseBuilder
         return Config::get('module-stub.migration.main');
     }
 
+    protected function getGeneratorKey(): BuilderKeysEnum
+    {
+        return BuilderKeysEnum::migration;
+    }
+
     protected function getReplacements(): array
     {
-        $table = $this->options['table'] ?? $this->moduleName;
+        $table = $this->options['table'] ?? Str::plural(Str::kebab(Str::singular($this->moduleName)));
         $action = 'create';
         $dropping = 'dropIfExists';
         $body = "\$table->id(); \n \$table->timestamps();";
@@ -35,8 +40,5 @@ class MigrationBuilder extends BaseBuilder
         ];
     }
 
-    protected function getGeneratorKey(): BuilderKeysEnum
-    {
-        return BuilderKeysEnum::migration;
-    }
+
 }

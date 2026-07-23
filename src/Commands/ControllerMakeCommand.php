@@ -54,6 +54,7 @@ class ControllerMakeCommand extends BaseCommand
             ['service', 's', InputOption::VALUE_NONE, 'Flag to create an associated Service class', null],
             ['action', 'a', InputOption::VALUE_NONE, 'Specify the related action name.'],
             ['test', 'T', InputOption::VALUE_NONE, 'Specify the related action name.'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
             ['all', null, InputOption::VALUE_NONE, 'Flag to create all associated classes (request, resource, transformer, service, action).'],
         ];
     }

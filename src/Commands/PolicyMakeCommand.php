@@ -51,6 +51,7 @@ class PolicyMakeCommand extends BaseCommand
         return [
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'The model that the policy applies to'],
             ['guard', 'g', InputOption::VALUE_OPTIONAL, 'The guard that the policy relies on'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
         ];
     }
 }

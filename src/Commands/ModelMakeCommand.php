@@ -62,6 +62,7 @@ class ModelMakeCommand extends BaseCommand
             ['morph-pivot', null, InputOption::VALUE_NONE, 'Indicates if the generated model should be a custom polymorphic intermediate table mode'],
             ['pivot', 'p', InputOption::VALUE_NONE, 'Indicates if the generated model should be a custom intermediate table model'],
             ['test', null, InputOption::VALUE_NONE, 'Generate an accompanying Test test for the Model'],
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
             ['all', null, InputOption::VALUE_NONE, 'Generate a migration, seeder, factory, policy, test, controller'],
         ];
     }

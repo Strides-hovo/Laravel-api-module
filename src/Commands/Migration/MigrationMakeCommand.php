@@ -25,7 +25,7 @@ class MigrationMakeCommand extends BaseCommand
     public function handleCommand(): int
     {
         if (! $this->showConfirm('Migration')) {
-            $this->warn('Создание migration отменено.');
+            $this->warn('Created migration canceled.');
 
             return self::FAILURE;
         }

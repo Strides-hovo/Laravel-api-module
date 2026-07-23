@@ -50,6 +50,7 @@ class ListenerMakeCommand extends BaseCommand
     {
         return [
             ['event', 'e', InputOption::VALUE_OPTIONAL, 'Using Event'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
         ];
     }
 }

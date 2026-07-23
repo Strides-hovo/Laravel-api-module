@@ -63,10 +63,11 @@ class TestMakeCommand extends BaseCommand
     {
         return [
             ['type', 't', InputOption::VALUE_OPTIONAL, 'The test type (unit or feature)', 'unit'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
         ];
     }
 
-    private function setEnums()
+    private function setEnums(): void
     {
         $this->type = $this->option('type') ?? 'unit';
 

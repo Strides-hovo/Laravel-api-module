@@ -11,6 +11,7 @@ use Strides\Module\Exceptions\BuilderException;
 use Strides\Module\Facades\Module;
 use Strides\Module\ModuleGenerator;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class ModuleMakeCommand extends Command
 {
@@ -34,7 +35,7 @@ class ModuleMakeCommand extends Command
             return self::FAILURE;
         }
 
-        if (Module::exists($this->moduleName)) {
+        if (!$this->option('force') && Module::exists($this->moduleName)) {
             if (! $this->confirm('This module already exists, do you want to overwrite the entire folder '.($this->moduleName).'?')) {
                 $this->line('<info>Creation of module '.($this->moduleName ?? '').' canceled.</info>');
 
@@ -42,6 +43,10 @@ class ModuleMakeCommand extends Command
             }
         }
 
+        if (Module::exists($this->moduleName)){
+            $this->comment('Cleaning old files from '.($this->moduleName));
+            Module::delete($this->moduleName);
+        }
         $this->comment('Creating module '.($this->moduleName));
         $statuses = ModuleGenerator::create($this->moduleName);
 
@@ -71,6 +76,13 @@ class ModuleMakeCommand extends Command
     {
         return [
             ['moduleName', InputArgument::OPTIONAL, 'Create a Module with this name.'],
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production']
         ];
     }
 }

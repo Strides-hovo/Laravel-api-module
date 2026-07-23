@@ -20,6 +20,7 @@ class MigrationResetCommand extends MigrationActionCommand
             '--path' => $this->relativePath,
             '--pretend' => $this->option('pretend'),
             '--database' => $this->option('database'),
+            '--force' => $this->option('force')
         ]);
 
         return self::SUCCESS;
@@ -38,6 +39,7 @@ class MigrationResetCommand extends MigrationActionCommand
         return [
             ['pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run'],
             ['database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use'],
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
         ];
     }
 }

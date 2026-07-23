@@ -50,6 +50,7 @@ class RepositoryMakeCommand extends BaseCommand
     {
         return [
             ['model', null, InputOption::VALUE_REQUIRED, 'Flag to use model'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
         ];
     }
 }

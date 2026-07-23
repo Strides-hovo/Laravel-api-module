@@ -50,6 +50,7 @@ class MailMakeCommand extends BaseCommand
     {
         return [
             ['view', null, InputOption::VALUE_NONE, 'Create view'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
         ];
     }
 }

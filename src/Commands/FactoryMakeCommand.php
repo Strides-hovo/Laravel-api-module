@@ -50,6 +50,7 @@ class FactoryMakeCommand extends BaseCommand
     {
         return [
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'The model that the factory applies to'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
         ];
     }
 }

@@ -29,6 +29,7 @@ class MigrationRunCommand extends MigrationActionCommand
             '--step' => $this->option('step'),
             '--database' => $this->option('database'),
             '--graceful' => $this->option('graceful'),
+            '--force' => $this->option('force')
         ], $options));
 
         return self::SUCCESS;
