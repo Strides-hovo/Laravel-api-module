@@ -46,7 +46,7 @@ jobs:
           COMPOSER_AUDIT_ABANDONED: ignore
           COMPOSER_NO_BLOCKING: 1
         run: |
-          # Если проверяем Laravel 12 или 13, удаляем старый larastan, чтобы исключить конфликт illuminate/support
+          
           if [[ "${{ matrix.laravel }}" == "12.*" || "${{ matrix.laravel }}" == "13.*" ]]; then
             composer remove --dev larastan/larastan --no-interaction --no-update --no-audit || true
           fi
