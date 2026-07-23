@@ -42,17 +42,18 @@ jobs:
           coverage: none
 
       - name: Install dependencies
+        env:
+          COMPOSER_AUDIT_ABANDONED: ignore
         run: |
-          # Игнорируем аудит уязвимостей для легальной установки старых релизов L10/L11 в тестах
-          composer config audit.blocked-packages false || true
+          composer config audit.block false --unset || true
           
-          # Если тестируем на L12/L13, удаляем старый larastan во избежание конфликта illuminate
+          # Если проверяем Laravel 12 или 13, удаляем старый larastan, чтобы исключить конфликт illuminate/support
           if [[ "${{ matrix.laravel }}" == "12.*" || "${{ matrix.laravel }}" == "13.*" ]]; then
-            composer remove --dev larastan/larastan --no-interaction --no-update || true
+            composer remove --dev larastan/larastan --no-interaction --no-update --no-audit || true
           fi
 
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer install --prefer-dist --no-interaction --no-progress
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update --no-audit
+          composer update --prefer-dist --no-interaction --no-progress --no-audit
 
       - name: Execute tests
         run: vendor/bin/phpunit
