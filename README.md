@@ -109,26 +109,73 @@ This registers the module in `modules_name.json` and generates the full director
 
 ```
 Modules/
-└── Product/
+└── Order/
     ├── Actions/
+    │   ├── OrderDestroyAction.php
+    │   ├── OrderIndexAction.php
+    │   ├── OrderShowAction.php
+    │   ├── OrderStoreAction.php
+    │   └── OrderUpdateAction.php
+    ├── Casts/
+    │   └── OrderCast.php
+    ├── Config/
+    │   └── config.php
+    ├── Console/
+    │   └── Commands/
+    │       └── OrderCommand.php
     ├── Database/
     │   ├── Factories/
+    │   │   └── OrderFactory.php
     │   ├── Migrations/
+    │   │   └── 2026_07_24_124752_create_order_table.php
     │   └── Seeders/
+    │       └── OrderSeeder.php
+    ├── Dto/
+    │   └── OrderDto.php
     ├── Entities/
+    │   └── Order.php
     ├── Events/
     ├── Http/
     │   ├── Controllers/
+    │   │   └── OrderController.php
     │   ├── Middleware/
+    │   │   └── OrderMiddleware.php
     │   ├── Requests/
+    │   │   └── OrderRequest.php
     │   ├── Resources/
+    │   │   └── OrderResource.php
+    │   ├── Rules/
+    │   │   └── OrderRule.php
     │   └── Transformers/
     ├── Jobs/
+    │   └── OrderJob.php
     ├── Listeners/
+    │   └── OrderListener.php
+    ├── Mail/
+    │   └── OrderMail.php
+    ├── Notification/
+    │   └── OrderNotification.php
+    ├── Policies/
+    │   └── OrderPolicy.php
     ├── Providers/
+    │   ├── OrderServiceProvider.php
+    │   └── RouteServiceProvider.php
     ├── Repositories/
+    │   └── OrderRepository.php
+    ├── resources/
+    │   └── views/
+    │       └── mail/
+    │           └── order-mail.blade.php
+    ├── Routes/
+    │   └── api.php
     ├── Services/
-    └── Tests/
+    │   └── OrderService.php
+    ├── Tests/
+    │   ├── Feature/
+    │   │   └── OrderTest.php
+    │   └── Unit/
+    │       └── OrderTest.php
+    └── Http.http
 ```
 
 ## Configuration
