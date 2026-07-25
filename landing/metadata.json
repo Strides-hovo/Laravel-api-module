@@ -1,0 +1,6 @@
+{
+  "name": "Laravel API Module",
+  "description": "Official documentation, configuration guide, and interactive CLI generator for Laravel API Module.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
