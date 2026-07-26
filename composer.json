@@ -1,7 +1,6 @@
 {
   "name": "strides/laravel-api-module",
   "description": "A code generation toolkit for building clean, scalable Laravel APIs with modular architecture.",
-  "version": "1.0.0",
   "type": "library",
   "license": "MIT",
   "keywords": [
