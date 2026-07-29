@@ -37,15 +37,14 @@ class LoaderServiceProvider extends ServiceProvider
     {
         // Merged base vs public config
         $baseConfig = require __DIR__.'/../Config/base.php';
-        $publicConfig = require __DIR__.'/../Config/config.php';
+        $this->mergeConfigFrom(__DIR__.'/../Config/config.php', 'module');
+        $publicConfig = $this->app->make('config')->get('module');
         $mergedGenerators = collect((array) $baseConfig['paths']['generator'])
             ->merge((array) $publicConfig['paths']['generator'])
             ->all();
 
-        $finalConfig = $publicConfig;
-        $finalConfig['paths']['generator'] = $mergedGenerators;
-
-        $this->app->make('config')->set('module', $finalConfig);
+        $publicConfig['paths']['generator'] = $mergedGenerators;
+        $this->app->make('config')->set('module', $publicConfig);
 
         $this->mergeConfigFrom(__DIR__.'/../Config/stub.php', 'module-stub');
 
