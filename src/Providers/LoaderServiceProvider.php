@@ -24,7 +24,7 @@ class LoaderServiceProvider extends ServiceProvider
             ->setMigrations()
             ->setProviders()
             ->setFactories()
-            ->setModuleConfigs();
+            ->setModuleConfigs()->setCommands();
     }
 
     public function boot(): void
@@ -194,5 +194,38 @@ class LoaderServiceProvider extends ServiceProvider
                 "{$configKey}-config"
             );
         }
+    }
+
+
+    private function setCommands(): self
+    {
+        $modules = Module::allEnabled();
+
+        foreach ($modules as $module) {
+            $commandsPath = ModuleHelper::module(
+                $module,
+                ModuleHelper::generator(BuilderKeysEnum::command)
+            );
+
+            if (! File::isDirectory($commandsPath)) {
+                continue;
+            }
+
+            $commandFiles = File::allFiles($commandsPath);
+            $commands = [];
+            foreach ($commandFiles as $file) {
+                $className = ModuleHelper::namespace($module, BuilderKeysEnum::command, $file->getFilenameWithoutExtension());
+
+                if (class_exists($className)) {
+                    $commands[] = $className;
+                }
+            }
+
+            if (! empty($commands)) {
+                $this->commands($commands);
+            }
+        }
+
+        return $this;
     }
 }
