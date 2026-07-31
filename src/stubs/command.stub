@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 class {{ class }} extends Command
 {
 
-    protected $signature = 'app:{{ name }}';
+    protected $signature = '{{ name }}';
 
 
     protected $description = 'Command description';
