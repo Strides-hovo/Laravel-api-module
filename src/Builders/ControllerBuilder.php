@@ -139,7 +139,7 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
         $methods = [
             'index' => $this->indexMethod,
             'store' => $this->storeMethod,
-            'show'  => $this->showMethod,
+            'show' => $this->showMethod,
             'update' => $this->updateMethod,
             'destroy' => $this->destroyMethod,
         ];

@@ -23,11 +23,11 @@ class ModelMakeCommand extends BaseCommand
      */
     public function handleCommand(): int
     {
-        if (! $this->showConfirm('Model')) {
+        /*if (! $this->showConfirm('Model')) {
             $this->warn('Model creation cancelled');
 
             return self::FAILURE;
-        }
+        }*/
 
         $statuses = $this->director->generateComponent(BuilderClassNameEnum::MODEL, $this->data);
 

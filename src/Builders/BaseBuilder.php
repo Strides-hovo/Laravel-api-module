@@ -42,6 +42,7 @@ abstract class BaseBuilder
     public function setOptions(array $options): BaseBuilder
     {
         $this->options = $options;
+
         return $this;
     }
 
@@ -60,7 +61,7 @@ abstract class BaseBuilder
         $dir = ModuleHelper::normalizePath(
             ModuleHelper::module($this->moduleName).DIRECTORY_SEPARATOR.ModuleHelper::generator($this->getGeneratorKey())
         );
-        $fileName = $this->fileName . ($this->getGeneratorKey() === BuilderKeysEnum::http ? ".http" : ".php");
+        $fileName = $this->fileName.($this->getGeneratorKey() === BuilderKeysEnum::http ? '.http' : '.php');
 
         return new BuilderResultDto($dir, $dir.DIRECTORY_SEPARATOR.$fileName, $content);
     }

@@ -23,10 +23,9 @@ class DbSeedCommand extends MigrationActionCommand
         $fileName = FileNameFactory::make($this->moduleName, BuilderKeysEnum::seeder);
         $class = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::seeder, $fileName);
 
-
         return $this->call('db:seed', [
             '--class' => $class,
-            '--force' => $this->option('force')
+            '--force' => $this->option('force'),
         ]);
 
     }

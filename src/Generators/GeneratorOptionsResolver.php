@@ -12,7 +12,7 @@ use Strides\Module\ModuleHelper;
 class GeneratorOptionsResolver
 {
     /**
-     * @return array<string, mixed>
+     * @return array<string, string>|array<string, true>
      */
     public static function resolve(string $key, string $moduleName, array $generators): array
     {
@@ -38,7 +38,7 @@ class GeneratorOptionsResolver
             ),
 
             'command' => array_intersect_key(
-                ['name' => FileNameFactory::make($moduleName, BuilderKeysEnum::command)], // было ::event — похоже, опечатка copy-paste
+                ['name' => FileNameFactory::make($moduleName, BuilderKeysEnum::command)],
                 $generators
             ),
 

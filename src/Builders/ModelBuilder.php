@@ -27,7 +27,7 @@ class ModelBuilder extends BaseBuilder implements HasRelationsInterface
     {
         return array_merge(parent::getReplacements(), [
             '{{ model }}' => $this->model,
-            '{{ factory }}' => isset($this->relations['factory']) ? 'use \Illuminate\Database\Eloquent\Factories\HasFactory;': null
+            '{{ factory }}' => isset($this->relations['factory']) ? 'use \Illuminate\Database\Eloquent\Factories\HasFactory;' : null,
         ]);
     }
 

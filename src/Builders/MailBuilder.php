@@ -12,11 +12,9 @@ use Strides\Module\ModuleHelper;
 
 class MailBuilder extends BaseBuilder
 {
-
-
     protected function getStubPath(): string
     {
-        return (string)Config::get('module-stub.mail.main');
+        return (string) Config::get('module-stub.mail.main');
     }
 
     protected function getGeneratorKey(): BuilderKeysEnum
@@ -24,19 +22,18 @@ class MailBuilder extends BaseBuilder
         return BuilderKeysEnum::mail;
     }
 
-
     protected function getReplacements(): array
     {
         $parent = parent::getReplacements();
 
         $Uname = '';
         $view = '';
-        $stub_path = (string)Config::get('module-stub.mail.main-view');
-        $stub = is_file($stub_path) ? (string)file_get_contents($stub_path) : '';
+        $stub_path = (string) Config::get('module-stub.mail.main-view');
+        $stub = is_file($stub_path) ? (string) file_get_contents($stub_path) : '';
 
-        if (!empty($this->options) && isset($this->options['view'])) {
+        if (! empty($this->options) && isset($this->options['view'])) {
             $Uname = Str::ucfirst($this->fileName);
-            $view = Str::lower($this->moduleName) . '::mail.' . Str::kebab($this->fileName);
+            $view = Str::lower($this->moduleName).'::mail.'.Str::kebab($this->fileName);
         }
 
         $replContent = strtr($stub, [
@@ -45,20 +42,20 @@ class MailBuilder extends BaseBuilder
         ]);
 
         $content = ['{{ content }}' => $replContent];
+
         return array_merge($parent, $content);
     }
 
-
     public function getRequestView(): BuilderResultDto
     {
-        $view_stub = (string)Config::get('module-stub.mail.view');
+        $view_stub = (string) Config::get('module-stub.mail.view');
         $dir = $this->getViewDirName();
-        $file = Str::kebab($this->fileName) . '.blade.php';
-        $content = is_file($view_stub) ? (string)file_get_contents($view_stub) : '';
+        $file = Str::kebab($this->fileName).'.blade.php';
+        $content = is_file($view_stub) ? (string) file_get_contents($view_stub) : '';
 
         return new BuilderResultDto(
             dirName: $dir,
-            fileName: $dir . DIRECTORY_SEPARATOR . $file,
+            fileName: $dir.DIRECTORY_SEPARATOR.$file,
             content: $content
         );
     }
@@ -69,7 +66,7 @@ class MailBuilder extends BaseBuilder
     private function getViewDirName(): string
     {
         return ModuleHelper::normalizePath(
-            ModuleHelper::module($this->moduleName) . DIRECTORY_SEPARATOR . 'resources/views/mail'
+            ModuleHelper::module($this->moduleName).DIRECTORY_SEPARATOR.'resources/views/mail'
         );
     }
 }

@@ -10,15 +10,13 @@ use Strides\Module\ModuleHelper;
 use Strides\Module\Providers\LoaderServiceProvider;
 use Strides\Module\Tests\Feature\Feature;
 
-
 /**
  * @runInSeparateProcess
+ *
  * @preserveGlobalState disabled
  */
 class MakeMailTest extends Feature
 {
-
-
     public function test_create_with_view(): void
     {
 
@@ -32,16 +30,16 @@ class MakeMailTest extends Feature
             'moduleName' => $this->moduleName,
             'fileName' => $fileName,
             '--view' => true,
-            '--force' => true
+            '--force' => true,
         ])->assertOk();
 
         $file = $this->getFilePath(BuilderKeysEnum::mail, $this->moduleName, $fileName);
         $class = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::mail, $fileName);
-        $viewPath = ModuleHelper::normalizePath(ModuleHelper::module($this->moduleName, 'resources/views/mail/' . Str::kebab($fileName) . '.blade.php'));
+        $viewPath = ModuleHelper::normalizePath(ModuleHelper::module($this->moduleName, 'resources/views/mail/'.Str::kebab($fileName).'.blade.php'));
 
         (new LoaderServiceProvider($this->app))->boot();
 
-        $view = Str::lower($this->moduleName) . '::mail.' . Str::kebab($fileName);
+        $view = Str::lower($this->moduleName).'::mail.'.Str::kebab($fileName);
 
         require $file;
 

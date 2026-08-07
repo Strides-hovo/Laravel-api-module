@@ -20,7 +20,7 @@ class MigrationRollbackCommand extends MigrationActionCommand
             '--path' => $this->relativePath,
             '--pretend' => $this->option('pretend'),
             '--database' => $this->option('database'),
-            '--force' => $this->option('force')
+            '--force' => $this->option('force'),
         ]);
 
         return self::SUCCESS;

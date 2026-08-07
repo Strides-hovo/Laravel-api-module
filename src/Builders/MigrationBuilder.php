@@ -39,6 +39,4 @@ class MigrationBuilder extends BaseBuilder
             '{{ body }}' => $body,
         ];
     }
-
-
 }

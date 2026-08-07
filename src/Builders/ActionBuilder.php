@@ -28,7 +28,7 @@ class ActionBuilder extends BaseBuilder
         'store' => StoreClassResolver::class,
         'update' => UpdateClassResolver::class,
         'destroy' => DestroyClassResolver::class,
-        'show'   => ShowClassResolver::class
+        'show' => ShowClassResolver::class,
     ];
 
     public function getContent(): BuilderResultDto

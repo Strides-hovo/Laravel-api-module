@@ -196,7 +196,6 @@ class LoaderServiceProvider extends ServiceProvider
         }
     }
 
-
     private function setCommands(): self
     {
         $modules = Module::allEnabled();

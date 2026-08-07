@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Strides\Module;
 
 use Illuminate\Support\Facades\File;
+use Strides\Module\Contracts\FileGeneratorInterface;
 
-class FileGenerator
+class FileGenerator implements FileGeneratorInterface
 {
     public function generate(string $dirName, string $fileName, string $content): string
     {
