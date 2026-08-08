@@ -11,6 +11,7 @@ use Strides\Module\Builders\MailBuilder;
 use Strides\Module\Contracts\FileGeneratorInterface;
 use Strides\Module\Dto\BuilderResultDto;
 use Strides\Module\Dto\CommandDto;
+use Strides\Module\Dto\ModuleStatusDto;
 use Strides\Module\Enums\BuilderClassNameEnum;
 use Strides\Module\Enums\BuilderKeysEnum;
 use Strides\Module\Exceptions\BuilderException;
@@ -22,16 +23,18 @@ use Strides\Module\Generators\GeneratorOptionsResolver;
 
 class ModuleGenerator
 {
-    public function __construct(private readonly GeneratorHelper $helper) {}
+    public function __construct(private readonly GeneratorHelper $helper)
+    {
+    }
 
     /**
      * Generates module files for every registered generator type
      * (controller, model, migration, etc.), skipping ones that already exist.
      */
-    public function create(string $moduleName, FileGeneratorInterface $fileGenerator): array
+    public function create(string $moduleName, FileGeneratorInterface $fileGenerator, ?string $version): \Generator
     {
-        $statuses = [];
-        $generators = array_map(fn ($setting) => true, ModuleHelper::generators());
+        dump($version);
+        $generators = array_map(fn($setting) => true, ModuleHelper::generators());
 
         foreach ($generators as $key => $_) {
             if ($key === 'action') {
@@ -39,7 +42,11 @@ class ModuleGenerator
             }
 
             if ($this->helper->fileExists($key, $moduleName)) {
-                $this->helper->addStatus($statuses, $key, 'missed');
+                yield ModuleStatusDto::fromArray([
+                    'key' => $key,
+                    'status' => 'missed',
+                    'message' => 'This entity was missed, it is already in the module',
+                ]);
 
                 continue;
             }
@@ -53,24 +60,26 @@ class ModuleGenerator
             }
 
             if ($builder instanceof MailBuilder) {
-                $this->handleMailView($builder, $fileGenerator, $statuses);
+                if ($status = $this->handleMailView($builder, $fileGenerator)) {
+                    yield $status;
+                }
             }
 
-            $this->generateAndTrack($builder->getContent(), $fileGenerator, $key, $statuses);
+            yield $this->generateAndTrack($builder->getContent(), $fileGenerator, $key);
 
             // action files are not a standalone generator — they're a side effect
             // of the controller builder (it already collects $relations['actions'])
             if ($key === 'controller' && array_key_exists('action', $generators)) {
                 $flag = $this->generateActionsFromController($builder, $moduleName, $fileGenerator);
                 if ($flag) {
-                    $this->helper->addStatus($statuses, 'actions', 'created');
+                    yield ModuleStatusDto::fromArray(['key' => 'actions', 'status' => 'created', 'message' => 'Created successfully']);
                 }
             }
         }
 
         Module::register($moduleName);
 
-        return $statuses;
+
     }
 
     /**
@@ -98,7 +107,7 @@ class ModuleGenerator
                 content: $result->content
             );
 
-            if (! $file) {
+            if (!$file) {
                 return false;
             }
         }
@@ -109,7 +118,7 @@ class ModuleGenerator
     /**
      * Generate and track status
      */
-    private function generateAndTrack(BuilderResultDto $content, FileGeneratorInterface $fileGenerator, string $key, array &$statuses): void
+    private function generateAndTrack(BuilderResultDto $content, FileGeneratorInterface $fileGenerator, string $key): ?ModuleStatusDto
     {
         $file = $fileGenerator->generate(
             dirName: $content->dirName,
@@ -117,9 +126,9 @@ class ModuleGenerator
             content: $content->content
         );
 
-        if ($file) {
-            $this->helper->addStatus($statuses, $key, 'created');
-        }
+        return $file
+            ? ModuleStatusDto::fromArray(['key' => $key, 'status' => 'created', 'message' => 'Created successfully'])
+            : null;
     }
 
     /**
@@ -148,7 +157,7 @@ class ModuleGenerator
      * MailBuilder also needs a blade view generated alongside the mail class itself —
      * an extra file the other generators don't have, hence the separate handling.
      */
-    private function handleMailView(MailBuilder $builder, FileGeneratorInterface $fileGenerator, array &$statuses): void
+    private function handleMailView(MailBuilder $builder, FileGeneratorInterface $fileGenerator): ?ModuleStatusDto
     {
         $builder->setOptions(['view' => true]);
         $view = $builder->getRequestView();
@@ -158,8 +167,9 @@ class ModuleGenerator
             fileName: $view->fileName,
             content: $view->content
         );
-        if ($file) {
-            $this->helper->addStatus($statuses, 'mail view', 'created');
-        }
+
+        return $file
+            ? ModuleStatusDto::fromArray(['key' => 'mail view', 'status' => 'created', 'message' => 'Created successfully'])
+            : null;
     }
 }

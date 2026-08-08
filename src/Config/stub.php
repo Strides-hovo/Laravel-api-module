@@ -31,6 +31,7 @@ return [
     ],
     'resource' => [
         'main' => dirname(__DIR__).'/stubs/resource.stub',
+        'api' => dirname(__DIR__).'/stubs/resource.api.stub',
     ],
     'transformer' => [
         'main' => dirname(__DIR__).'/stubs/transformer.stub',

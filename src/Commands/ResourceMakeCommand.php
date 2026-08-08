@@ -51,6 +51,7 @@ class ResourceMakeCommand extends BaseCommand
         return [
             ['collection', 'c', InputOption::VALUE_NONE, 'Create collection'],
             ['force', 'f', InputOption::VALUE_NONE, 'Force the operation to run without confirmation prompt.'],
+            ['json-api', 'j', InputOption::VALUE_NONE, 'Create json api resource'],
         ];
     }
 }

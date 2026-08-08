@@ -31,9 +31,12 @@ class ModuleMakeCommand extends Command
             return self::FAILURE;
         }
 
+
         $this->comment('Creating module '.($this->moduleName));
-        /** @var ModuleStatusDto[] $statuses */
-        $statuses = $generator->create($this->moduleName, $fileGenerator);
+        $option = $this->option('mversion');
+        $version = $option ? "V{$option}" : null;
+
+        $statuses = $generator->create($this->moduleName, $fileGenerator, $version);
 
         foreach ($statuses as $status) {
             $type = Str::ucfirst($status->key);
