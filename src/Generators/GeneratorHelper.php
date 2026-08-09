@@ -9,13 +9,11 @@ use Strides\Module\ModuleHelper;
 
 class GeneratorHelper
 {
-
-
     public function getFileName(string $key, string $moduleName): string
     {
         $buildKey = BuilderKeysEnum::getCaseByName($key);
 
-        return ModuleHelper::path($moduleName, $buildKey) . '.' . ($key === 'http' ? 'http' : 'php');
+        return ModuleHelper::path($moduleName, $buildKey).'.'.($key === 'http' ? 'http' : 'php');
     }
 
     public function fileExists(string $key, string $moduleName): bool
@@ -26,16 +24,19 @@ class GeneratorHelper
         if ($key === 'migration') {
             return self::migrationExists($moduleName);
         }
+        if (in_array($key, $this->getMissingEntities(), true)) {
+            return false;
+        }
 
         return File::exists($file);
     }
 
     public function migrationExists(string $moduleName): bool
     {
-        $table = 'create_' . Str::lower($moduleName);
+        $table = 'create_'.Str::lower($moduleName);
 
         $dir = ModuleHelper::normalizePath(ModuleHelper::module($moduleName, ModuleHelper::generator(BuilderKeysEnum::migration)));
-        if (!File::isDirectory($dir)) {
+        if (! File::isDirectory($dir)) {
             return false;
         }
 
@@ -49,5 +50,12 @@ class GeneratorHelper
         }
 
         return false;
+    }
+
+    private function getMissingEntities(): array
+    {
+        return [
+            'config', 'route_service_provider',
+        ];
     }
 }

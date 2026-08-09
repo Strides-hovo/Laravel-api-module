@@ -19,16 +19,19 @@ abstract class BaseBuilder
     public string $fileName;
 
     /** @var array<string, mixed> */
-    protected array $options;
+    public array $relations = [];
 
     /** @var array<string, mixed> */
-    public array $relations = [];
+    protected array $options;
+
+    protected string $version;
 
     public function __construct(CommandDto $dto)
     {
         $this->moduleName = $dto->moduleName ?? '';
         $this->fileName = $dto->fileName ?? '';
         $this->options = $dto->options;
+        $this->version = $dto->options['version'] ?? 'v1';
 
         if ($this instanceof HasRelationsInterface) {
             $this->init();
@@ -63,7 +66,7 @@ abstract class BaseBuilder
         );
         $fileName = $this->fileName.($this->getGeneratorKey() === BuilderKeysEnum::http ? '.http' : '.php');
 
-        return new BuilderResultDto($dir, $dir.DIRECTORY_SEPARATOR.$fileName, $content);
+        return new BuilderResultDto(filePath: $dir.DIRECTORY_SEPARATOR.$fileName, content: $content);
     }
 
     /**

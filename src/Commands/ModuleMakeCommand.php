@@ -7,7 +7,6 @@ namespace Strides\Module\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Strides\Module\Contracts\FileGeneratorInterface;
-use Strides\Module\Dto\ModuleStatusDto;
 use Strides\Module\ModuleGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -31,10 +30,9 @@ class ModuleMakeCommand extends Command
             return self::FAILURE;
         }
 
-
         $this->comment('Creating module '.($this->moduleName));
         $option = $this->option('mversion');
-        $version = $option ? "V{$option}" : null;
+        $version = $option ? "v{$option}" : 'v1';
 
         $statuses = $generator->create($this->moduleName, $fileGenerator, $version);
 

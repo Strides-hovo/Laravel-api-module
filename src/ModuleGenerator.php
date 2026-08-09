@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Strides\Module;
 
+use Generator;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Log;
 use Strides\Module\Builders\BaseBuilder;
@@ -23,18 +24,15 @@ use Strides\Module\Generators\GeneratorOptionsResolver;
 
 class ModuleGenerator
 {
-    public function __construct(private readonly GeneratorHelper $helper)
-    {
-    }
+    public function __construct(private readonly GeneratorHelper $helper) {}
 
     /**
      * Generates module files for every registered generator type
      * (controller, model, migration, etc.), skipping ones that already exist.
      */
-    public function create(string $moduleName, FileGeneratorInterface $fileGenerator, ?string $version): \Generator
+    public function create(string $moduleName, FileGeneratorInterface $fileGenerator, ?string $version): Generator
     {
-        dump($version);
-        $generators = array_map(fn($setting) => true, ModuleHelper::generators());
+        $generators = array_map(fn ($setting) => true, ModuleHelper::generators());
 
         foreach ($generators as $key => $_) {
             if ($key === 'action') {
@@ -51,7 +49,7 @@ class ModuleGenerator
                 continue;
             }
 
-            $builder = $this->resolveBuilder($key, $moduleName, $generators);
+            $builder = $this->resolveBuilder($key, $moduleName, $generators, $version);
 
             if ($builder === null) {
                 Log::warning('No builder registered for generator key.', ['key' => $key]);
@@ -79,7 +77,6 @@ class ModuleGenerator
 
         Module::register($moduleName);
 
-
     }
 
     /**
@@ -102,12 +99,11 @@ class ModuleGenerator
             $result = $builder->getContent();
 
             $file = $fileGenerator->generate(
-                dirName: $result->dirName,
-                fileName: $result->fileName,
+                filePath: $result->filePath,
                 content: $result->content
             );
 
-            if (!$file) {
+            if (! $file) {
                 return false;
             }
         }
@@ -120,9 +116,9 @@ class ModuleGenerator
      */
     private function generateAndTrack(BuilderResultDto $content, FileGeneratorInterface $fileGenerator, string $key): ?ModuleStatusDto
     {
+
         $file = $fileGenerator->generate(
-            dirName: $content->dirName,
-            fileName: $content->fileName,
+            filePath: $content->filePath,
             content: $content->content
         );
 
@@ -134,7 +130,7 @@ class ModuleGenerator
     /**
      * @throws BindingResolutionException|BuilderException
      */
-    private function resolveBuilder(string $key, string $moduleName, array $generators): ?BaseBuilder
+    private function resolveBuilder(string $key, string $moduleName, array $generators, string $version): ?BaseBuilder
     {
         $builderClass = BuilderResolver::tryGetClass($key);
 
@@ -143,6 +139,7 @@ class ModuleGenerator
         }
 
         $options = GeneratorOptionsResolver::resolve($key, $moduleName, $generators);
+        $options['version'] = $version;
         $generatorKey = BuilderKeysEnum::getCaseByName($key);
         $fileName = FileNameFactory::make(moduleName: $moduleName, type: $generatorKey);
 
@@ -163,8 +160,7 @@ class ModuleGenerator
         $view = $builder->getRequestView();
 
         $file = $fileGenerator->generate(
-            dirName: $view->dirName,
-            fileName: $view->fileName,
+            filePath: $view->filePath,
             content: $view->content
         );
 

@@ -12,9 +12,10 @@ class ResourceBuilder extends BaseBuilder
 {
     protected function getStubPath(): string
     {
-        if(!empty($this->options) && $this->options['json-api']){
+        if (! empty($this->options) && isset($this->options['json-api'])) {
             return Config::get('module-stub.resource.api');
         }
+
         return Config::get('module-stub.resource.main');
     }
 

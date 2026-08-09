@@ -7,8 +7,7 @@ namespace Strides\Module\Dto;
 class BuilderResultDto
 {
     public function __construct(
-        public string $dirName,
-        public string $fileName,
+        public string $filePath,
         public string $content,
     ) {}
 }

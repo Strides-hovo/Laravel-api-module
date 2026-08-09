@@ -42,8 +42,7 @@ class ModuleDirector
             $view = $builder->getRequestView();
 
             $statuses[] = $this->fileGenerator->generate(
-                dirName: $view->dirName,
-                fileName: $view->fileName,
+                filePath: $view->filePath,
                 content: $view->content
             );
         }
@@ -51,8 +50,7 @@ class ModuleDirector
         $buildResult = $builder->getContent();
 
         $statuses[] = $this->fileGenerator->generate(
-            dirName: $buildResult->dirName,
-            fileName: $buildResult->fileName,
+            filePath: $buildResult->filePath,
             content: $buildResult->content
         );
 
@@ -116,8 +114,7 @@ class ModuleDirector
         $result = $relatedBuilder->getContent();
 
         $status = $this->fileGenerator->generate(
-            dirName: $result->dirName,
-            fileName: $result->fileName,
+            filePath: $result->filePath,
             content: $result->content
         );
 

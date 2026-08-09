@@ -54,8 +54,7 @@ class MailBuilder extends BaseBuilder
         $content = is_file($view_stub) ? (string) file_get_contents($view_stub) : '';
 
         return new BuilderResultDto(
-            dirName: $dir,
-            fileName: $dir.DIRECTORY_SEPARATOR.$file,
+            filePath: $dir.DIRECTORY_SEPARATOR.$file,
             content: $content
         );
     }

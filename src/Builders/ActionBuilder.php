@@ -45,8 +45,7 @@ class ActionBuilder extends BaseBuilder
         $fileName = $dir.DIRECTORY_SEPARATOR.$this->fileName.'.php';
 
         return new BuilderResultDto(
-            dirName: $dir,
-            fileName: $fileName,
+            filePath: $fileName,
             content: $finalContent
         );
     }

@@ -4,5 +4,5 @@ namespace Strides\Module\Contracts;
 
 interface FileGeneratorInterface
 {
-    public function generate(string $dirName, string $fileName, string $content): string;
+    public function generate(string $filePath, string $content): string;
 }
