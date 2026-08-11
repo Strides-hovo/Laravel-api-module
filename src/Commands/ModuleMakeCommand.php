@@ -31,7 +31,7 @@ class ModuleMakeCommand extends Command
         }
 
         $option = $this->option('mversion');
-        $version =  $this->normalizeVersion($option);
+        $version = $this->normalizeVersion($option);
 
         $this->comment("Creating module {$this->moduleName} $version");
         $statuses = $generator->create($this->moduleName, $fileGenerator, $version);
@@ -45,7 +45,6 @@ class ModuleMakeCommand extends Command
         return self::SUCCESS;
     }
 
-
     private function normalizeVersion(null|int|string $version): ?string
     {
         if (is_null($version)) {
@@ -54,8 +53,7 @@ class ModuleMakeCommand extends Command
 
         if (is_numeric($version)) {
             $number = (int) $version;
-        }
-        else {
+        } else {
             $number = (int) preg_replace('/^[a-zA-Z]+/', '', trim($version));
         }
 
@@ -63,10 +61,8 @@ class ModuleMakeCommand extends Command
             return null;
         }
 
-        return 'V' . $number;
+        return 'V'.$number;
     }
-
-
 
     private function setModuleName(?string $moduleName): bool
     {

@@ -87,7 +87,7 @@ abstract class BaseBuilder
 
     private function normalizeRelationClassName(BuilderKeysEnum $enum): string
     {
-        return match ($enum){
+        return match ($enum) {
             BuilderKeysEnum::request, BuilderKeysEnum::resource, BuilderKeysEnum::transformer => $this->getFileName(),
             default => $this->fileName
         };
