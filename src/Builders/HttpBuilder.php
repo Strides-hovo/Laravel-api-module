@@ -19,11 +19,10 @@ class HttpBuilder extends BaseBuilder
         return Config::get('module-stub.http.main');
     }
 
-
     protected function getReplacements(): array
     {
-
-        $url = url('/api');
+        $version = $this->version ?: 'v1';
+        $url = url("/api/{$version}");
         $path = Str::plural(Str::camel(ModuleHelper::singular($this->moduleName)));
         $uri = "$url/$path";
 
@@ -32,7 +31,7 @@ class HttpBuilder extends BaseBuilder
             '{{ url_2 }}' => $uri,
             '{{ url_3 }}' => "{$uri}/1",
             '{{ url_4 }}' => "{$uri}/1",
-            '{{ url_5 }}' => "{$uri}/1"
+            '{{ url_5 }}' => "{$uri}/1",
         ];
     }
 }

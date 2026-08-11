@@ -7,7 +7,10 @@ namespace {{ namespace }};
 use PHPUnit\Framework\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Group;
 
+
+//#[Group('module-disabled')]
 class {{ class }} extends TestCase
 {
     public function testExample()

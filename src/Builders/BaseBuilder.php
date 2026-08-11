@@ -16,19 +16,22 @@ abstract class BaseBuilder
 {
     protected string $moduleName;
 
-    public string $fileName;
+    protected string $fileName;
+
+    /** @var array<string, mixed> */
+    public array $relations = [];
 
     /** @var array<string, mixed> */
     protected array $options;
 
-    /** @var array<string, mixed> */
-    public array $relations = [];
+    protected ?string $version;
 
     public function __construct(CommandDto $dto)
     {
         $this->moduleName = $dto->moduleName ?? '';
         $this->fileName = $dto->fileName ?? '';
         $this->options = $dto->options;
+        $this->version = $dto->options['version'] ?? null;
 
         if ($this instanceof HasRelationsInterface) {
             $this->init();
@@ -42,14 +45,20 @@ abstract class BaseBuilder
     public function setOptions(array $options): BaseBuilder
     {
         $this->options = $options;
+
         return $this;
+    }
+
+    public function getFileName(): string
+    {
+        return $this->fileName;
     }
 
     protected function getControllerRelation(BuilderKeysEnum $key, string $replacer, string $entity = 'Controller'): string
     {
-        $relationClass = Str::replaceLast($entity, $replacer, $this->fileName);
+        $relationClass = Str::replaceLast($entity, $replacer, $this->normalizeRelationClassName($key));
 
-        return FileNameFactory::make($this->moduleName, $key, $relationClass);
+        return FileNameFactory::make(moduleName: $this->moduleName, type: $key, customName: $relationClass);
     }
 
     public function getContent(): BuilderResultDto
@@ -60,9 +69,9 @@ abstract class BaseBuilder
         $dir = ModuleHelper::normalizePath(
             ModuleHelper::module($this->moduleName).DIRECTORY_SEPARATOR.ModuleHelper::generator($this->getGeneratorKey())
         );
-        $fileName = $this->fileName . ($this->getGeneratorKey() === BuilderKeysEnum::http ? ".http" : ".php");
+        $fileName = $this->getFileName().($this->getGeneratorKey() === BuilderKeysEnum::http ? '.http' : '.php');
 
-        return new BuilderResultDto($dir, $dir.DIRECTORY_SEPARATOR.$fileName, $content);
+        return new BuilderResultDto(filePath: $dir.DIRECTORY_SEPARATOR.$fileName, content: $content);
     }
 
     /**
@@ -72,7 +81,15 @@ abstract class BaseBuilder
     {
         return [
             '{{ namespace }}' => ModuleHelper::namespace($this->moduleName, $this->getGeneratorKey()),
-            '{{ class }}' => $this->fileName,
+            '{{ class }}' => $this->getFileName(),
         ];
+    }
+
+    private function normalizeRelationClassName(BuilderKeysEnum $enum): string
+    {
+        return match ($enum) {
+            BuilderKeysEnum::request, BuilderKeysEnum::resource, BuilderKeysEnum::transformer => $this->getFileName(),
+            default => $this->fileName
+        };
     }
 }

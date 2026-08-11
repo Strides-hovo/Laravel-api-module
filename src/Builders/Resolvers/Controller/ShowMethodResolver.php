@@ -12,11 +12,11 @@ class ShowMethodResolver extends ControllerMethodsResolver
 
     protected array $params = ['int|string $id'];
 
-
     protected function setRequest(array $relations): static
     {
         return $this;
     }
+
     protected function setResource(array $relations): self
     {
         $hasResource = ! empty($relations['resource']);
@@ -54,11 +54,10 @@ class ShowMethodResolver extends ControllerMethodsResolver
             $pureName = Str::afterLast($moduleName, '/');
             $itemVar = lcfirst($pureName);
 
-            if ($hasAction){
-                $sourceCall = "\$action->handle(\$id)";
+            if ($hasAction) {
+                $sourceCall = '$action->handle($id)';
                 $this->body = "\${$itemVar} = {$sourceCall};\nreturn {$transformer}::make(\${$itemVar}, 200);";
-            }
-            elseif ($hasService){
+            } elseif ($hasService) {
                 $sourceCall = "\$service->{$this->method}(\$id)";
                 $this->body = "\${$itemVar} = {$sourceCall};\nreturn {$transformer}::make(\${$itemVar}, 200);";
             }

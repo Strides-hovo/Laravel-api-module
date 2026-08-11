@@ -112,7 +112,7 @@ class ModuleManager
      */
     public static function path(string $moduleName): string
     {
-        return rtrim(config('module.paths.modules'), '/').'/'.$moduleName;
+        return rtrim(config('module.paths.modules'), '/').DIRECTORY_SEPARATOR.$moduleName;
     }
 
     /**

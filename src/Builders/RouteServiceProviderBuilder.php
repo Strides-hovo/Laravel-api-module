@@ -2,7 +2,9 @@
 
 namespace Strides\Module\Builders;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 use Strides\Module\Enums\BuilderKeysEnum;
 use Strides\Module\ModuleHelper;
 
@@ -20,8 +22,36 @@ class RouteServiceProviderBuilder extends BaseBuilder
 
     protected function getReplacements(): array
     {
+        $key = Str::lower($this->moduleName);
+        $config = Config::get($key);
+
+        $versions = Arr::get($config, 'versions', []);
+        $versions[Str::lower($this->version) ?: 'v1'] = ['enabled' => true, 'deprecated' => false];
+
         return array_merge(parent::getReplacements(), [
-            '{{ route_file }}' => ModuleHelper::normalizePath(Config::get('module.namespace').DIRECTORY_SEPARATOR."{$this->moduleName}/Routes/api.php"),
+            '{{ routes_map }}' => $this->buildRoutesMap($versions),
+
         ]);
+    }
+
+    private function buildRoutesMap(array $versions): string
+    {
+        $blocks = [];
+        $key = Str::lower($this->moduleName);
+
+        foreach ($versions as $version => $data) {
+            $_version = Str::ucfirst($version);
+            $path = ModuleHelper::normalizePath(ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::route, "api{$_version}.php"));
+
+            $blocks[] = <<<PHP
+        if (config('{$key}.versions.{$version}.enabled')) {
+            Route::prefix('api/{$version}')
+                ->middleware('api')
+                ->group(base_path('{$path}'));
+        }
+        PHP;
+        }
+
+        return implode("\n\n", $blocks);
     }
 }

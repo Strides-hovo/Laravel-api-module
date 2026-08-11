@@ -4,76 +4,135 @@ declare(strict_types=1);
 
 namespace Strides\Module;
 
+use Generator;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Log;
 use Strides\Module\Builders\BaseBuilder;
 use Strides\Module\Builders\MailBuilder;
+use Strides\Module\Contracts\FileGeneratorInterface;
+use Strides\Module\Dto\BuilderResultDto;
 use Strides\Module\Dto\CommandDto;
+use Strides\Module\Dto\ModuleStatusDto;
 use Strides\Module\Enums\BuilderClassNameEnum;
 use Strides\Module\Enums\BuilderKeysEnum;
 use Strides\Module\Exceptions\BuilderException;
 use Strides\Module\Facades\Module;
 use Strides\Module\Factories\FileNameFactory;
 use Strides\Module\Generators\BuilderResolver;
+use Strides\Module\Generators\GeneratorHelper;
 use Strides\Module\Generators\GeneratorOptionsResolver;
 
 class ModuleGenerator
 {
+    public function __construct(private readonly GeneratorHelper $helper) {}
+
     /**
-     * @throws BindingResolutionException|BuilderException
+     * Generates module files for every registered generator type
+     * (controller, model, migration, etc.), skipping ones that already exist.
      */
-    public static function create(string $moduleName): array
+    public function create(string $moduleName, FileGeneratorInterface $fileGenerator, ?string $version): Generator
     {
         $generators = array_map(fn ($setting) => true, ModuleHelper::generators());
-        $fileGenerator = new FileGenerator;
-        $statuses = [];
 
-        foreach ($generators as $key => $value) {
+        foreach ($generators as $key => $_) {
             if ($key === 'action') {
                 continue;
             }
 
-            $builder = self::resolveBuilder($key, $moduleName, $generators);
+            $filePath = $this->helper->getFilePath($key, $moduleName, $version);
+
+            if ($this->helper->fileExists($key, $moduleName, $filePath)) {
+                yield ModuleStatusDto::fromArray([
+                    'key' => $key,
+                    'status' => 'missed',
+                    'message' => 'This entity was missed, it is already in the module',
+                ]);
+
+                continue;
+            }
+
+            $builder = $this->resolveBuilder($key, $moduleName, $generators, $version);
 
             if ($builder === null) {
                 Log::warning('No builder registered for generator key.', ['key' => $key]);
 
                 continue;
             }
-            if ($builder instanceof MailBuilder){
-                $builder->setOptions(['view' => true]);
-                $view = $builder->getRequestView();
 
-                $statuses["mail view"] = $fileGenerator->generate(
-                    dirName: $view->dirName,
-                    fileName: $view->fileName,
-                    content: $view->content
-                );
+            if ($builder instanceof MailBuilder) {
+                if ($status = $this->handleMailView($builder, $fileGenerator)) {
+                    yield $status;
+                }
             }
-            $content = $builder->getContent();
 
-            $statuses[$key] = $fileGenerator->generate(
-                dirName: $content->dirName,
-                fileName: $content->fileName,
-                content: $content->content
-            );
+            yield $this->generateAndTrack($builder->getContent(), $fileGenerator, $key);
 
-
-
+            // action files are not a standalone generator — they're a side effect
+            // of the controller builder (it already collects $relations['actions'])
             if ($key === 'controller' && array_key_exists('action', $generators)) {
-                $statuses['action'] = self::generateActionsFromController($builder, $moduleName, $fileGenerator);
+                $flag = $this->generateActionsFromController($builder, $moduleName, $fileGenerator);
+                if ($flag) {
+                    yield ModuleStatusDto::fromArray(['key' => 'actions', 'status' => 'created', 'message' => 'Created successfully']);
+                }
             }
         }
 
         Module::register($moduleName);
 
-        return $statuses;
+    }
+
+    /**
+     * Generates the action files collected by the controller builder in $relations['actions'].
+     * Returns false on the first failed generation (the whole batch is treated as not created).
+     *
+     * @throws BindingResolutionException
+     * @throws BuilderException
+     */
+    private function generateActionsFromController(BaseBuilder $controllerBuilder, string $moduleName, FileGeneratorInterface $fileGenerator): bool
+    {
+
+        $actionNames = $controllerBuilder->relations['actions'] ?? [];
+
+        foreach ($actionNames as $fileName) {
+            $builder = BuilderResolver::make(
+                BuilderClassNameEnum::getCaseByName('action'),
+                new CommandDto(moduleName: $moduleName, fileName: $fileName, options: [])
+            );
+            $result = $builder->getContent();
+
+            $file = $fileGenerator->generate(
+                filePath: $result->filePath,
+                content: $result->content
+            );
+
+            if (! $file) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Generate and track status
+     */
+    private function generateAndTrack(BuilderResultDto $content, FileGeneratorInterface $fileGenerator, string $key): ?ModuleStatusDto
+    {
+
+        $file = $fileGenerator->generate(
+            filePath: $content->filePath,
+            content: $content->content
+        );
+
+        return $file
+            ? ModuleStatusDto::fromArray(['key' => $key, 'status' => 'created', 'message' => 'Created successfully'])
+            : null;
     }
 
     /**
      * @throws BindingResolutionException|BuilderException
      */
-    private static function resolveBuilder(string $key, string $moduleName, array $generators): ?BaseBuilder
+    private function resolveBuilder(string $key, string $moduleName, array $generators, ?string $version): ?BaseBuilder
     {
         $builderClass = BuilderResolver::tryGetClass($key);
 
@@ -82,8 +141,9 @@ class ModuleGenerator
         }
 
         $options = GeneratorOptionsResolver::resolve($key, $moduleName, $generators);
+        $options['version'] = $version;
         $generatorKey = BuilderKeysEnum::getCaseByName($key);
-        $fileName = FileNameFactory::make(moduleName: $moduleName, type: $generatorKey);
+        $fileName = FileNameFactory::make(moduleName: $moduleName, type: $generatorKey, version: $version);
 
         return BuilderResolver::make($builderClass, new CommandDto(
             moduleName: $moduleName,
@@ -93,29 +153,21 @@ class ModuleGenerator
     }
 
     /**
-     * @return array<string, string>
-     *
-     * @throws BindingResolutionException|BuilderException
+     * MailBuilder also needs a blade view generated alongside the mail class itself —
+     * an extra file the other generators don't have, hence the separate handling.
      */
-    private static function generateActionsFromController(BaseBuilder $controllerBuilder, string $moduleName, FileGenerator $fileGenerator): array
+    private function handleMailView(MailBuilder $builder, FileGeneratorInterface $fileGenerator): ?ModuleStatusDto
     {
-        $actionStatuses = [];
-        $actionNames = $controllerBuilder->relations['actions'] ?? [];
+        $builder->setOptions(['view' => true]);
+        $view = $builder->getRequestView();
 
-        foreach ($actionNames as $method => $fileName) {
-            $builder = BuilderResolver::make(
-                BuilderClassNameEnum::getCaseByName('action'),
-                new CommandDto(moduleName: $moduleName, fileName: $fileName, options: [])
-            );
-            $result = $builder->getContent();
+        $file = $fileGenerator->generate(
+            filePath: $view->filePath,
+            content: $view->content
+        );
 
-            $actionStatuses[$method] = $fileGenerator->generate(
-                dirName: $result->dirName,
-                fileName: $result->fileName,
-                content: $result->content
-            );
-        }
-
-        return $actionStatuses;
+        return $file
+            ? ModuleStatusDto::fromArray(['key' => 'mail view', 'status' => 'created', 'message' => 'Created successfully'])
+            : null;
     }
 }

@@ -1,4 +1,9 @@
 <?php
 
 
-return ['name' => '{{ module }}' ];
+return [
+    'name' => '{{ module }}',
+    'versions' => [
+       {{ versions }}
+    ],
+];

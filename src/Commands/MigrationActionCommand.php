@@ -78,7 +78,7 @@ abstract class MigrationActionCommand extends Command
 
     public function setSeedClass(): self
     {
-        $this->seedClass = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::seeder, FileNameFactory::make($this->moduleName, BuilderKeysEnum::seeder));
+        $this->seedClass = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::seeder, FileNameFactory::make(moduleName: $this->moduleName, type: BuilderKeysEnum::seeder));
 
         return $this;
     }

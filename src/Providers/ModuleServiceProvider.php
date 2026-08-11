@@ -41,7 +41,9 @@ use Strides\Module\Commands\SeederMakeCommand;
 use Strides\Module\Commands\ServiceMakeCommand;
 use Strides\Module\Commands\TestMakeCommand;
 use Strides\Module\Commands\TransformerMakeCommand;
+use Strides\Module\Contracts\FileGeneratorInterface;
 use Strides\Module\Facades\ModuleManager;
+use Strides\Module\FileGenerator;
 
 /**
  * Service provider for registering module-specific services, configurations, and artisan commands.
@@ -55,6 +57,7 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->app->singleton('strides-module-manager', fn () => new ModuleManager); // Facade
         $this->app->register(LoaderServiceProvider::class);
+        $this->app->singleton(FileGeneratorInterface::class, fn () => new FileGenerator);
     }
 
     /**

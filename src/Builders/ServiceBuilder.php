@@ -42,7 +42,7 @@ class ServiceBuilder extends BaseBuilder
     {
         return [
             '{{ namespace }}' => ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::service),
-            '{{ class }}' => $this->fileName,
+            '{{ class }}' => $this->getFileName(),
             '{{ repository_use }}' => ModuleHelper::repositoryUseStatement($this->moduleName),
             '{{ repository_param }}' => ModuleHelper::repositoryParam($this->moduleName),
             '{{ body }}' => $this->buildBody(),

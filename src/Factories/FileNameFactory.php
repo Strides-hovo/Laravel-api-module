@@ -8,7 +8,7 @@ use Strides\Module\ModuleHelper;
 
 class FileNameFactory
 {
-    public static function make(string $moduleName, BuilderKeysEnum $type, ?string $customName = null): string
+    public static function make(string $moduleName, BuilderKeysEnum $type, ?string $version = null, ?string $customName = null): string
     {
         if (! empty($customName)) {
             return $customName;

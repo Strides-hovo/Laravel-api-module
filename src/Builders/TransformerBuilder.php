@@ -18,4 +18,9 @@ class TransformerBuilder extends BaseBuilder
     {
         return BuilderKeysEnum::transformer;
     }
+
+    public function getFileName(): string
+    {
+        return $this->fileName.$this->version;
+    }
 }

@@ -28,7 +28,7 @@ class RepositoryBuilder extends BaseBuilder
 
         return [
             '{{ namespace }}' => ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::repository),
-            '{{ class }}' => $this->fileName,
+            '{{ class }}' => $this->getFileName(),
             '{{ model }}' => ModuleHelper::modelFqcn($model),
         ];
     }

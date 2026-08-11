@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Strides\Module\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Strides\Module\Dto\ModuleDto;
 
 /**
  * @method static array<string, bool> all() Получить все модули и их статус.

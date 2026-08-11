@@ -24,7 +24,8 @@ class LoaderServiceProvider extends ServiceProvider
             ->setMigrations()
             ->setProviders()
             ->setFactories()
-            ->setModuleConfigs()->setCommands();
+            ->setModuleConfigs()
+            ->setCommands();
     }
 
     public function boot(): void
@@ -109,7 +110,7 @@ class LoaderServiceProvider extends ServiceProvider
             $module = explode('\\', $modelClass)[1];
 
             /** @var class-string<Factory> $factoryClass */
-            $factoryClass = ModuleHelper::namespace($module, BuilderKeysEnum::factory, FileNameFactory::make($module, BuilderKeysEnum::factory));
+            $factoryClass = ModuleHelper::namespace($module, BuilderKeysEnum::factory, FileNameFactory::make(moduleName: $module, type: BuilderKeysEnum::factory));
 
             return $factoryClass;
         };
@@ -154,7 +155,7 @@ class LoaderServiceProvider extends ServiceProvider
             $configPath = ModuleHelper::path(
                 $module,
                 BuilderKeysEnum::config,
-                FileNameFactory::make($module, BuilderKeysEnum::config)
+                FileNameFactory::make(moduleName: $module, type: BuilderKeysEnum::config)
             );
 
             $configFile = "{$configPath}.php";
@@ -178,7 +179,7 @@ class LoaderServiceProvider extends ServiceProvider
             $configPath = ModuleHelper::path(
                 $module,
                 BuilderKeysEnum::config,
-                FileNameFactory::make($module, BuilderKeysEnum::config)
+                FileNameFactory::make(moduleName: $module, type: BuilderKeysEnum::config)
             );
 
             $configFile = "{$configPath}.php";
@@ -195,7 +196,6 @@ class LoaderServiceProvider extends ServiceProvider
             );
         }
     }
-
 
     private function setCommands(): self
     {

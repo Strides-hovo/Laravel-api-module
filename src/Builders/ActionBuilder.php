@@ -28,7 +28,7 @@ class ActionBuilder extends BaseBuilder
         'store' => StoreClassResolver::class,
         'update' => UpdateClassResolver::class,
         'destroy' => DestroyClassResolver::class,
-        'show'   => ShowClassResolver::class
+        'show' => ShowClassResolver::class,
     ];
 
     public function getContent(): BuilderResultDto
@@ -45,8 +45,7 @@ class ActionBuilder extends BaseBuilder
         $fileName = $dir.DIRECTORY_SEPARATOR.$this->fileName.'.php';
 
         return new BuilderResultDto(
-            dirName: $dir,
-            fileName: $fileName,
+            filePath: $fileName,
             content: $finalContent
         );
     }
@@ -90,7 +89,7 @@ class ActionBuilder extends BaseBuilder
     {
         return [
             '{{ namespace }}' => ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::action),
-            '{{ class }}' => $this->fileName,
+            '{{ class }}' => $this->getFileName(),
             '{{ repository_use }}' => ModuleHelper::repositoryUseStatement($this->moduleName),
             '{{ repository_param }}' => ModuleHelper::repositoryParam($this->moduleName),
         ];

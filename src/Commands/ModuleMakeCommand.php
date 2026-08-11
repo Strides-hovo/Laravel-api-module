@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Strides\Module\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Str;
-use Strides\Module\Exceptions\BuilderException;
-use Strides\Module\Facades\Module;
+use Strides\Module\Contracts\FileGeneratorInterface;
 use Strides\Module\ModuleGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -21,10 +19,7 @@ class ModuleMakeCommand extends Command
 
     private string $moduleName;
 
-    /**
-     * @throws BuilderException|BindingResolutionException
-     */
-    public function handle(): int
+    public function handle(ModuleGenerator $generator, FileGeneratorInterface $fileGenerator): int
     {
         $argument = $this->argument('moduleName');
         $moduleNameParam = is_string($argument) || is_null($argument) ? $argument : null;
@@ -35,30 +30,41 @@ class ModuleMakeCommand extends Command
             return self::FAILURE;
         }
 
-        if (!$this->option('force') && Module::exists($this->moduleName)) {
-            if (! $this->confirm('This module already exists, do you want to overwrite the entire folder '.($this->moduleName).'?')) {
-                $this->line('<info>Creation of module '.($this->moduleName ?? '').' canceled.</info>');
+        $option = $this->option('mversion');
+        $version = $this->normalizeVersion($option);
 
-                return self::FAILURE;
-            }
-        }
+        $this->comment("Creating module {$this->moduleName} $version");
+        $statuses = $generator->create($this->moduleName, $fileGenerator, $version);
 
-        if (Module::exists($this->moduleName)){
-            $this->comment('Cleaning old files from '.($this->moduleName));
-            Module::delete($this->moduleName);
-        }
-        $this->comment('Creating module '.($this->moduleName));
-        $statuses = ModuleGenerator::create($this->moduleName);
-
-        foreach ($statuses as $relation => $file) {
-            $type = Str::ucfirst($relation);
-            $this->line("<fg=blue>INFO </> <fg=blue>[</>{$type}<fg=blue>]</> <info>created successfully.</info>");
+        foreach ($statuses as $status) {
+            $type = Str::ucfirst($status->key);
+            $message = $status->status === 'created' ? "<info>{$status->message} </info>" : "<fg=yellow>{$status->message}</>";
+            $this->line(string: "<fg=blue>INFO </> <fg=blue>[</>{$type}<fg=blue>]</> $message");
         }
 
         return self::SUCCESS;
     }
 
-    public function setModuleName(?string $moduleName): bool
+    private function normalizeVersion(null|int|string $version): ?string
+    {
+        if (is_null($version)) {
+            return null;
+        }
+
+        if (is_numeric($version)) {
+            $number = (int) $version;
+        } else {
+            $number = (int) preg_replace('/^[a-zA-Z]+/', '', trim($version));
+        }
+
+        if ($number < 2) {
+            return null;
+        }
+
+        return 'V'.$number;
+    }
+
+    private function setModuleName(?string $moduleName): bool
     {
         if (empty($moduleName)) {
             $askedName = $this->ask('Please enter the module name:');
@@ -82,7 +88,8 @@ class ModuleMakeCommand extends Command
     protected function getOptions(): array
     {
         return [
-            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production']
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production'],
+            ['mversion', 'M', InputOption::VALUE_OPTIONAL, 'Generate module by version'],
         ];
     }
 }

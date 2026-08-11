@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Strides\Module;
 
 use Illuminate\Support\Facades\File;
+use Strides\Module\Contracts\FileGeneratorInterface;
 
-class FileGenerator
+class FileGenerator implements FileGeneratorInterface
 {
-    public function generate(string $dirName, string $fileName, string $content): string
+    public function generate(string $filePath, string $content): string
     {
+        self::mkDir(dirname($filePath));
+        self::mkFile($filePath, $content);
 
-        self::mkDir($dirName);
+        PintFormatter::format([$filePath]);
 
-        self::mkFile($fileName, $content);
-        PintFormatter::format([$fileName]);
-
-        return $dirName.DIRECTORY_SEPARATOR.basename($fileName);
+        return $filePath;
     }
 
     private static function mkDir(string $directory): void

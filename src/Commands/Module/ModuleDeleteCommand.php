@@ -19,6 +19,7 @@ use Symfony\Component\Console\Input\InputOption;
 class ModuleDeleteCommand extends Command
 {
     protected $name = 'module:delete';
+
     protected $description = 'Delete a module without deleting its physical files';
 
     private string $moduleName;
@@ -27,13 +28,14 @@ class ModuleDeleteCommand extends Command
     {
         $this->setModuleName();
 
-        if (!Module::exists($this->moduleName)) {
+        if (! Module::exists($this->moduleName)) {
             $this->error("Module [{$this->moduleName}] does not exist.");
+
             return self::FAILURE;
         }
 
-        $dropDb = (bool)$this->option('db');
-        $force = (bool)$this->option('force');
+        $dropDb = (bool) $this->option('db');
+        $force = (bool) $this->option('force');
 
         $tables = [];
         if ($dropDb) {
@@ -41,18 +43,16 @@ class ModuleDeleteCommand extends Command
             $tables = $this->getTablesName($dir);
         }
 
-
-        if (!$force && !$this->confirmDeletion($tables)) {
+        if (! $force && ! $this->confirmDeletion($tables)) {
             $this->info("Module [{$this->moduleName}] deletion canceled.");
+
             return self::SUCCESS;
         }
 
-
-        if ($dropDb && !empty($tables)) {
+        if ($dropDb && ! empty($tables)) {
             $this->backup($tables);
             $this->trashTables($tables);
         }
-
 
         Module::delete($this->moduleName);
 
@@ -61,8 +61,6 @@ class ModuleDeleteCommand extends Command
 
         return self::SUCCESS;
     }
-
-
 
     protected function getArguments(): array
     {
@@ -79,13 +77,11 @@ class ModuleDeleteCommand extends Command
         ];
     }
 
-
-
     private function confirmDeletion(array $tables): bool
     {
         $message = "Are you sure you want to remove the module [{$this->moduleName}]?";
 
-        if (!empty($tables)) {
+        if (! empty($tables)) {
             $tablesList = implode(', ', $tables);
             $message .= " Associated database tables ({$tablesList}) will be rolled back.";
         }
@@ -99,10 +95,9 @@ class ModuleDeleteCommand extends Command
         $this->moduleName = is_string($argument) ? Str::ucfirst($argument) : '';
     }
 
-
     private function getTablesName(string $dirPath): array
     {
-        if (!File::isDirectory($dirPath)) {
+        if (! File::isDirectory($dirPath)) {
             return [];
         }
 
@@ -156,11 +151,11 @@ class ModuleDeleteCommand extends Command
     private function backup(array $tables): void
     {
         foreach ($tables as $table) {
-            if (!Schema::hasTable($table)) {
+            if (! Schema::hasTable($table)) {
                 continue;
             }
 
-            $fileName = "module-backups/{$table}_" . now()->format('Y_m_d_His') . '.jsonl';
+            $fileName = "module-backups/{$table}_".now()->format('Y_m_d_His').'.jsonl';
 
             $disk = Storage::disk('local');
             $disk->makeDirectory('module-backups');
@@ -170,11 +165,12 @@ class ModuleDeleteCommand extends Command
 
             if ($fileHandle === false) {
                 $this->error("Failed to create backup file for table: {$table}");
+
                 continue;
             }
 
             foreach (DB::table($table)->cursor() as $row) {
-                fwrite($fileHandle, json_encode($row, JSON_UNESCAPED_UNICODE) . PHP_EOL);
+                fwrite($fileHandle, json_encode($row, JSON_UNESCAPED_UNICODE).PHP_EOL);
             }
 
             fclose($fileHandle);

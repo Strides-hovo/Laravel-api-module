@@ -105,7 +105,7 @@ class ModuleHelper
     {
 
         $entityDir = self::generator($moduleKey);
-        $fileName = $fileName ?: FileNameFactory::make($moduleName, $moduleKey);
+        $fileName = $fileName ?: FileNameFactory::make(moduleName: $moduleName, type: $moduleKey);
         $result = $entityDir.DIRECTORY_SEPARATOR.$fileName;
 
         return self::normalizePath(self::module($moduleName, $result));

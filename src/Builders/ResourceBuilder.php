@@ -12,7 +12,11 @@ class ResourceBuilder extends BaseBuilder
 {
     protected function getStubPath(): string
     {
-        return Config::get('module-stub.resource.main', dirname(__DIR__).'/stubs/resource.stub');
+        if (! empty($this->options) && isset($this->options['json-api'])) {
+            return Config::get('module-stub.resource.api');
+        }
+
+        return Config::get('module-stub.resource.main');
     }
 
     protected function getReplacements(): array
@@ -24,7 +28,7 @@ class ResourceBuilder extends BaseBuilder
 
         return [
             '{{ namespace }}' => ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::resource),
-            '{{ class }}' => $this->fileName,
+            '{{ class }}' => $this->getFileName(),
             '{{ extend }}' => $extend,
         ];
     }
@@ -32,5 +36,10 @@ class ResourceBuilder extends BaseBuilder
     protected function getGeneratorKey(): BuilderKeysEnum
     {
         return BuilderKeysEnum::resource;
+    }
+
+    public function getFileName(): string
+    {
+        return $this->fileName.$this->version;
     }
 }
