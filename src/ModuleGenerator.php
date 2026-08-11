@@ -39,7 +39,9 @@ class ModuleGenerator
                 continue;
             }
 
-            if ($this->helper->fileExists($key, $moduleName)) {
+            $filePath = $this->helper->getFilePath($key, $moduleName, $version);
+
+            if ($this->helper->fileExists($key, $moduleName, $filePath)) {
                 yield ModuleStatusDto::fromArray([
                     'key' => $key,
                     'status' => 'missed',
@@ -130,7 +132,7 @@ class ModuleGenerator
     /**
      * @throws BindingResolutionException|BuilderException
      */
-    private function resolveBuilder(string $key, string $moduleName, array $generators, string $version): ?BaseBuilder
+    private function resolveBuilder(string $key, string $moduleName, array $generators, ?string $version): ?BaseBuilder
     {
         $builderClass = BuilderResolver::tryGetClass($key);
 
@@ -141,7 +143,7 @@ class ModuleGenerator
         $options = GeneratorOptionsResolver::resolve($key, $moduleName, $generators);
         $options['version'] = $version;
         $generatorKey = BuilderKeysEnum::getCaseByName($key);
-        $fileName = FileNameFactory::make(moduleName: $moduleName, type: $generatorKey);
+        $fileName = FileNameFactory::make(moduleName: $moduleName, type: $generatorKey, version: $version);
 
         return BuilderResolver::make($builderClass, new CommandDto(
             moduleName: $moduleName,

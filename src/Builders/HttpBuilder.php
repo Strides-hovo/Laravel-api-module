@@ -21,8 +21,8 @@ class HttpBuilder extends BaseBuilder
 
     protected function getReplacements(): array
     {
-
-        $url = url('/api');
+        $version = $this->version ?: 'v1';
+        $url = url("/api/{$version}");
         $path = Str::plural(Str::camel(ModuleHelper::singular($this->moduleName)));
         $uri = "$url/$path";
 

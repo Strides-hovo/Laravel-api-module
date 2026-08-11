@@ -26,7 +26,7 @@ class RouteServiceProviderBuilder extends BaseBuilder
         $config = Config::get($key);
 
         $versions = Arr::get($config, 'versions', []);
-        $versions[$this->version] = ['enabled' => true, 'deprecated' => false];
+        $versions[Str::lower($this->version) ?: 'v1'] = ['enabled' => true, 'deprecated' => false];
 
         return array_merge(parent::getReplacements(), [
             '{{ routes_map }}' => $this->buildRoutesMap($versions),
@@ -40,7 +40,8 @@ class RouteServiceProviderBuilder extends BaseBuilder
         $key = Str::lower($this->moduleName);
 
         foreach ($versions as $version => $data) {
-            $path = ModuleHelper::normalizePath(ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::route, "api{$version}.php"));
+            $_version = Str::ucfirst($version);
+            $path = ModuleHelper::normalizePath(ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::route, "api{$_version}.php"));
 
             $blocks[] = <<<PHP
         if (config('{$key}.versions.{$version}.enabled')) {

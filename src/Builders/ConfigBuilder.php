@@ -5,10 +5,18 @@ namespace Strides\Module\Builders;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
+use Strides\Module\Dto\CommandDto;
 use Strides\Module\Enums\BuilderKeysEnum;
 
 class ConfigBuilder extends BaseBuilder
 {
+    public function __construct(CommandDto $dto)
+    {
+        parent::__construct($dto);
+        $this->version = Str::lower($dto->options['version']) ?: 'v1';
+
+    }
+
     protected function getGeneratorKey(): BuilderKeysEnum
     {
         return BuilderKeysEnum::config;

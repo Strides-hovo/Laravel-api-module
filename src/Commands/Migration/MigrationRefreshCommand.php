@@ -19,7 +19,7 @@ class MigrationRefreshCommand extends MigrationActionCommand
 
     public function handleCommand(): int
     {
-        $seeder = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::seeder, FileNameFactory::make($this->moduleName, BuilderKeysEnum::seeder));
+        $seeder = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::seeder, FileNameFactory::make(moduleName: $this->moduleName, type: BuilderKeysEnum::seeder));
         $options = [];
 
         if ($this->option('seed') || $this->option('seeder')) {

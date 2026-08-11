@@ -16,7 +16,7 @@ class GeneratorOptionsResolver
      */
     public static function resolve(string $key, string $moduleName, array $generators): array
     {
-        $modelName = FileNameFactory::make($moduleName, BuilderKeysEnum::model);
+        $modelName = FileNameFactory::make(moduleName: $moduleName, type: BuilderKeysEnum::model);
 
         return match ($key) {
             'factory', 'policy', 'repository' => ['model' => $modelName],
@@ -33,12 +33,12 @@ class GeneratorOptionsResolver
             ),
 
             'listener' => array_intersect_key(
-                ['event' => FileNameFactory::make($moduleName, BuilderKeysEnum::event)],
+                ['event' => FileNameFactory::make(moduleName: $moduleName, type: BuilderKeysEnum::event)],
                 $generators
             ),
 
             'command' => array_intersect_key(
-                ['name' => FileNameFactory::make($moduleName, BuilderKeysEnum::command)],
+                ['name' => FileNameFactory::make(moduleName: $moduleName, type: BuilderKeysEnum::command)],
                 $generators
             ),
 

@@ -9,18 +9,15 @@ use Strides\Module\ModuleHelper;
 
 class GeneratorHelper
 {
-    public function getFileName(string $key, string $moduleName): string
+    public function getFilePath(string $key, string $moduleName, ?string $version): string
     {
         $buildKey = BuilderKeysEnum::getCaseByName($key);
 
-        return ModuleHelper::path($moduleName, $buildKey).'.'.($key === 'http' ? 'http' : 'php');
+        return ModuleHelper::path($moduleName, $buildKey).$this->getVersion($key, $version).'.'.($key === 'http' ? 'http' : 'php');
     }
 
-    public function fileExists(string $key, string $moduleName): bool
+    public function fileExists(string $key, string $moduleName, string $filePath): bool
     {
-
-        $file = $this->getFileName($key, $moduleName);
-
         if ($key === 'migration') {
             return self::migrationExists($moduleName);
         }
@@ -28,7 +25,7 @@ class GeneratorHelper
             return false;
         }
 
-        return File::exists($file);
+        return File::exists($filePath);
     }
 
     public function migrationExists(string $moduleName): bool
@@ -57,5 +54,22 @@ class GeneratorHelper
         return [
             'config', 'route_service_provider',
         ];
+    }
+
+    public function getVersion(string $key, ?string $version): ?string
+    {
+        $versionalKeys = [
+            'controller',
+            'route',
+            'request',
+            'resource',
+            'transformer',
+        ];
+
+        if ($version && in_array($key, $versionalKeys)) {
+            return $version;
+        }
+
+        return null;
     }
 }

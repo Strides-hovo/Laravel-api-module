@@ -90,11 +90,20 @@ composer dump-autoload
 **4. Add Modules test suite to `phpunit.xml`** *(optional but recommended)*
 
 ```xml
-<testsuites>
-    <testsuite name="Modules">
-        <directory suffix="Test.php">Modules/*/Tests/*</directory>
-    </testsuite>
-</testsuites>
+<phpunit>
+    <testsuites>
+        <testsuite name="Modules">
+            <directory suffix="Test.php">Modules/*/Tests/*</directory>
+        </testsuite>
+    </testsuites>
+    <groups>
+    <exclude>
+        <group>module-disabled</group>
+    </exclude>
+    </groups>
+    
+    ... other code
+</phpunit>
 ```
 
 ## Quick Start

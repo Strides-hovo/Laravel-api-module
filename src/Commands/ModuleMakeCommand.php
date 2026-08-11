@@ -30,10 +30,10 @@ class ModuleMakeCommand extends Command
             return self::FAILURE;
         }
 
-        $this->comment('Creating module '.($this->moduleName));
         $option = $this->option('mversion');
-        $version = $option ? "v{$option}" : 'v1';
+        $version =  $this->normalizeVersion($option);
 
+        $this->comment("Creating module {$this->moduleName} $version");
         $statuses = $generator->create($this->moduleName, $fileGenerator, $version);
 
         foreach ($statuses as $status) {
@@ -45,7 +45,30 @@ class ModuleMakeCommand extends Command
         return self::SUCCESS;
     }
 
-    public function setModuleName(?string $moduleName): bool
+
+    private function normalizeVersion(null|int|string $version): ?string
+    {
+        if (is_null($version)) {
+            return null;
+        }
+
+        if (is_numeric($version)) {
+            $number = (int) $version;
+        }
+        else {
+            $number = (int) preg_replace('/^[a-zA-Z]+/', '', trim($version));
+        }
+
+        if ($number < 2) {
+            return null;
+        }
+
+        return 'V' . $number;
+    }
+
+
+
+    private function setModuleName(?string $moduleName): bool
     {
         if (empty($moduleName)) {
             $askedName = $this->ask('Please enter the module name:');

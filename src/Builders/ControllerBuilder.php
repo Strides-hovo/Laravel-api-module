@@ -49,6 +49,11 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
         $this->setRelations($this->options);
     }
 
+    public function getFileName(): string
+    {
+        return $this->fileName.$this->version;
+    }
+
     /**
      * Get the defined dependency array mapping.
      *
@@ -124,7 +129,7 @@ class ControllerBuilder extends BaseBuilder implements HasRelationsInterface
     {
         return [
             '{{ namespace }}' => ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::controller),
-            '{{ class }}' => $this->fileName,
+            '{{ class }}' => $this->getFileName(),
             '{{ imports }}' => $this->buildImports(),
             '{{ body }}' => $this->buildBody(),
         ];

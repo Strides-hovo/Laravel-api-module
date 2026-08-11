@@ -32,8 +32,8 @@ class MailBuilder extends BaseBuilder
         $stub = is_file($stub_path) ? (string) file_get_contents($stub_path) : '';
 
         if (! empty($this->options) && isset($this->options['view'])) {
-            $Uname = Str::ucfirst($this->fileName);
-            $view = Str::lower($this->moduleName).'::mail.'.Str::kebab($this->fileName);
+            $Uname = Str::ucfirst($this->getFileName());
+            $view = Str::lower($this->moduleName).'::mail.'.Str::kebab($this->getFileName());
         }
 
         $replContent = strtr($stub, [
@@ -50,7 +50,7 @@ class MailBuilder extends BaseBuilder
     {
         $view_stub = (string) Config::get('module-stub.mail.view');
         $dir = $this->getViewDirName();
-        $file = Str::kebab($this->fileName).'.blade.php';
+        $file = Str::kebab($this->getFileName()).'.blade.php';
         $content = is_file($view_stub) ? (string) file_get_contents($view_stub) : '';
 
         return new BuilderResultDto(

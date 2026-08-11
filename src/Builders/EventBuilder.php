@@ -18,7 +18,7 @@ class EventBuilder extends BaseBuilder
     protected function getReplacements(): array
     {
         return array_merge(parent::getReplacements(), [
-            '{{ name }}' => Str::kebab($this->fileName),
+            '{{ name }}' => Str::kebab($this->getFileName()),
         ]);
     }
 

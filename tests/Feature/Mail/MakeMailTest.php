@@ -20,7 +20,7 @@ class MakeMailTest extends Feature
     public function test_create_with_view(): void
     {
 
-        $fileName = FileNameFactory::make($this->moduleName, BuilderKeysEnum::mail);
+        $fileName = FileNameFactory::make(moduleName: $this->moduleName, type: BuilderKeysEnum::mail);
 
         $this->artisan('module:make-module', [
             'moduleName' => $this->moduleName,

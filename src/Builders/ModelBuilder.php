@@ -39,7 +39,7 @@ class ModelBuilder extends BaseBuilder implements HasRelationsInterface
             }
 
             match ($key) {
-                'migration', 'm' => $this->relations['migration'] = FileNameFactory::make($this->moduleName, BuilderKeysEnum::migration),
+                'migration', 'm' => $this->relations['migration'] = FileNameFactory::make(moduleName: $this->moduleName, type: BuilderKeysEnum::migration),
                 'controller', 'c' => $this->relations['controller'] = $this->getModelRelation(BuilderKeysEnum::controller, 'Controller'),
                 'request', 'R' => $this->relations['request'] = $this->getModelRelation(BuilderKeysEnum::request, 'Request'),
                 'resource', 'r' => $this->relations['resource'] = $this->getModelRelation(BuilderKeysEnum::resource, 'Resource'),
@@ -50,10 +50,10 @@ class ModelBuilder extends BaseBuilder implements HasRelationsInterface
                 'seed', 's' => $this->relations['seeder'] = $this->getModelRelation(BuilderKeysEnum::seeder, 'Seeder'),
                 'test' => $this->relations['unit_test'] = $this->getModelRelation(BuilderKeysEnum::unit_test, 'Test'),
                 'a', 'action' => $this->relations['actions'] = [
-                    'index' => $this->getControllerRelation(BuilderKeysEnum::action, 'IndexAction', $this->fileName),
-                    'store' => $this->getControllerRelation(BuilderKeysEnum::action, 'StoreAction', $this->fileName),
-                    'update' => $this->getControllerRelation(BuilderKeysEnum::action, 'UpdateAction', $this->fileName),
-                    'destroy' => $this->getControllerRelation(BuilderKeysEnum::action, 'DestroyAction', $this->fileName),
+                    'index' => $this->getControllerRelation(BuilderKeysEnum::action, 'IndexAction', $this->getFileName()),
+                    'store' => $this->getControllerRelation(BuilderKeysEnum::action, 'StoreAction', $this->getFileName()),
+                    'update' => $this->getControllerRelation(BuilderKeysEnum::action, 'UpdateAction', $this->getFileName()),
+                    'destroy' => $this->getControllerRelation(BuilderKeysEnum::action, 'DestroyAction', $this->getFileName()),
                 ],
 
                 'morph-pivot' => $this->morphPivot(),
@@ -80,15 +80,15 @@ class ModelBuilder extends BaseBuilder implements HasRelationsInterface
 
     private function getModelRelation(BuilderKeysEnum $key, string $replacer): string
     {
-        $relationClass = $this->fileName.$replacer;
+        $relationClass = $this->getFileName().$replacer;
 
-        return FileNameFactory::make($this->moduleName, $key, $relationClass);
+        return FileNameFactory::make(moduleName: $this->moduleName, type: $key, customName: $relationClass);
     }
 
     private function setAllRelation(): void
     {
         $this->relations = [
-            'migration' => FileNameFactory::make($this->moduleName, BuilderKeysEnum::migration),
+            'migration' => FileNameFactory::make(moduleName: $this->moduleName, type: BuilderKeysEnum::migration),
             'controller' => $this->getModelRelation(BuilderKeysEnum::controller, 'Controller'),
             'policy' => $this->getModelRelation(BuilderKeysEnum::policy, 'Policy'),
             'factory' => $this->getModelRelation(BuilderKeysEnum::factory, 'Factory'),

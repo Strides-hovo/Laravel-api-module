@@ -20,10 +20,15 @@ class RouteBuilder extends BaseBuilder
         return Config::get('module-stub.module.route');
     }
 
+    public function getFileName(): string
+    {
+        return $this->fileName.Str::ucfirst($this->version ?: 'v1');
+    }
+
     protected function getReplacements(): array
     {
 
-        $controllerName = FileNameFactory::make($this->moduleName, BuilderKeysEnum::controller);
+        $controllerName = FileNameFactory::make(moduleName: $this->moduleName, type: BuilderKeysEnum::controller).Str::ucfirst($this->version);
         $controller = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::controller, $controllerName);
 
         return [
