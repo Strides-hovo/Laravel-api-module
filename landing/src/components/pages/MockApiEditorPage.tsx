@@ -155,7 +155,7 @@ export const MockApiEditorPage: React.FC<MockApiEditorPageProps> = ({
               Resource Data Editor
             </h1>
             <p className="text-[#94a3b8] text-base md:text-lg max-w-3xl mt-2 leading-relaxed">
-              Edit documentation metadata, features, and Artisan commands per version release (<strong>v1.0.0</strong>, <strong>v1.5.0</strong>, <strong>v2.0.0</strong>) and sync updates directly to your MockAPI endpoint.
+              Edit documentation metadata, features, and Artisan commands per version release (<strong>v1.0.0</strong>, <strong>v2.0.0</strong>) and sync updates directly to your MockAPI endpoint.
             </p>
           </div>
 
@@ -359,7 +359,7 @@ export const MockApiEditorPage: React.FC<MockApiEditorPageProps> = ({
 
                 <div className="bg-[#1e293b]/60 border border-[#334155] rounded-xl p-4 space-y-3 mt-4">
                   <label className="block text-[#f8fafc] font-bold text-xs">
-                    Статус релиза версии (Реализовано или В планах / Roadmap?):
+                    Release Status (Released or Roadmap?):
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <label className={`flex items-start gap-3 cursor-pointer p-3 rounded-xl border transition-all ${
@@ -377,10 +377,10 @@ export const MockApiEditorPage: React.FC<MockApiEditorPageProps> = ({
                       <div>
                         <div className="text-xs font-bold text-[#10b981] flex items-center gap-1.5">
                           <span className="material-symbols-outlined text-[16px]">verified</span>
-                          Реализовано (Готово к работе)
+                          Released (Ready for use)
                         </div>
                         <div className="text-[11px] text-[#94a3b8] mt-1 leading-normal">
-                          Версия официально выпущена, стабильна и доступна для установки через Composer.
+                          The version is officially released, stable, and available for installation via Composer.
                         </div>
                       </div>
                     </label>
@@ -400,10 +400,10 @@ export const MockApiEditorPage: React.FC<MockApiEditorPageProps> = ({
                       <div>
                         <div className="text-xs font-bold text-[#f59e0b] flex items-center gap-1.5">
                           <span className="material-symbols-outlined text-[16px]">engineering</span>
-                          В планах (Roadmap / Мысли вслух)
+                          Roadmap (Planned)
                         </div>
                         <div className="text-[11px] text-[#94a3b8] mt-1 leading-normal">
-                          Планируемые фичи и концепты. Показывает плашку предупреждения, что функции пока в разработке.
+                          Planned features and concepts. Shows a warning banner indicating the feature is still in development.
                         </div>
                       </div>
                     </label>

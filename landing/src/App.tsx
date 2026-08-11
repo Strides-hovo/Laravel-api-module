@@ -21,9 +21,54 @@ import { MockApiEditorPage } from './components/pages/MockApiEditorPage';
 import { CommunityPage } from './components/pages/CommunityPage';
 import { AdminAuthModal } from './components/AdminAuthModal';
 
+const KNOWN_PAGE_IDS: PageId[] = [
+  'instructions',
+  'requirements',
+  'installation',
+  'commands',
+  'create-module',
+  'transformer',
+  'migrations',
+  'mockapi-editor',
+  'issues',
+  'discussions',
+  'github',
+];
+
+function readPageIdFromHash(): PageId {
+  const raw = window.location.hash.replace(/^#\/?/, '');
+  return (KNOWN_PAGE_IDS as string[]).includes(raw) ? (raw as PageId) : 'instructions';
+}
+
 export default function App() {
-  const [activePage, setActivePage] = useState<PageId>('instructions');
-  const [selectedVersion, setSelectedVersion] = useState<string>('1.0.0');
+  const [activePage, setActivePageState] = useState<PageId>(() => readPageIdFromHash());
+
+  // Keep the URL hash in sync whenever navigation happens in-app.
+  const setActivePage = useCallback((pageId: PageId) => {
+    setActivePageState(pageId);
+    const nextHash = `#/${pageId}`;
+    if (window.location.hash !== nextHash) {
+      window.location.hash = nextHash;
+    }
+  }, []);
+
+  // Support browser Back/Forward and direct links (e.g. shared /#/commands URLs).
+  useEffect(() => {
+    const onHashChange = () => setActivePageState(readPageIdFromHash());
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  // Normalize the URL on first load (e.g. bare "/" becomes "/#/instructions").
+  useEffect(() => {
+    const nextHash = `#/${activePage}`;
+    if (window.location.hash !== nextHash) {
+      window.location.hash = nextHash;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [selectedVersion, setSelectedVersion] = useState<string>('2.0.0');
   const [starCount, setStarCount] = useState<number>(1284);
   const [isStarred, setIsStarred] = useState<boolean>(false);
 
@@ -115,7 +160,7 @@ export default function App() {
       title: feat,
       category: feat.includes(':') || feat.toLowerCase().includes('command') || feat.startsWith('module') ? 'Artisan Commands' : 'New Features',
       pageId: (feat.includes(':') || feat.toLowerCase().includes('command') || feat.startsWith('module') ? 'commands' : 'instructions') as PageId,
-      description: `Элемент из панели администратора (v${docData.version})`,
+      description: `Admin panel item (v${docData.version})`,
     }));
     return [...extra, ...base];
   }, [docData]);

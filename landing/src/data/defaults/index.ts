@@ -8,13 +8,11 @@
  */
 import { VersionDocData } from '../../types/docData';
 import { NAV_GROUPS_V1_0_0, ENV_VARIABLES_V1_0_0, SEARCH_ITEMS_V1_0_0, META_V1_0_0 } from './versions/v1_0_0';
-import { NAV_GROUPS_V1_5_0, ENV_VARIABLES_V1_5_0, SEARCH_ITEMS_V1_5_0, META_V1_5_0 } from './versions/v1_5_0';
 import { NAV_GROUPS_V2_0_0, ENV_VARIABLES_V2_0_0, SEARCH_ITEMS_V2_0_0, META_V2_0_0 } from './versions/v2_0_0';
 
 export const SUPPORTED_VERSIONS = [
-  { value: '1.0.0', label: 'Version 1.0.0 (LTS)', tag: 'Stable' },
-  { value: '1.5.0', label: 'Version 1.5.0', tag: 'New Features' },
-  { value: '2.0.0', label: 'Version 2.0.0 (Next-Gen)', tag: 'Latest Major' },
+  { value: '2.0.0', label: 'Version 2.0.0 (Current)', tag: 'Stable' },
+  { value: '1.0.0', label: 'Version 1.0.0 (Legacy)', tag: 'Legacy' },
 ];
 
 export const DEFAULT_VERSION_DATA: Record<string, VersionDocData> = {
@@ -23,12 +21,6 @@ export const DEFAULT_VERSION_DATA: Record<string, VersionDocData> = {
     navGroups: NAV_GROUPS_V1_0_0,
     envVariables: ENV_VARIABLES_V1_0_0,
     searchResults: SEARCH_ITEMS_V1_0_0,
-  },
-  '1.5.0': {
-    ...META_V1_5_0,
-    navGroups: NAV_GROUPS_V1_5_0,
-    envVariables: ENV_VARIABLES_V1_5_0,
-    searchResults: SEARCH_ITEMS_V1_5_0,
   },
   '2.0.0': {
     ...META_V2_0_0,

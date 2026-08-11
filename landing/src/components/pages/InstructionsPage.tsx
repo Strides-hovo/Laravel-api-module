@@ -42,12 +42,12 @@ export const InstructionsPage: React.FC<InstructionsPageProps> = ({ onNavigate, 
               {docData?.isReleased === false ? (
                   <span className="px-3 py-1 rounded-full border border-[#f59e0b]/50 bg-[#f59e0b]/15 text-[#f59e0b] font-code text-[11px] font-bold flex items-center gap-1.5 shadow-[0_0_10px_rgba(245,158,11,0.2)]">
                 <span className="material-symbols-outlined text-[15px]">engineering</span>
-                <span>В ПЛАНАХ / ROADMAP (НЕ ВЫПУЩЕНО)</span>
+                <span>ROADMAP / NOT YET RELEASED</span>
               </span>
               ) : (
                   <span className="px-3 py-1 rounded-full border border-[#10b981]/40 bg-[#10b981]/10 text-[#34d399] font-code text-[11px] font-bold flex items-center gap-1">
                 <span className="material-symbols-outlined text-[14px]">verified</span>
-                <span>РЕАЛИЗОВАНО</span>
+                <span>RELEASED</span>
               </span>
               )}
             </div>
@@ -67,11 +67,11 @@ export const InstructionsPage: React.FC<InstructionsPageProps> = ({ onNavigate, 
                   </div>
                   <div className="space-y-1">
                     <h3 className="text-sm md:text-base font-bold text-[#f8fafc] flex items-center gap-2 flex-wrap">
-                      <span>💡 Планируемые функции и улучшения (Roadmap / Мысли вслух)</span>
+                      <span>💡 Planned Features & Improvements (Roadmap)</span>
                       <span className="bg-[#f59e0b] text-[#0f172a] text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider font-code">In Planning</span>
                     </h3>
                     <p className="text-xs md:text-sm text-[#cbd5e1] leading-relaxed">
-                      Версия <strong>{version} ({releaseName})</strong> находится в стадии проектирования. Описанные ниже фичи, команды и архитектура — это наш концепт того, что планируется внедрить в будущих релизах. Вы можете редактировать эти планы в Resource Editor.
+                      Version <strong>{version} ({releaseName})</strong> is in the design stage. The features, commands, and architecture described below are our concept of what's planned for future releases. You can edit these plans in the Resource Editor.
                     </p>
                   </div>
                 </div>
@@ -97,6 +97,93 @@ export const InstructionsPage: React.FC<InstructionsPageProps> = ({ onNavigate, 
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
             </div>
+          </div>
+        </section>
+
+        {/* Comparison Table */}
+        <section className="bg-[#131b2e] border border-[#334155] rounded-xl p-6 md:p-8 shadow-2xl space-y-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-[#10b981]/15 text-[#10b981] rounded-xl flex items-center justify-center">
+              <span className="material-symbols-outlined text-[24px]">balance</span>
+            </div>
+            <div>
+              <h2 className="text-xl md:text-2xl font-extrabold text-[#f8fafc]">Why Strides</h2>
+              <p className="text-xs md:text-sm text-[#94a3b8] mt-0.5">
+                Built API-first, from day one — not a generic module generator with API support bolted on.
+              </p>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto -mx-2 px-2">
+            <table className="w-full border-collapse min-w-[560px]">
+              <thead>
+                <tr>
+                  <th className="text-left text-xs font-bold uppercase tracking-wider text-[#94a3b8] pb-3 pr-4 border-b border-[#334155]">
+                    Feature
+                  </th>
+                  <th className="text-center text-xs font-bold uppercase tracking-wider text-[#ffb690] pb-3 px-4 border-b border-[#334155] w-[140px]">
+                    Strides
+                  </th>
+                  <th className="text-center text-xs font-bold uppercase tracking-wider text-[#94a3b8] pb-3 pl-4 border-b border-[#334155] w-[140px]">
+                    Other packages
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    label: 'Built exclusively for REST APIs (no web/views scaffolding)',
+                    ours: true,
+                    theirs: false,
+                  },
+                  {
+                    label: 'Generated files ship pre-wired (Controller → Action → Repository)',
+                    ours: true,
+                    theirs: false,
+                  },
+                  {
+                    label: 'Working CRUD endpoint in ~10 seconds',
+                    ours: true,
+                    theirs: false,
+                  },
+                  {
+                    label: 'API versioning built into the module architecture',
+                    ours: true,
+                    theirs: false,
+                  },
+                  {
+                    label: 'Idempotent generation — safe to re-run, nothing is silently overwritten',
+                    ours: true,
+                    theirs: false,
+                  },
+                  {
+                    label: 'Enable/disable individual API versions via config, no code changes',
+                    ours: true,
+                    theirs: false,
+                  },
+                ].map((row, idx) => (
+                    <tr key={idx} className="border-b border-[#334155]/60 last:border-b-0">
+                      <td className="py-3 pr-4 text-sm text-[#e2e8f0]">{row.label}</td>
+                      <td className="py-3 px-4 text-center">
+                        <span className="material-symbols-outlined text-[20px] text-[#10b981] align-middle">
+                          check_circle
+                        </span>
+                      </td>
+                      <td className="py-3 pl-4 text-center">
+                        {row.theirs ? (
+                            <span className="material-symbols-outlined text-[20px] text-[#10b981] align-middle">
+                              check_circle
+                            </span>
+                        ) : (
+                            <span className="material-symbols-outlined text-[20px] text-[#64748b] align-middle">
+                              cancel
+                            </span>
+                        )}
+                      </td>
+                    </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
@@ -138,7 +225,7 @@ export const InstructionsPage: React.FC<InstructionsPageProps> = ({ onNavigate, 
                             {feat}
                           </div>
                           <div className="text-xs text-[#94a3b8] mt-1">
-                            {isCmd ? 'Доступно в Artisan CLI' : 'Возможность версии v' + version}
+                            {isCmd ? 'Available in Artisan CLI' : 'Feature of v' + version}
                           </div>
                         </div>
                       </div>

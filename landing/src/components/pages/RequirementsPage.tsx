@@ -23,12 +23,12 @@ export const RequirementsPage: React.FC<RequirementsPageProps> = ({ onNavigate, 
           {docData?.isReleased === false ? (
             <span className="px-2.5 py-0.5 rounded-full border border-[#f59e0b]/50 bg-[#f59e0b]/15 text-[#f59e0b] font-code text-[10px] font-bold flex items-center gap-1">
               <span className="material-symbols-outlined text-[13px]">engineering</span>
-              <span>В ПЛАНАХ / ROADMAP</span>
+              <span>ROADMAP</span>
             </span>
           ) : (
             <span className="px-2.5 py-0.5 rounded-full border border-[#10b981]/40 bg-[#10b981]/10 text-[#34d399] font-code text-[10px] font-bold flex items-center gap-1">
               <span className="material-symbols-outlined text-[13px]">verified</span>
-              <span>РЕАЛИЗОВАНО</span>
+              <span>RELEASED</span>
             </span>
           )}
         </div>
@@ -45,9 +45,9 @@ export const RequirementsPage: React.FC<RequirementsPageProps> = ({ onNavigate, 
               <span className="material-symbols-outlined text-[20px]">lightbulb</span>
             </div>
             <div>
-              <h4 className="text-sm font-bold text-[#f8fafc]">💡 Предварительные требования (В планах / Roadmap)</h4>
+              <h4 className="text-sm font-bold text-[#f8fafc]">💡 Preliminary Requirements (Roadmap)</h4>
               <p className="text-xs text-[#cbd5e1] mt-0.5">
-                Требования для версии <strong>{version}</strong> являются ориентировочными, так как версия пока не выпущена (в разработке).
+                Requirements for version <strong>{version}</strong> are tentative, since this version hasn't been released yet (in development).
               </p>
             </div>
           </div>

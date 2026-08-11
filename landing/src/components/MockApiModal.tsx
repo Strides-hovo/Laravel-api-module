@@ -164,7 +164,7 @@ export const MockApiModal: React.FC<MockApiModalProps> = ({
               <span>How MockAPI Versioning Works</span>
             </div>
             <p className="text-[#94a3b8] leading-relaxed">
-              When you select different versions (<strong>1.0.0</strong>, <strong>1.5.0</strong>, or <strong>2.0.0</strong>) in the application selector, data is dynamically requested from your <code>mockapi.io</code> project. If your resources are currently empty, click <strong>"Seed MockAPI Resource"</strong> below to automatically populate them!
+              When you select different versions (<strong>1.0.0</strong> or <strong>2.0.0</strong>) in the application selector, data is dynamically requested from your <code>mockapi.io</code> project. If your resources are currently empty, click <strong>"Seed MockAPI Resource"</strong> below to automatically populate them!
             </p>
           </div>
 

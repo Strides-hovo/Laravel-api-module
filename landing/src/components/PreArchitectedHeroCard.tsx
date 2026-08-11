@@ -55,12 +55,12 @@ export const PreArchitectedHeroCard: React.FC<PreArchitectedHeroCardProps> = ({
           {docData.isReleased === false ? (
             <span className="px-2.5 py-0.5 rounded-full border border-[#f59e0b]/50 bg-[#f59e0b]/15 text-[#f59e0b] font-code text-[10px] font-bold flex items-center gap-1 shadow-[0_0_10px_rgba(245,158,11,0.2)]">
               <span className="material-symbols-outlined text-[13px]">engineering</span>
-              <span>В планах / Roadmap v{docData.version}</span>
+              <span>Roadmap v{docData.version}</span>
             </span>
           ) : (
             <span className="px-2.5 py-0.5 rounded-full border border-[#10b981]/40 bg-[#10b981]/10 text-[#34d399] font-code text-[10px] font-bold flex items-center gap-1 shadow-[0_0_10px_rgba(16,185,129,0.15)]">
               <span className="material-symbols-outlined text-[13px]">verified</span>
-              <span>Реализовано v{docData.version}</span>
+              <span>Released v{docData.version}</span>
             </span>
           )}
         </div>
@@ -69,11 +69,11 @@ export const PreArchitectedHeroCard: React.FC<PreArchitectedHeroCardProps> = ({
       {/* Header title */}
       <div className="text-center space-y-3 relative z-10">
         <h3 className="text-2xl sm:text-3xl font-black font-code text-[#f8fafc] tracking-wide leading-tight uppercase">
-          для <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffb690] to-[#ffa06d]">Laravel API</span><br />
-          начерченная заранее
+          Pre-architected <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffb690] to-[#ffa06d]">for Laravel API</span><br />
+          from the very first command
         </h3>
         <p className="text-xs sm:text-sm text-[#94a3b8] max-w-md mx-auto leading-relaxed">
-          Один toolkit для генерации чистых, изолированных модулей: контроллер, модель, миграция и роуты — одной командой artisan, без ручной рутины.
+          One toolkit for generating clean, isolated modules: controller, model, migration, and routes — with a single artisan command, no manual boilerplate.
         </p>
       </div>
 
@@ -84,7 +84,7 @@ export const PreArchitectedHeroCard: React.FC<PreArchitectedHeroCardProps> = ({
           className="px-4 py-2.5 rounded-xl bg-[#ffb690] hover:bg-[#ffa06d] text-[#0f172a] font-bold text-xs sm:text-sm transition-all shadow-[0_0_20px_rgba(255,182,144,0.25)] hover:shadow-[0_0_25px_rgba(255,182,144,0.4)] flex items-center gap-1.5 cursor-pointer active:scale-95"
         >
           <span className="material-symbols-outlined text-[17px]">terminal</span>
-          <span>Установить через Composer</span>
+          <span>Install via Composer</span>
         </button>
 
         <button
@@ -92,7 +92,7 @@ export const PreArchitectedHeroCard: React.FC<PreArchitectedHeroCardProps> = ({
           className="px-4 py-2.5 rounded-xl border border-[#334155] bg-[#1e293b]/60 hover:bg-[#1e293b] hover:border-[#7bd0ff]/50 text-[#cbd5e1] hover:text-white font-medium text-xs sm:text-sm transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
         >
           <span className="material-symbols-outlined text-[17px]">menu_book</span>
-          <span>Документация</span>
+          <span>Documentation</span>
         </button>
       </div>
 
@@ -116,11 +116,11 @@ export const PreArchitectedHeroCard: React.FC<PreArchitectedHeroCardProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={handleReplay}
-              title="Перезапустить анимацию генерации"
+              title="Replay generation animation"
               className="text-[#94a3b8] hover:text-[#7bd0ff] transition-colors p-1 rounded hover:bg-[#1e293b] flex items-center gap-1 text-[10px] cursor-pointer"
             >
               <span className="material-symbols-outlined text-[14px]">refresh</span>
-              <span className="hidden sm:inline">Анимация</span>
+              <span className="hidden sm:inline">Replay</span>
             </button>
 
             {/* Interactive Module selector pills */}
@@ -151,7 +151,7 @@ export const PreArchitectedHeroCard: React.FC<PreArchitectedHeroCardProps> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
             onClick={() => handleCopyCommand(commandText)}
-            title="Нажмите, чтобы скопировать команду"
+            title="Click to copy the command"
             className="flex items-center justify-between bg-[#1e293b]/50 hover:bg-[#1e293b] px-3 py-2 rounded-lg border border-[#ffb690]/30 hover:border-[#ffb690] cursor-pointer transition-all group/cmd"
           >
             <div className="flex items-center gap-2 text-[#ffb690] font-bold font-mono truncate">
@@ -162,7 +162,7 @@ export const PreArchitectedHeroCard: React.FC<PreArchitectedHeroCardProps> = ({
               <span className="material-symbols-outlined text-[15px]">
                 {copied ? 'check_circle' : 'content_copy'}
               </span>
-              <span className="hidden sm:inline">{copied ? 'Скопировано!' : 'Копия'}</span>
+              <span className="hidden sm:inline">{copied ? 'Copied!' : 'Copy'}</span>
             </div>
           </motion.div>
 

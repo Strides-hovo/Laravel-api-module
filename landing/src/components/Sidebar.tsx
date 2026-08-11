@@ -53,9 +53,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
             onChange={(e) => onVersionChange(e.target.value)}
             className="w-full bg-[#171f33] border border-[#334155] text-[#f8fafc] text-xs font-code rounded-lg px-3 py-2 appearance-none"
           >
-            <option value="1.0.0">Version 1.0.0 (LTS)</option>
-            <option value="1.5.0">Version 1.5.0</option>
-            <option value="2.0.0">Version 2.0.0 (Next-Gen)</option>
+            <option value="2.0.0">Version 2.0.0 (Current)</option>
+            <option value="1.0.0">Version 1.0.0 (Legacy)</option>
           </select>
           <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none text-[#94a3b8]">
             expand_more
