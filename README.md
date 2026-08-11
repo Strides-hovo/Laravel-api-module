@@ -7,9 +7,9 @@
 > A code generation toolkit for building clean, scalable Laravel APIs with modular architecture.
 > Designed for teams that work exclusively with APIs and follow the **Action → Repository → Transformer** pattern.
 
-[![Latest Version](https://img.shields.io/badge/version-1.0.0-blue)]()
+[![Latest Version](https://img.shields.io/badge/version-2.0.0-blue)]()
 [![PHP](https://img.shields.io/badge/PHP-%3E%3D8.1-777BB4?style=flat&logo=php&logoColor=white)]()
-[![Laravel](https://img.shields.io/badge/Illuminate-%5E9.0%20%7C%20%5E10.0%20%7C%20%5E11.0%20%7C%20%5E12.0%20%7C%20%5E13.0-FF2D20?style=flat&logo=laravel&logoColor=white)]()
+[![Laravel](https://img.shields.io/badge/Illuminate-%20%5E10.0%20%7C%20%5E11.0%20%7C%20%5E12.0%20%7C%20%5E13.0-FF2D20?style=flat&logo=laravel&logoColor=white)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)]()
 
 </div>
@@ -48,7 +48,7 @@ One command. Model, migration, factory, seeder, controller, repository, transfor
 | Dependency | Version |
 |------------|---------|
 | PHP | `>= 8.1` |
-| Laravel | `^9.0 \| ^10.0 \| ^11.0 \| ^12.0 \| ^13.0` |
+| Laravel | ` ^10.0 \| ^11.0 \| ^12.0 \| ^13.0` |
 | Composer | Latest |
 
 ---
@@ -247,9 +247,9 @@ Done. Removed 1 stale entry from modules_name.json.
 
 ### Module
 
-| Command | Description |
-|---------|-------------|
-| `module:make-module {name}` | Create a complete module with full directory structure |
+| Command                               | Description |
+|---------------------------------------|-------------|
+| `module:make-module {name} {version}` | Create a complete module with full directory structure |
 
 ### Models & Data
 
