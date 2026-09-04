@@ -121,6 +121,12 @@ abstract class ModuleTransformer extends JsonResource
         ], $this->statusCode);
     }
 
+    
+    protected function request(): Request
+    {
+        return request();
+    }
+
     /**
      * Парсинг связей из GET-запроса (?include=comments,author).
      *

@@ -48,6 +48,8 @@ abstract class MigrationActionCommand extends Command
     public function setRelativePath(): self
     {
         $relativePath = ModuleHelper::namespace($this->moduleName, BuilderKeysEnum::migration);
+        $relativePath = ModuleHelper::normalizePath($relativePath);
+         
         if ($this->hasArgument('fileName')) {
             $fileName = $this->argument('fileName');
             if (is_string($fileName) && $fileName !== '') {
