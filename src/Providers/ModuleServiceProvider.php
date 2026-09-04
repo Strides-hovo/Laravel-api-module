@@ -30,6 +30,7 @@ use Strides\Module\Commands\Module\ModuleDisableCommand;
 use Strides\Module\Commands\Module\ModuleEnableCommand;
 use Strides\Module\Commands\Module\ModuleListCommand;
 use Strides\Module\Commands\Module\ModuleOptimizeCommand;
+use Strides\Module\Commands\Module\ModuleTestCommand;
 use Strides\Module\Commands\ModuleMakeCommand;
 use Strides\Module\Commands\NotificationMakeCommand;
 use Strides\Module\Commands\PolicyMakeCommand;
@@ -116,6 +117,7 @@ class ModuleServiceProvider extends ServiceProvider
         ModuleDisableCommand::class,
         ModuleDeleteCommand::class,
         ModuleOptimizeCommand::class,
+        ModuleTestCommand::class,
         ConfigPublishCommand::class,
         TestMakeCommand::class,
         DbSeedCommand::class,

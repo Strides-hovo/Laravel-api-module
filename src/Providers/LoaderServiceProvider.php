@@ -80,8 +80,7 @@ class LoaderServiceProvider extends ServiceProvider
     {
         $modules = Module::allEnabled();
         foreach ($modules as $module) {
-            $dir = ModuleHelper::namespace($module, BuilderKeysEnum::service_provider);
-            $provider = $dir.DIRECTORY_SEPARATOR.ModuleHelper::singular($module).'ServiceProvider';
+            $provider = ModuleHelper::namespace($module, BuilderKeysEnum::service_provider, ModuleHelper::singular($module).'ServiceProvider');
             $file = ModuleHelper::path(ModuleHelper::singular($module), BuilderKeysEnum::service_provider);
 
             if (File::exists("{$file}.php")) {
